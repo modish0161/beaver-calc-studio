@@ -34,7 +34,7 @@ services:
       REDIS_URL: ${REDIS_URL:-redis://redis:6379/0}
       SECRET_KEY: ${SECRET_KEY:?Set SECRET_KEY in .env}
       JWT_SECRET_KEY: ${JWT_SECRET_KEY:?Set JWT_SECRET_KEY in .env}
-      CORS_ORIGINS: https://beavercalcstudio.com,https://www.beavercalcstudio.com
+      CORS_ORIGINS: http://beavercalcstudio.com,http://www.beavercalcstudio.com,https://beavercalcstudio.com,https://www.beavercalcstudio.com,http://148.230.123.128
     expose:
       - "5000"
     depends_on:

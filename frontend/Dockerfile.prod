@@ -10,7 +10,10 @@ RUN npm run build
 FROM nginx:1.25-alpine
 
 COPY --from=build /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Use HTTP-only config initially; switch to nginx.conf after SSL certs are obtained
+COPY nginx.initial.conf /etc/nginx/conf.d/default.conf
+# Keep full SSL config available for later
+COPY nginx.conf /etc/nginx/conf.d/ssl.conf.disabled
 
 EXPOSE 80 443
 
