@@ -1,17 +1,17 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useCallback, useRef, useState } from 'react';
 import {
-    FiActivity,
-    FiAlertTriangle,
-    FiCheck,
-    FiDownload,
-    FiEye,
-    FiInfo,
-    FiLayers,
-    FiPlus,
-    FiSliders,
-    FiTrash2,
-    FiZap,
+  FiActivity,
+  FiAlertTriangle,
+  FiCheck,
+  FiDownload,
+  FiEye,
+  FiInfo,
+  FiLayers,
+  FiPlus,
+  FiSliders,
+  FiTrash2,
+  FiZap,
 } from 'react-icons/fi';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
@@ -889,7 +889,7 @@ const BearingReactions: React.FC = () => {
   return (
     <div className="relative min-h-screen overflow-hidden">
       <MouseSpotlight />
-        <div className="absolute inset-0 bg-grid-pattern opacity-30" />
+      <div className="absolute inset-0 bg-grid-pattern opacity-30" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Hero Header */}
@@ -906,8 +906,17 @@ const BearingReactions: React.FC = () => {
             <span className="text-white font-semibold">EN 1990 | Eurocode 0</span>
           </motion.div>
 
+          <h1 className="text-6xl font-black mb-6">
+            <span className="bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-purple bg-clip-text text-transparent">
+              Bearing Reactions
+            </span>
+          </h1>
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+            EN 1990/1991-2 compliant bearing reaction analysis
+          </p>
+
           {/* Tab Navigation */}
-          <div className="flex justify-center gap-4 mb-8">
+          <div className="flex justify-center gap-4 mb-8 mt-8">
             {['input', 'results', 'visualization'].map((tab) => (
               <Button
                 key={tab}
@@ -929,15 +938,6 @@ const BearingReactions: React.FC = () => {
               </Button>
             ))}
           </div>
-
-          <h1 className="text-6xl font-black mb-6">
-            <span className="bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-purple bg-clip-text text-transparent">
-              Bearing Reactions
-            </span>
-          </h1>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            EN 1990/1991-2 compliant bearing reaction analysis
-          </p>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mt-3">
             Advanced bearing reaction envelope analysis from multiple load cases with comprehensive
             stability assessment
@@ -1224,7 +1224,9 @@ const BearingReactions: React.FC = () => {
                   className="flex justify-center"
                 >
                   <Button
-                    onClick={() => { calculateResults().then(() => setActiveTab('results')); }}
+                    onClick={() => {
+                      calculateResults().then(() => setActiveTab('results'));
+                    }}
                     disabled={isCalculating}
                     className="px-12 py-6 text-lg font-bold bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-purple hover:scale-105 transition-transform duration-300 shadow-2xl cyber-glow-blue"
                   >
@@ -1435,30 +1437,49 @@ const BearingReactions: React.FC = () => {
                 {[
                   {
                     label: 'Vertical Capacity',
-                    value: ((results.capacity_checks?.vertical_capacity?.max_utilisation || 0) * 100).toFixed(1),
+                    value: (
+                      (results.capacity_checks?.vertical_capacity?.max_utilisation || 0) * 100
+                    ).toFixed(1),
                     util: (results.capacity_checks?.vertical_capacity?.max_utilisation || 0) * 100,
-                    status: results.capacity_checks?.vertical_capacity?.status === 'FAIL' ? 'FAIL' : 'PASS',
+                    status:
+                      results.capacity_checks?.vertical_capacity?.status === 'FAIL'
+                        ? 'FAIL'
+                        : 'PASS',
                     icon: <FiActivity size={14} />,
                   },
                   {
                     label: 'Horizontal Capacity',
-                    value: ((results.capacity_checks?.horizontal_capacity?.max_utilisation || 0) * 100).toFixed(1),
-                    util: (results.capacity_checks?.horizontal_capacity?.max_utilisation || 0) * 100,
-                    status: results.capacity_checks?.horizontal_capacity?.status === 'FAIL' ? 'FAIL' : 'PASS',
+                    value: (
+                      (results.capacity_checks?.horizontal_capacity?.max_utilisation || 0) * 100
+                    ).toFixed(1),
+                    util:
+                      (results.capacity_checks?.horizontal_capacity?.max_utilisation || 0) * 100,
+                    status:
+                      results.capacity_checks?.horizontal_capacity?.status === 'FAIL'
+                        ? 'FAIL'
+                        : 'PASS',
                     icon: <FiSliders size={14} />,
                   },
                   {
                     label: 'Moment Capacity',
-                    value: ((results.capacity_checks?.moment_capacity?.max_utilisation || 0) * 100).toFixed(1),
+                    value: (
+                      (results.capacity_checks?.moment_capacity?.max_utilisation || 0) * 100
+                    ).toFixed(1),
                     util: (results.capacity_checks?.moment_capacity?.max_utilisation || 0) * 100,
-                    status: results.capacity_checks?.moment_capacity?.status === 'FAIL' ? 'FAIL' : 'PASS',
+                    status:
+                      results.capacity_checks?.moment_capacity?.status === 'FAIL' ? 'FAIL' : 'PASS',
                     icon: <FiLayers size={14} />,
                   },
                   {
                     label: 'System Stability',
-                    value: results.system_stability?.stability_status === 'STABLE' ? '\u2713' : '\u2717',
-                    util: results.system_stability?.stability_ratio < Infinity ? Math.min((1.5 / results.system_stability.stability_ratio) * 100, 150) : 10,
-                    status: results.system_stability?.stability_status === 'STABLE' ? 'PASS' : 'FAIL',
+                    value:
+                      results.system_stability?.stability_status === 'STABLE' ? '\u2713' : '\u2717',
+                    util:
+                      results.system_stability?.stability_ratio < Infinity
+                        ? Math.min((1.5 / results.system_stability.stability_ratio) * 100, 150)
+                        : 10,
+                    status:
+                      results.system_stability?.stability_status === 'STABLE' ? 'PASS' : 'FAIL',
                     icon: <FiAlertTriangle size={14} />,
                   },
                   {
@@ -1469,23 +1490,48 @@ const BearingReactions: React.FC = () => {
                     icon: <FiZap size={14} />,
                   },
                 ].map((item, i) => (
-                  <Card key={i} variant="glass" className={cn('border-l-4', item.status === 'PASS' ? 'border-l-green-500' : 'border-l-red-500')}>
+                  <Card
+                    key={i}
+                    variant="glass"
+                    className={cn(
+                      'border-l-4',
+                      item.status === 'PASS' ? 'border-l-green-500' : 'border-l-red-500',
+                    )}
+                  >
                     <CardContent className="p-4">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="p-1.5 bg-gray-800 rounded-lg text-gray-400">{item.icon}</span>
-                        <span className={cn('px-2 py-1 rounded-md text-[10px] font-bold uppercase',
-                          item.status === 'PASS' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400')}>
+                        <span className="p-1.5 bg-gray-800 rounded-lg text-gray-400">
+                          {item.icon}
+                        </span>
+                        <span
+                          className={cn(
+                            'px-2 py-1 rounded-md text-[10px] font-bold uppercase',
+                            item.status === 'PASS'
+                              ? 'bg-green-500/20 text-green-400'
+                              : 'bg-red-500/20 text-red-400',
+                          )}
+                        >
                           {item.status}
                         </span>
                       </div>
                       <p className="text-gray-400 text-xs mb-1">{item.label}</p>
-                      <p className="text-2xl font-black text-white">{item.value}{item.label !== 'System Stability' ? '%' : ''}</p>
+                      <p className="text-2xl font-black text-white">
+                        {item.value}
+                        {item.label !== 'System Stability' ? '%' : ''}
+                      </p>
                       <div className="mt-2 h-1.5 bg-gray-900 rounded-full overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
                           animate={{ width: `${Math.min(item.util, 100)}%` }}
                           transition={{ duration: 0.8, delay: i * 0.1 }}
-                          className={cn('h-full rounded-full', item.util > 100 ? 'bg-red-500' : item.util > 80 ? 'bg-orange-500' : 'bg-gradient-to-r from-neon-cyan to-neon-blue')}
+                          className={cn(
+                            'h-full rounded-full',
+                            item.util > 100
+                              ? 'bg-red-500'
+                              : item.util > 80
+                                ? 'bg-orange-500'
+                                : 'bg-gradient-to-r from-neon-cyan to-neon-blue',
+                          )}
                         />
                       </div>
                     </CardContent>

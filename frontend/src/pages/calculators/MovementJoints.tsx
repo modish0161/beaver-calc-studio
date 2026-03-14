@@ -250,19 +250,19 @@ const MovementJoints: React.FC = () => {
 
   const validateInputs = (): boolean => {
     const errs = validateNumericInputs(formData as unknown as Record<string, unknown>, [
-  { key: 'spanLength', label: 'Span Length' },
-  { key: 'deckWidth', label: 'Deck Width' },
-  { key: 'minTemperature', label: 'Min Temperature' },
-  { key: 'maxTemperature', label: 'Max Temperature' },
-  { key: 'meanTemperature', label: 'Mean Temperature' },
-  { key: 'thermalCoefficient', label: 'Thermal Coefficient' },
-  { key: 'creepCoefficient', label: 'Creep Coefficient' },
-  { key: 'shrinkageStrain', label: 'Shrinkage Strain' },
-  { key: 'numberOfGaps', label: 'Number Of Gaps' },
-  { key: 'jointDepth', label: 'Joint Depth' },
-  { key: 'seismicDisplacement', label: 'Seismic Displacement' },
-  { key: 'safetyFactor', label: 'Safety Factor' },
-  { key: 'serviceLife', label: 'Service Life' },
+      { key: 'spanLength', label: 'Span Length' },
+      { key: 'deckWidth', label: 'Deck Width' },
+      { key: 'minTemperature', label: 'Min Temperature' },
+      { key: 'maxTemperature', label: 'Max Temperature' },
+      { key: 'meanTemperature', label: 'Mean Temperature' },
+      { key: 'thermalCoefficient', label: 'Thermal Coefficient' },
+      { key: 'creepCoefficient', label: 'Creep Coefficient' },
+      { key: 'shrinkageStrain', label: 'Shrinkage Strain' },
+      { key: 'numberOfGaps', label: 'Number Of Gaps' },
+      { key: 'jointDepth', label: 'Joint Depth' },
+      { key: 'seismicDisplacement', label: 'Seismic Displacement' },
+      { key: 'safetyFactor', label: 'Safety Factor' },
+      { key: 'serviceLife', label: 'Service Life' },
     ]);
     if (errs.length > 0) {
       setWarnings(errs);
@@ -767,8 +767,17 @@ const MovementJoints: React.FC = () => {
             <span className="text-white font-semibold">EN 1991-1-5 | Eurocode</span>
           </motion.div>
 
+          <h1 className="text-6xl font-black mb-6">
+            <span className="bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-purple bg-clip-text text-transparent">
+              Movement Joints
+            </span>
+          </h1>
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+            Bridge movement joint design &amp; analysis
+          </p>
+
           {/* Tab Navigation */}
-          <div className="flex justify-center gap-4 mb-8">
+          <div className="flex justify-center gap-4 mb-8 mt-8">
             {['input', 'results', 'visualization'].map((tab) => (
               <Button
                 key={tab}
@@ -790,15 +799,6 @@ const MovementJoints: React.FC = () => {
               </Button>
             ))}
           </div>
-
-          <h1 className="text-6xl font-black mb-6">
-            <span className="bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-purple bg-clip-text text-transparent">
-              Movement Joints
-            </span>
-          </h1>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Bridge movement joint design &amp; analysis
-          </p>
           <div className="flex items-center justify-center space-x-6 mt-8">
             <div className="flex items-center space-x-2 text-gray-400">
               <FiCheck className="text-green-400" />

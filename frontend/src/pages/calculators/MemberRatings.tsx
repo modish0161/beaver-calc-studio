@@ -6,18 +6,18 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import {
-    FiActivity,
-    FiAlertTriangle,
-    FiCheck,
-    FiChevronDown,
-    FiDownload,
-    FiEye,
-    FiInfo,
-    FiLayers,
-    FiPlus,
-    FiTarget,
-    FiTrash2,
-    FiZap,
+  FiActivity,
+  FiAlertTriangle,
+  FiCheck,
+  FiChevronDown,
+  FiDownload,
+  FiEye,
+  FiInfo,
+  FiLayers,
+  FiPlus,
+  FiTarget,
+  FiTrash2,
+  FiZap,
 } from 'react-icons/fi';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
@@ -416,7 +416,6 @@ const MemberRatings: React.FC = () => {
     form.links,
     form.serviceClass,
   ]);
-
 
   const updateForm = (field: keyof FormData, value: any) => {
     setForm((prev) => {
@@ -1181,7 +1180,7 @@ const MemberRatings: React.FC = () => {
   return (
     <div className="relative min-h-screen overflow-hidden">
       <MouseSpotlight />
-        <div className="absolute inset-0 bg-grid-pattern opacity-30" />
+      <div className="absolute inset-0 bg-grid-pattern opacity-30" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Hero Header */}
@@ -1198,8 +1197,17 @@ const MemberRatings: React.FC = () => {
             <span className="text-white font-semibold">{matCode}</span>
           </motion.div>
 
+          <h1 className="text-6xl font-black mb-6">
+            <span className="bg-gradient-to-r from-neon-cyan via-white to-neon-purple bg-clip-text text-transparent">
+              Member Ratings
+            </span>
+          </h1>
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+            EN 1993-2 structural member capacity checks
+          </p>
+
           {/* Tab Navigation */}
-          <div className="flex justify-center gap-4 mb-8 bg-gray-800/40 backdrop-blur-md border border-gray-700/50 rounded-2xl p-2 mx-auto w-fit">
+          <div className="flex justify-center gap-4 mb-8 mt-8 bg-gray-800/40 backdrop-blur-md border border-gray-700/50 rounded-2xl p-2 mx-auto w-fit">
             {['input', 'results', 'visualization'].map((tab) => (
               <Button
                 key={tab}
@@ -1221,13 +1229,6 @@ const MemberRatings: React.FC = () => {
               </Button>
             ))}
           </div>
-
-          <h1 className="text-6xl font-black mb-6">
-            <span className="bg-gradient-to-r from-neon-cyan via-white to-neon-purple bg-clip-text text-transparent">
-              Member Ratings
-            </span>
-          </h1>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">EN 1993-2 structural member capacity checks</p>
           <div className="flex items-center justify-center space-x-6 mt-8">
             <div className="flex items-center space-x-2 text-gray-400">
               <FiCheck className="text-green-400" />
@@ -1271,7 +1272,11 @@ const MemberRatings: React.FC = () => {
                   <Card variant="glass" className="border-neon-cyan/30 shadow-2xl">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-xl font-bold text-white flex items-center space-x-3">
-                        <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }} className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center">
+                        <motion.div
+                          whileHover={{ rotate: 360 }}
+                          transition={{ duration: 0.6 }}
+                          className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center"
+                        >
                           <FiZap className="text-neon-cyan w-6 h-6" />
                         </motion.div>
                         <span>Quick Presets</span>
@@ -1299,7 +1304,11 @@ const MemberRatings: React.FC = () => {
                 <CollapsibleSection
                   title="Material & Section"
                   icon={
-                    <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }} className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center">
+                    <motion.div
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                      className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center"
+                    >
                       <FiLayers className="text-neon-cyan w-6 h-6" />
                     </motion.div>
                   }
@@ -1376,7 +1385,9 @@ const MemberRatings: React.FC = () => {
                     {/* Steel Section Selection */}
                     {form.materialType === 'steel' && (
                       <div>
-                        <label className="block text-sm font-semibold text-gray-200 mb-1">Section</label>
+                        <label className="block text-sm font-semibold text-gray-200 mb-1">
+                          Section
+                        </label>
                         <select
                           title="Section"
                           value={form.sectionName}
@@ -1396,7 +1407,9 @@ const MemberRatings: React.FC = () => {
                     {form.materialType !== 'steel' && (
                       <div className="grid grid-cols-2 gap-4">
                         <div>
-                          <label className="block text-sm font-semibold text-gray-200 mb-1">Width <span className="text-neon-cyan text-xs">(mm)</span></label>
+                          <label className="block text-sm font-semibold text-gray-200 mb-1">
+                            Width <span className="text-neon-cyan text-xs">(mm)</span>
+                          </label>
                           <input
                             title="Width (mm)"
                             type="number"
@@ -1406,7 +1419,9 @@ const MemberRatings: React.FC = () => {
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-semibold text-gray-200 mb-1">Depth <span className="text-neon-cyan text-xs">(mm)</span></label>
+                          <label className="block text-sm font-semibold text-gray-200 mb-1">
+                            Depth <span className="text-neon-cyan text-xs">(mm)</span>
+                          </label>
                           <input
                             title="Depth (mm)"
                             type="number"
@@ -1421,7 +1436,9 @@ const MemberRatings: React.FC = () => {
                     {/* Timber Service Class */}
                     {form.materialType === 'timber' && (
                       <div>
-                        <label className="block text-sm font-semibold text-gray-200 mb-1">Service Class</label>
+                        <label className="block text-sm font-semibold text-gray-200 mb-1">
+                          Service Class
+                        </label>
                         <select
                           title="Service Class"
                           value={form.serviceClass}
@@ -1439,7 +1456,9 @@ const MemberRatings: React.FC = () => {
 
                     {/* Span Length */}
                     <div>
-                      <label className="block text-sm font-semibold text-gray-200 mb-1">Span Length <span className="text-neon-cyan text-xs">(m)</span></label>
+                      <label className="block text-sm font-semibold text-gray-200 mb-1">
+                        Span Length <span className="text-neon-cyan text-xs">(m)</span>
+                      </label>
                       <input
                         title="Span Length (m)"
                         type="number"
@@ -1455,7 +1474,11 @@ const MemberRatings: React.FC = () => {
                 <CollapsibleSection
                   title="Load Cases"
                   icon={
-                    <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }} className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center">
+                    <motion.div
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                      className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center"
+                    >
                       <FiTarget className="text-neon-cyan w-6 h-6" />
                     </motion.div>
                   }
@@ -1525,10 +1548,8 @@ const MemberRatings: React.FC = () => {
                     disabled={isCalculating}
                     className="w-full px-16 py-8 bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-purple rounded-2xl text-white text-2xl font-black uppercase tracking-widest hover:scale-105 transition-transform duration-300 shadow-2xl cyber-glow-blue"
                   >
-                    {isCalculating ? (
-                      <FiActivity className="animate-spin mr-2" />
-                    ) : null}
-                    ⚡ RUN FULL ANALYSIS
+                    {isCalculating ? <FiActivity className="animate-spin mr-2" /> : null}⚡ RUN FULL
+                    ANALYSIS
                   </Button>
                   {results && (
                     <>
@@ -1576,7 +1597,11 @@ const MemberRatings: React.FC = () => {
                 <Card variant="glass" className="border-neon-cyan/30 shadow-2xl">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-xl font-bold text-white flex items-center space-x-3">
-                      <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }} className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center">
+                      <motion.div
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.6 }}
+                        className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center"
+                      >
                         <FiInfo className="text-neon-cyan w-6 h-6" />
                       </motion.div>
                       <span>Design Code Reference</span>
@@ -1644,21 +1669,27 @@ const MemberRatings: React.FC = () => {
                       <FiCheck className="text-purple-400 w-5 h-5 flex-shrink-0" />
                       <div>
                         <div className="text-sm text-gray-400">Peak Utilisation</div>
-                        <div className="text-lg font-bold text-white">{results.overallUtilisation.toFixed(1)}%</div>
+                        <div className="text-lg font-bold text-white">
+                          {results.overallUtilisation.toFixed(1)}%
+                        </div>
                       </div>
                     </div>
                     <div className="border-l-4 border-emerald-400 bg-gray-900/50 rounded-r-xl p-4 flex items-center space-x-3">
                       <FiCheck className="text-emerald-400 w-5 h-5 flex-shrink-0" />
                       <div>
                         <div className="text-sm text-gray-400">Load Cases</div>
-                        <div className="text-lg font-bold text-white">{results.caseResults.length} checked</div>
+                        <div className="text-lg font-bold text-white">
+                          {results.caseResults.length} checked
+                        </div>
                       </div>
                     </div>
                     <div className="border-l-4 border-amber-400 bg-gray-900/50 rounded-r-xl p-4 flex items-center space-x-3">
                       <FiCheck className="text-amber-400 w-5 h-5 flex-shrink-0" />
                       <div>
                         <div className="text-sm text-gray-400">Rating</div>
-                        <div className="text-lg font-bold" style={{ color: results.ratingColor }}>{results.rating}</div>
+                        <div className="text-lg font-bold" style={{ color: results.ratingColor }}>
+                          {results.rating}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1674,9 +1705,7 @@ const MemberRatings: React.FC = () => {
                       <div className="flex items-center justify-between">
                         <div>
                           <h3 className="text-xl font-bold text-white">Overall Assessment</h3>
-                          <p className="text-gray-400">
-                            Maximum utilisation across all load cases
-                          </p>
+                          <p className="text-gray-400">Maximum utilisation across all load cases</p>
                         </div>
                         <div className="text-right">
                           <div
@@ -1714,7 +1743,11 @@ const MemberRatings: React.FC = () => {
                   <Card variant="glass" className="border-neon-cyan/30 shadow-2xl">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-xl font-bold text-white flex items-center space-x-3">
-                        <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }} className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center">
+                        <motion.div
+                          whileHover={{ rotate: 360 }}
+                          transition={{ duration: 0.6 }}
+                          className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center"
+                        >
                           <FiActivity className="text-neon-cyan w-6 h-6" />
                         </motion.div>
                         <span>Load Case Utilisations</span>
@@ -1788,13 +1821,14 @@ const MemberRatings: React.FC = () => {
                   </Card>
 
                   {/* Section Capacities */}
-                  <Card
-                    variant="glass"
-                    className="border-neon-cyan/30 shadow-2xl"
-                  >
+                  <Card variant="glass" className="border-neon-cyan/30 shadow-2xl">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-xl font-bold text-white flex items-center space-x-3">
-                        <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }} className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center">
+                        <motion.div
+                          whileHover={{ rotate: 360 }}
+                          transition={{ duration: 0.6 }}
+                          className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center"
+                        >
                           <FiTarget className="text-neon-cyan w-6 h-6" />
                         </motion.div>
                         <span>Section Capacities ({matCode})</span>
@@ -1856,7 +1890,11 @@ const MemberRatings: React.FC = () => {
                     <Card className="bg-amber-500/10 border-amber-500/40 shadow-2xl">
                       <CardContent className="py-4">
                         <div className="flex items-center space-x-3 text-amber-400 mb-3">
-                          <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }} className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center">
+                          <motion.div
+                            whileHover={{ rotate: 360 }}
+                            transition={{ duration: 0.6 }}
+                            className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center"
+                          >
                             <FiAlertTriangle className="text-amber-400 w-6 h-6" />
                           </motion.div>
                           <span className="text-xl font-bold text-white">Warnings</span>
@@ -1872,13 +1910,14 @@ const MemberRatings: React.FC = () => {
 
                   {/* Recommendations */}
                   {results.recommendations.length > 0 && (
-                    <Card
-                      variant="glass"
-                      className="border-neon-cyan/30 shadow-2xl"
-                    >
+                    <Card variant="glass" className="border-neon-cyan/30 shadow-2xl">
                       <CardHeader className="pb-2">
                         <CardTitle className="text-xl font-bold text-white flex items-center space-x-3">
-                          <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }} className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center">
+                          <motion.div
+                            whileHover={{ rotate: 360 }}
+                            transition={{ duration: 0.6 }}
+                            className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center"
+                          >
                             <FiInfo className="text-neon-cyan w-6 h-6" />
                           </motion.div>
                           <span>Recommendations</span>
@@ -1898,13 +1937,14 @@ const MemberRatings: React.FC = () => {
                   )}
 
                   {/* Design Summary */}
-                  <Card
-                    variant="glass"
-                    className="border-neon-cyan/30 shadow-2xl"
-                  >
+                  <Card variant="glass" className="border-neon-cyan/30 shadow-2xl">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-xl font-bold text-white flex items-center space-x-3">
-                        <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }} className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center">
+                        <motion.div
+                          whileHover={{ rotate: 360 }}
+                          transition={{ duration: 0.6 }}
+                          className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center"
+                        >
                           <FiLayers className="text-neon-cyan w-6 h-6" />
                         </motion.div>
                         <span>Design Summary</span>
@@ -1953,7 +1993,11 @@ const MemberRatings: React.FC = () => {
                     <CardHeader>
                       <CardTitle className="text-xl font-bold text-white flex items-center justify-between">
                         <div className="flex items-center space-x-3">
-                          <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }} className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center">
+                          <motion.div
+                            whileHover={{ rotate: 360 }}
+                            transition={{ duration: 0.6 }}
+                            className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center"
+                          >
                             <FiEye className="text-neon-cyan w-6 h-6" />
                           </motion.div>
                           <span>3D Structural Model</span>
@@ -1990,7 +2034,11 @@ const MemberRatings: React.FC = () => {
                   <Card variant="glass" className="border-neon-cyan/30 shadow-2xl">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-xl font-bold text-white flex items-center space-x-3">
-                        <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }} className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center">
+                        <motion.div
+                          whileHover={{ rotate: 360 }}
+                          transition={{ duration: 0.6 }}
+                          className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center"
+                        >
                           <FiActivity className="text-neon-cyan w-6 h-6" />
                         </motion.div>
                         <span>Utilisation Breakdown</span>
@@ -2055,7 +2103,11 @@ const MemberRatings: React.FC = () => {
                   <Card variant="glass" className="border-neon-cyan/30 shadow-2xl">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-xl font-bold text-white flex items-center space-x-3">
-                        <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }} className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center">
+                        <motion.div
+                          whileHover={{ rotate: 360 }}
+                          transition={{ duration: 0.6 }}
+                          className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan/20 to-neon-purple/20 flex items-center justify-center"
+                        >
                           <FiLayers className="text-neon-cyan w-6 h-6" />
                         </motion.div>
                         <span>Section Properties</span>

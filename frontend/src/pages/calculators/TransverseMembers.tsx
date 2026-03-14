@@ -1,14 +1,14 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
-    FiActivity,
-    FiAlertTriangle,
-    FiCheck,
-    FiDownload,
-    FiEye,
-    FiInfo,
-    FiLayers,
-    FiZap,
+  FiActivity,
+  FiAlertTriangle,
+  FiCheck,
+  FiDownload,
+  FiEye,
+  FiInfo,
+  FiLayers,
+  FiZap,
 } from 'react-icons/fi';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
@@ -890,7 +890,7 @@ const TransverseMembers: React.FC = () => {
   return (
     <div className="relative min-h-screen overflow-hidden">
       <MouseSpotlight />
-        <div className="absolute inset-0 bg-grid-pattern opacity-30" />
+      <div className="absolute inset-0 bg-grid-pattern opacity-30" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Hero Header */}
@@ -907,8 +907,17 @@ const TransverseMembers: React.FC = () => {
             <span className="text-white font-semibold">EN 1993-1-1 | Eurocode 3</span>
           </motion.div>
 
+          <h1 className="text-6xl font-black mb-6">
+            <span className="bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-purple bg-clip-text text-transparent">
+              Transverse Members
+            </span>
+          </h1>
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+            EN 1993-2 transverse member design
+          </p>
+
           {/* Tab Navigation */}
-          <div className="flex justify-center gap-4 mb-8">
+          <div className="flex justify-center gap-4 mb-8 mt-8">
             {['input', 'results', 'visualization'].map((tab) => (
               <Button
                 key={tab}
@@ -930,13 +939,6 @@ const TransverseMembers: React.FC = () => {
               </Button>
             ))}
           </div>
-
-          <h1 className="text-6xl font-black mb-6">
-            <span className="bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-purple bg-clip-text text-transparent">
-              Transverse Members
-            </span>
-          </h1>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">EN 1993-2 transverse member design</p>
           <div className="flex items-center justify-center space-x-6 mt-8">
             <div className="flex items-center space-x-2 text-gray-400">
               <FiCheck className="text-green-400" />
@@ -1267,13 +1269,17 @@ const TransverseMembers: React.FC = () => {
                   updateForm={handleInputChange}
                   status={overallStatus}
                   utilisation={maxUtil}
-                  liveReadout={results ? [
-                    { label: 'Bend', value: results.bending_resistance_check.utilisation },
-                    { label: 'Shear', value: results.shear_resistance_check.utilisation },
-                    { label: 'Web', value: results.web_bearing_check.utilisation },
-                    { label: 'Defl', value: results.deflection_check.utilisation },
-                    { label: 'LTB', value: results.buckling_check.utilisation },
-                  ] : undefined}
+                  liveReadout={
+                    results
+                      ? [
+                          { label: 'Bend', value: results.bending_resistance_check.utilisation },
+                          { label: 'Shear', value: results.shear_resistance_check.utilisation },
+                          { label: 'Web', value: results.web_bearing_check.utilisation },
+                          { label: 'Defl', value: results.deflection_check.utilisation },
+                          { label: 'LTB', value: results.buckling_check.utilisation },
+                        ]
+                      : undefined
+                  }
                 />
 
                 {/* Preset Selector */}
@@ -1306,17 +1312,13 @@ const TransverseMembers: React.FC = () => {
                   <div className="flex items-center justify-between p-3 rounded-lg bg-gray-900/50 border border-gray-700">
                     <span className="text-gray-400 text-sm">Girders</span>
                     <span className="text-white font-bold">
-                      {formData.numberOfGirders
-                        ? `${formData.numberOfGirders} main girders`
-                        : '—'}
+                      {formData.numberOfGirders ? `${formData.numberOfGirders} main girders` : '—'}
                     </span>
                   </div>
                   <div className="flex items-center justify-between p-3 rounded-lg bg-gray-900/50 border border-gray-700">
                     <span className="text-gray-400 text-sm">Load Distribution</span>
                     <span className="text-white font-bold">
-                      {formData.mainGirderSpacing
-                        ? `${formData.mainGirderSpacing}m spacing`
-                        : '—'}
+                      {formData.mainGirderSpacing ? `${formData.mainGirderSpacing}m spacing` : '—'}
                     </span>
                   </div>
                   {results && (
@@ -1371,11 +1373,31 @@ const TransverseMembers: React.FC = () => {
             {/* Border-l-4 Summary Cards */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               {[
-                { label: 'Bending', util: results.bending_resistance_check.utilisation, status: results.bending_resistance_check.status },
-                { label: 'Shear', util: results.shear_resistance_check.utilisation, status: results.shear_resistance_check.status },
-                { label: 'Web Bearing', util: results.web_bearing_check.utilisation, status: results.web_bearing_check.status },
-                { label: 'Deflection', util: results.deflection_check.utilisation, status: results.deflection_check.status },
-                { label: 'LT Buckling', util: results.buckling_check.utilisation, status: results.buckling_check.status },
+                {
+                  label: 'Bending',
+                  util: results.bending_resistance_check.utilisation,
+                  status: results.bending_resistance_check.status,
+                },
+                {
+                  label: 'Shear',
+                  util: results.shear_resistance_check.utilisation,
+                  status: results.shear_resistance_check.status,
+                },
+                {
+                  label: 'Web Bearing',
+                  util: results.web_bearing_check.utilisation,
+                  status: results.web_bearing_check.status,
+                },
+                {
+                  label: 'Deflection',
+                  util: results.deflection_check.utilisation,
+                  status: results.deflection_check.status,
+                },
+                {
+                  label: 'LT Buckling',
+                  util: results.buckling_check.utilisation,
+                  status: results.buckling_check.status,
+                },
               ].map((check) => (
                 <div
                   key={check.label}
@@ -1392,10 +1414,12 @@ const TransverseMembers: React.FC = () => {
                     )}
                     <span className="text-sm font-semibold text-gray-200">{check.label}</span>
                   </div>
-                  <p className={cn(
-                    'text-2xl font-black',
-                    check.status === 'PASS' ? 'text-green-400' : 'text-red-400',
-                  )}>
+                  <p
+                    className={cn(
+                      'text-2xl font-black',
+                      check.status === 'PASS' ? 'text-green-400' : 'text-red-400',
+                    )}
+                  >
                     {check.util.toFixed(1)}%
                   </p>
                 </div>

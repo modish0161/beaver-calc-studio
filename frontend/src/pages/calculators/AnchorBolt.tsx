@@ -3,28 +3,29 @@
 // Concrete anchor bolt capacity to BS EN 1992-4
 // =============================================================================
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
-    FiActivity,
-    FiAlertTriangle,
-    FiBox,
-    FiCheck,
-    FiCheckCircle,
-    FiChevronDown,
-    FiDownload,
-    FiGrid,
-    FiInfo,
-    FiLayers,
-    FiMinimize2,
-    FiSettings,
-    FiSliders,
-    FiTarget,
-    FiX,
-    FiZap
+  FiActivity,
+  FiAlertTriangle,
+  FiBox,
+  FiCheck,
+  FiCheckCircle,
+  FiChevronDown,
+  FiDownload,
+  FiGrid,
+  FiInfo,
+  FiLayers,
+  FiMinimize2,
+  FiSettings,
+  FiSliders,
+  FiTarget,
+  FiX,
+  FiZap,
 } from 'react-icons/fi';
 import Interactive3DDiagram from '../../components/3d/Interactive3DDiagram';
 import AnchorBolt3D from '../../components/3d/scenes/AnchorBolt3D';
 import ExplainableLabel from '../../components/ExplainableLabel';
+import MouseSpotlight from '../../components/MouseSpotlight';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import SaveRunButton from '../../components/ui/SaveRunButton';
@@ -32,7 +33,6 @@ import WhatIfPreview from '../../components/WhatIfPreview';
 import { generateDOCX } from '../../lib/docxGenerator';
 import { generatePremiumPDF } from '../../lib/pdfGenerator';
 import { cn } from '../../lib/utils';
-import MouseSpotlight from '../../components/MouseSpotlight';
 import { validateNumericInputs } from '../../lib/validation';
 
 interface FormData {
@@ -105,20 +105,20 @@ const AnchorBolt = () => {
 
   const validateInputs = (): boolean => {
     const errs = validateNumericInputs(form as unknown as Record<string, unknown>, [
-  { key: 'boltDiameter', label: 'Bolt Diameter' },
-  { key: 'embedmentDepth', label: 'Embedment Depth' },
-  { key: 'numberOfBolts', label: 'Number Of Bolts' },
-  { key: 'spacingX', label: 'Spacing X' },
-  { key: 'spacingY', label: 'Spacing Y' },
-  { key: 'edgeDistX', label: 'Edge Dist X' },
-  { key: 'edgeDistY', label: 'Edge Dist Y' },
-  { key: 'tensionForce', label: 'Tension Force' },
-  { key: 'shearForce', label: 'Shear Force' },
-  { key: 'eccentricityT', label: 'Eccentricity T' },
-  { key: 'eccentricityV', label: 'Eccentricity V' },
+      { key: 'boltDiameter', label: 'Bolt Diameter' },
+      { key: 'embedmentDepth', label: 'Embedment Depth' },
+      { key: 'numberOfBolts', label: 'Number Of Bolts' },
+      { key: 'spacingX', label: 'Spacing X' },
+      { key: 'spacingY', label: 'Spacing Y' },
+      { key: 'edgeDistX', label: 'Edge Dist X' },
+      { key: 'edgeDistY', label: 'Edge Dist Y' },
+      { key: 'tensionForce', label: 'Tension Force' },
+      { key: 'shearForce', label: 'Shear Force' },
+      { key: 'eccentricityT', label: 'Eccentricity T' },
+      { key: 'eccentricityV', label: 'Eccentricity V' },
     ]);
     if (errs.length > 0) {
-      setWarnings(errs.map(e => ({ type: 'error' as const, message: e })));
+      setWarnings(errs.map((e) => ({ type: 'error' as const, message: e })));
       return false;
     }
     return true;
@@ -133,7 +133,7 @@ const AnchorBolt = () => {
     { key: 'anchorType', label: 'Anchor Type', min: 0, max: 100, step: 1, unit: '' },
     { key: 'boltDiameter', label: 'Bolt Diameter', min: 0, max: 100, step: 1, unit: '' },
     { key: 'embedmentDepth', label: 'Embedment Depth', min: 0, max: 100, step: 1, unit: '' },
-    { key: 'numberOfBolts', label: 'Number Of Bolts', min: 0, max: 100, step: 1, unit: '' }
+    { key: 'numberOfBolts', label: 'Number Of Bolts', min: 0, max: 100, step: 1, unit: '' },
   ];
 
   const [activeTab, setActiveTab] = useState<'input' | 'results' | 'visualization'>('input');
@@ -236,7 +236,6 @@ const AnchorBolt = () => {
     }
     setWarnings(w);
   };
-
 
   const exportPDF = () => {
     if (!results) return;
@@ -389,7 +388,8 @@ const AnchorBolt = () => {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
         }}
       />
 
@@ -400,6 +400,13 @@ const AnchorBolt = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent mb-4">
+            Anchor Bolt Design
+          </h2>
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-6">
+            Cast-in or post-installed anchor bolt verification to BS EN 1992-4
+          </p>
+
           {/* Glass toolbar */}
           <div className="flex items-center gap-3 bg-gray-900/40 backdrop-blur-md border border-gray-700/50 rounded-xl p-3 mb-6">
             <div className="flex items-center gap-2">
@@ -436,7 +443,12 @@ const AnchorBolt = () => {
               {[
                 { id: 'input', label: 'Inputs', icon: <FiGrid /> },
                 { id: 'results', label: 'Analysis', icon: <FiActivity />, disabled: !results },
-                { id: 'visualization', label: 'Visualization', icon: <FiTarget />, disabled: !results },
+                {
+                  id: 'visualization',
+                  label: 'Visualization',
+                  icon: <FiTarget />,
+                  disabled: !results,
+                },
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -454,13 +466,6 @@ const AnchorBolt = () => {
               ))}
             </div>
           </div>
-
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent mb-4">
-            Anchor Bolt Design
-          </h2>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Cast-in or post-installed anchor bolt verification to BS EN 1992-4
-          </p>
         </motion.div>
 
         {/* Status Banner */}
@@ -545,7 +550,10 @@ const AnchorBolt = () => {
               <div className="grid lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-2 space-y-6">
                   {/* Anchor Geometry */}
-                  <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
+                  <Card
+                    variant="glass"
+                    className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                  >
                     <CardHeader
                       className="cursor-pointer py-3"
                       onClick={() => toggleSection('geometry')}
@@ -653,7 +661,10 @@ const AnchorBolt = () => {
                   </Card>
 
                   {/* Materials */}
-                  <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
+                  <Card
+                    variant="glass"
+                    className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                  >
                     <CardHeader
                       className="cursor-pointer py-3"
                       onClick={() => toggleSection('material')}
@@ -719,7 +730,10 @@ const AnchorBolt = () => {
                   </Card>
 
                   {/* Loading */}
-                  <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
+                  <Card
+                    variant="glass"
+                    className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                  >
                     <CardHeader
                       className="cursor-pointer py-3"
                       onClick={() => toggleSection('loading')}
@@ -803,19 +817,77 @@ const AnchorBolt = () => {
                         <FiSliders size={14} /> Live Parameters
                       </h3>
                       {[
-                        { label: 'Bolt Diameter', field: 'boltDiameter' as keyof FormData, min: 8, max: 36, step: 2, unit: 'mm' },
-                        { label: 'Embedment Depth', field: 'embedmentDepth' as keyof FormData, min: 50, max: 400, step: 10, unit: 'mm' },
-                        { label: 'No. Bolts', field: 'numberOfBolts' as keyof FormData, min: 1, max: 16, step: 1, unit: '' },
-                        { label: 'Spacing X', field: 'spacingX' as keyof FormData, min: 50, max: 500, step: 10, unit: 'mm' },
-                        { label: 'Spacing Y', field: 'spacingY' as keyof FormData, min: 50, max: 500, step: 10, unit: 'mm' },
-                        { label: 'Edge Dist X', field: 'edgeDistX' as keyof FormData, min: 50, max: 400, step: 10, unit: 'mm' },
-                        { label: 'Tension Force', field: 'tensionForce' as keyof FormData, min: 0, max: 200, step: 5, unit: 'kN' },
-                        { label: 'Shear Force', field: 'shearForce' as keyof FormData, min: 0, max: 200, step: 5, unit: 'kN' },
+                        {
+                          label: 'Bolt Diameter',
+                          field: 'boltDiameter' as keyof FormData,
+                          min: 8,
+                          max: 36,
+                          step: 2,
+                          unit: 'mm',
+                        },
+                        {
+                          label: 'Embedment Depth',
+                          field: 'embedmentDepth' as keyof FormData,
+                          min: 50,
+                          max: 400,
+                          step: 10,
+                          unit: 'mm',
+                        },
+                        {
+                          label: 'No. Bolts',
+                          field: 'numberOfBolts' as keyof FormData,
+                          min: 1,
+                          max: 16,
+                          step: 1,
+                          unit: '',
+                        },
+                        {
+                          label: 'Spacing X',
+                          field: 'spacingX' as keyof FormData,
+                          min: 50,
+                          max: 500,
+                          step: 10,
+                          unit: 'mm',
+                        },
+                        {
+                          label: 'Spacing Y',
+                          field: 'spacingY' as keyof FormData,
+                          min: 50,
+                          max: 500,
+                          step: 10,
+                          unit: 'mm',
+                        },
+                        {
+                          label: 'Edge Dist X',
+                          field: 'edgeDistX' as keyof FormData,
+                          min: 50,
+                          max: 400,
+                          step: 10,
+                          unit: 'mm',
+                        },
+                        {
+                          label: 'Tension Force',
+                          field: 'tensionForce' as keyof FormData,
+                          min: 0,
+                          max: 200,
+                          step: 5,
+                          unit: 'kN',
+                        },
+                        {
+                          label: 'Shear Force',
+                          field: 'shearForce' as keyof FormData,
+                          min: 0,
+                          max: 200,
+                          step: 5,
+                          unit: 'kN',
+                        },
                       ].map((s) => (
                         <div key={s.field} className="space-y-1">
                           <div className="flex justify-between text-xs font-mono">
                             <span className="text-gray-400">{s.label}</span>
-                            <span className="text-white">{form[s.field]} {s.unit}</span>
+                            <span className="text-white">
+                              {form[s.field]} {s.unit}
+                            </span>
                           </div>
                           <input
                             title={s.label}
@@ -834,28 +906,63 @@ const AnchorBolt = () => {
                           <FiActivity size={14} /> Live Readout
                         </h3>
                         {[
-                          { label: 'Anchor Type', value: form.anchorType === 'cast_in' ? 'Cast-in' : 'Post-installed' },
+                          {
+                            label: 'Anchor Type',
+                            value: form.anchorType === 'cast_in' ? 'Cast-in' : 'Post-installed',
+                          },
                           { label: 'Bolt Diameter', value: `M${form.boltDiameter}` },
                           { label: 'Concrete Grade', value: `C${form.concreteGrade}` },
                           { label: 'Steel Grade', value: `Grade ${form.steelGrade}` },
-                          { label: 'Grid', value: `${form.numberOfBolts} bolts @ ${form.spacingX}×${form.spacingY}` },
+                          {
+                            label: 'Grid',
+                            value: `${form.numberOfBolts} bolts @ ${form.spacingX}×${form.spacingY}`,
+                          },
                         ].map((stat) => (
-                          <div key={stat.label} className="flex justify-between text-xs py-1 border-b border-gray-800/50">
+                          <div
+                            key={stat.label}
+                            className="flex justify-between text-xs py-1 border-b border-gray-800/50"
+                          >
                             <span className="text-gray-500">{stat.label}</span>
                             <span className="text-white font-medium">{stat.value}</span>
                           </div>
                         ))}
                         {results && (
                           <div className="mt-3 space-y-1">
-                            <div className="text-xs font-bold text-gray-400 uppercase mb-1">Last Analysis</div>
+                            <div className="text-xs font-bold text-gray-400 uppercase mb-1">
+                              Last Analysis
+                            </div>
                             {[
-                              { label: 'Tension', util: results.tensionUtil.toFixed(0), status: results.tensionUtil <= 100 ? 'PASS' : 'FAIL' },
-                              { label: 'Shear', util: results.shearUtil.toFixed(0), status: results.shearUtil <= 100 ? 'PASS' : 'FAIL' },
-                              { label: 'Interaction', util: results.interactionUtil.toFixed(0), status: results.interactionUtil <= 100 ? 'PASS' : 'FAIL' },
+                              {
+                                label: 'Tension',
+                                util: results.tensionUtil.toFixed(0),
+                                status: results.tensionUtil <= 100 ? 'PASS' : 'FAIL',
+                              },
+                              {
+                                label: 'Shear',
+                                util: results.shearUtil.toFixed(0),
+                                status: results.shearUtil <= 100 ? 'PASS' : 'FAIL',
+                              },
+                              {
+                                label: 'Interaction',
+                                util: results.interactionUtil.toFixed(0),
+                                status: results.interactionUtil <= 100 ? 'PASS' : 'FAIL',
+                              },
                             ].map((check) => (
-                              <div key={check.label} className="flex justify-between text-xs py-0.5">
+                              <div
+                                key={check.label}
+                                className="flex justify-between text-xs py-0.5"
+                              >
                                 <span className="text-gray-500">{check.label}</span>
-                                <span className={cn('font-bold', check.status === 'FAIL' ? 'text-red-500' : parseFloat(check.util) > 90 ? 'text-orange-400' : 'text-emerald-400')}>
+                                <span
+                                  className={cn(
+                                    'font-bold',
+                                    check.status === 'FAIL'
+                                      ? 'text-red-500'
+                                      : parseFloat(check.util) > 90
+                                        ? 'text-orange-400'
+                                        : 'text-emerald-400',
+                                  )}
+                                >
                                   {check.util}%
                                 </span>
                               </div>
@@ -890,7 +997,10 @@ const AnchorBolt = () => {
                       )}
                     />
 
-                    <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
+                    <Card
+                      variant="glass"
+                      className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                    >
                       <CardHeader className="pb-2">
                         <CardTitle className="text-lg text-white font-semibold flex items-center gap-2">
                           <FiInfo className="text-blue-400" />
@@ -927,12 +1037,42 @@ const AnchorBolt = () => {
               {/* Top Summary Cards with border-l-4 */}
               <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-4">
                 {[
-                  { label: 'Tension', value: `${(results.tensionUtil * 100).toFixed(0)}%`, icon: <FiTarget />, pass: results.tensionUtil <= 1 },
-                  { label: 'Shear', value: `${(results.shearUtil * 100).toFixed(0)}%`, icon: <FiZap />, pass: results.shearUtil <= 1 },
-                  { label: 'Interaction', value: results.interactionUtil.toFixed(2), icon: <FiActivity />, pass: results.interactionUtil <= 1 },
-                  { label: 'Steel Tension', value: `${results.steelTension.toFixed(0)} kN`, icon: <FiBox />, pass: true },
-                  { label: 'Cone Tension', value: `${results.coneTension.toFixed(0)} kN`, icon: <FiLayers />, pass: results.coneTension >= parseFloat(form.tensionForce) },
-                  { label: 'Status', value: results.overallStatus, icon: <FiCheckCircle />, pass: results.overallStatus === 'PASS' },
+                  {
+                    label: 'Tension',
+                    value: `${(results.tensionUtil * 100).toFixed(0)}%`,
+                    icon: <FiTarget />,
+                    pass: results.tensionUtil <= 1,
+                  },
+                  {
+                    label: 'Shear',
+                    value: `${(results.shearUtil * 100).toFixed(0)}%`,
+                    icon: <FiZap />,
+                    pass: results.shearUtil <= 1,
+                  },
+                  {
+                    label: 'Interaction',
+                    value: results.interactionUtil.toFixed(2),
+                    icon: <FiActivity />,
+                    pass: results.interactionUtil <= 1,
+                  },
+                  {
+                    label: 'Steel Tension',
+                    value: `${results.steelTension.toFixed(0)} kN`,
+                    icon: <FiBox />,
+                    pass: true,
+                  },
+                  {
+                    label: 'Cone Tension',
+                    value: `${results.coneTension.toFixed(0)} kN`,
+                    icon: <FiLayers />,
+                    pass: results.coneTension >= parseFloat(form.tensionForce),
+                  },
+                  {
+                    label: 'Status',
+                    value: results.overallStatus,
+                    icon: <FiCheckCircle />,
+                    pass: results.overallStatus === 'PASS',
+                  },
                 ].map((item, i) => (
                   <Card
                     key={i}
@@ -969,7 +1109,10 @@ const AnchorBolt = () => {
               <div className="grid lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-2 space-y-6">
                   {/* Capacity Table */}
-                  <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
+                  <Card
+                    variant="glass"
+                    className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                  >
                     <CardHeader>
                       <CardTitle className="text-white font-semibold flex items-center space-x-3">
                         <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
@@ -980,18 +1123,57 @@ const AnchorBolt = () => {
                     </CardHeader>
                     <CardContent>
                       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
-                        <ResultCard label="Steel Tension" value={`${results.steelTension.toFixed(1)} kN`} limit="NRd,s" status="pass" />
-                        <ResultCard label="Cone Tension" value={`${results.coneTension.toFixed(1)} kN`} limit="NRd,c" status={results.coneTension >= parseFloat(form.tensionForce) ? 'pass' : 'fail'} />
-                        <ResultCard label="Pullout Tension" value={`${results.pulloutTension.toFixed(1)} kN`} limit="NRd,p" status="pass" />
-                        <ResultCard label="Steel Shear" value={`${results.steelShear.toFixed(1)} kN`} limit="VRd,s" status="pass" />
-                        <ResultCard label="Pry-out Shear" value={`${results.pryConeShear.toFixed(1)} kN`} limit="VRd,cp" status={results.pryConeShear >= parseFloat(form.shearForce) ? 'pass' : 'fail'} />
-                        <ResultCard label="Edge Shear" value={`${results.edgeShear.toFixed(1)} kN`} limit="VRd,c" status={results.edgeShear >= parseFloat(form.shearForce) ? 'pass' : 'fail'} />
+                        <ResultCard
+                          label="Steel Tension"
+                          value={`${results.steelTension.toFixed(1)} kN`}
+                          limit="NRd,s"
+                          status="pass"
+                        />
+                        <ResultCard
+                          label="Cone Tension"
+                          value={`${results.coneTension.toFixed(1)} kN`}
+                          limit="NRd,c"
+                          status={
+                            results.coneTension >= parseFloat(form.tensionForce) ? 'pass' : 'fail'
+                          }
+                        />
+                        <ResultCard
+                          label="Pullout Tension"
+                          value={`${results.pulloutTension.toFixed(1)} kN`}
+                          limit="NRd,p"
+                          status="pass"
+                        />
+                        <ResultCard
+                          label="Steel Shear"
+                          value={`${results.steelShear.toFixed(1)} kN`}
+                          limit="VRd,s"
+                          status="pass"
+                        />
+                        <ResultCard
+                          label="Pry-out Shear"
+                          value={`${results.pryConeShear.toFixed(1)} kN`}
+                          limit="VRd,cp"
+                          status={
+                            results.pryConeShear >= parseFloat(form.shearForce) ? 'pass' : 'fail'
+                          }
+                        />
+                        <ResultCard
+                          label="Edge Shear"
+                          value={`${results.edgeShear.toFixed(1)} kN`}
+                          limit="VRd,c"
+                          status={
+                            results.edgeShear >= parseFloat(form.shearForce) ? 'pass' : 'fail'
+                          }
+                        />
                       </div>
                     </CardContent>
                   </Card>
 
                   {/* Recommendations */}
-                  <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
+                  <Card
+                    variant="glass"
+                    className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                  >
                     <CardContent className="p-6">
                       <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                         <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
@@ -1004,7 +1186,9 @@ const AnchorBolt = () => {
                           <div className="flex items-start gap-3 p-3 rounded-lg bg-amber-500/5 border border-amber-500/10">
                             <FiAlertTriangle className="text-amber-400 mt-0.5 shrink-0" />
                             <div>
-                              <div className="text-sm font-semibold text-white">High Interaction</div>
+                              <div className="text-sm font-semibold text-white">
+                                High Interaction
+                              </div>
                               <div className="text-xs text-gray-400">
                                 Consider larger bolt diameter or additional anchors
                               </div>
@@ -1028,9 +1212,12 @@ const AnchorBolt = () => {
                           <div className="flex items-start gap-3 p-3 rounded-lg bg-purple-500/5 border border-purple-500/10">
                             <FiInfo className="text-purple-400 mt-0.5 shrink-0" />
                             <div>
-                              <div className="text-sm font-semibold text-white">Small Edge Distance</div>
+                              <div className="text-sm font-semibold text-white">
+                                Small Edge Distance
+                              </div>
                               <div className="text-xs text-gray-400">
-                                Edge distance &lt; 3d — check splitting and provide hanger reinforcement
+                                Edge distance &lt; 3d — check splitting and provide hanger
+                                reinforcement
                               </div>
                             </div>
                           </div>
@@ -1054,7 +1241,10 @@ const AnchorBolt = () => {
                 {/* Right Column — Sticky Sidebar */}
                 <div className="lg:col-span-1">
                   <div className="sticky top-8 space-y-4">
-                    <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50 border-l-4 border-l-blue-400">
+                    <Card
+                      variant="glass"
+                      className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50 border-l-4 border-l-blue-400"
+                    >
                       <CardContent className="py-6 text-center">
                         <div className="text-4xl mb-2 text-blue-400">
                           <FiTarget className="inline" />
@@ -1089,9 +1279,14 @@ const AnchorBolt = () => {
                       </Card>
                     )}
 
-                    <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
+                    <Card
+                      variant="glass"
+                      className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                    >
                       <CardHeader className="pb-2">
-                        <CardTitle className="text-lg text-white font-semibold">Design Summary</CardTitle>
+                        <CardTitle className="text-lg text-white font-semibold">
+                          Design Summary
+                        </CardTitle>
                       </CardHeader>
                       <CardContent className="text-sm space-y-2">
                         <div className="flex justify-between">
@@ -1129,7 +1324,10 @@ const AnchorBolt = () => {
               exit={{ opacity: 0 }}
               className="space-y-4"
             >
-              <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
+              <Card
+                variant="glass"
+                className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+              >
                 <CardHeader className="pb-2">
                   <CardTitle className="text-white font-semibold flex items-center space-x-3">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">

@@ -477,6 +477,15 @@ const FinPlate = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
+          {/* Gradient hero title */}
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent mb-4">
+            Fin Plate Connection
+          </h2>
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-6">
+            Simple shear connection design with bolt shear, bearing, plate shear, block tearing, and
+            weld checks to BS EN 1993-1-8.
+          </p>
+
           {/* Glass toolbar */}
           <div className="flex items-center gap-3 bg-gray-900/40 backdrop-blur-md border border-gray-700/50 rounded-xl p-3 mb-6">
             <div className="flex items-center gap-2">
@@ -541,15 +550,6 @@ const FinPlate = () => {
               ))}
             </div>
           </div>
-
-          {/* Gradient hero title */}
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent mb-4">
-            Fin Plate Connection
-          </h2>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Simple shear connection design with bolt shear, bearing, plate shear, block tearing, and
-            weld checks to BS EN 1993-1-8.
-          </p>
         </motion.div>
 
         {/* Status Banner */}

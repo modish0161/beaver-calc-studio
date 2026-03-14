@@ -6,22 +6,22 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
-    FiActivity,
-    FiAlertTriangle,
-    FiBarChart2,
-    FiCheck,
-    FiChevronDown,
-    FiDownload,
-    FiInfo,
-    FiLayers,
-    FiMaximize2,
-    FiMinimize2,
-    FiPlay,
-    FiSettings,
-    FiSliders,
-    FiTarget,
-    FiTrendingUp,
-    FiZap,
+  FiActivity,
+  FiAlertTriangle,
+  FiBarChart2,
+  FiCheck,
+  FiChevronDown,
+  FiDownload,
+  FiInfo,
+  FiLayers,
+  FiMaximize2,
+  FiMinimize2,
+  FiPlay,
+  FiSettings,
+  FiSliders,
+  FiTarget,
+  FiTrendingUp,
+  FiZap,
 } from 'react-icons/fi';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
@@ -633,7 +633,6 @@ const Sensitivity: React.FC = () => {
 
   const [parameters, setParameters] = useState<Parameter[]>(DEFAULT_PARAMETERS.steel);
 
-
   const updateForm = (field: keyof FormData, value: string) => {
     setForm((prev) => {
       const newForm = { ...prev, [field]: value };
@@ -1097,8 +1096,22 @@ const Sensitivity: React.FC = () => {
   const calcName = (CALCULATOR_TYPES as any)[form.calculatorType]?.name || form.calculatorType;
 
   const whatIfSliders: WhatIfSlider[] = [
-    { key: 'numSimulations', label: 'Simulation Count', min: 100, max: 10000, step: 100, unit: 'runs' },
-    { key: 'targetReliability', label: 'Target Reliability β', min: 1.0, max: 5.0, step: 0.1, unit: '' },
+    {
+      key: 'numSimulations',
+      label: 'Simulation Count',
+      min: 100,
+      max: 10000,
+      step: 100,
+      unit: 'runs',
+    },
+    {
+      key: 'targetReliability',
+      label: 'Target Reliability β',
+      min: 1.0,
+      max: 5.0,
+      step: 0.1,
+      unit: '',
+    },
   ];
 
   // 3D scene element (shared across usages)
@@ -1352,7 +1365,13 @@ const Sensitivity: React.FC = () => {
     <div className="relative min-h-screen overflow-hidden">
       <MouseSpotlight />
       {/* Grid pattern background */}
-      <div className="absolute inset-0 pointer-events-none" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} />
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+        }}
+      />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Hero Header */}
@@ -1369,8 +1388,15 @@ const Sensitivity: React.FC = () => {
             <span className="text-white font-semibold">Probabilistic Assessment</span>
           </motion.div>
 
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent mb-6">
+            Sensitivity Analysis
+          </h1>
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+            Parametric sensitivity & what-if analysis
+          </p>
+
           {/* Tab Navigation */}
-          <div className="flex justify-center gap-4 mb-8">
+          <div className="flex justify-center gap-4 mb-8 mt-8">
             {(['setup', 'results', 'visualization'] as const).map((tab) => (
               <Button
                 key={tab}
@@ -1392,11 +1418,6 @@ const Sensitivity: React.FC = () => {
               </Button>
             ))}
           </div>
-
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent mb-6">
-              Sensitivity Analysis
-          </h1>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">Parametric sensitivity & what-if analysis</p>
           <div className="flex items-center justify-center space-x-6 mt-8">
             <div className="flex items-center space-x-2 text-gray-400">
               <FiCheck className="text-green-400" />
@@ -1466,7 +1487,11 @@ const Sensitivity: React.FC = () => {
               </Button>
             )}
             {statistics && (
-              <SaveRunButton calculatorKey="sensitivity" inputs={form as unknown as Record<string, string | number>} results={statistics} />
+              <SaveRunButton
+                calculatorKey="sensitivity"
+                inputs={form as unknown as Record<string, string | number>}
+                results={statistics}
+              />
             )}
           </div>
 
@@ -1526,7 +1551,11 @@ const Sensitivity: React.FC = () => {
                   <CollapsibleSection
                     title="Simulation Settings"
                     icon={
-                      <motion.div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center" whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }}>
+                      <motion.div
+                        className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center"
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.6 }}
+                      >
                         <FiSettings className="w-5 h-5 text-blue-400" />
                       </motion.div>
                     }
@@ -1601,7 +1630,11 @@ const Sensitivity: React.FC = () => {
                   <CollapsibleSection
                     title="Input Parameters"
                     icon={
-                      <motion.div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center" whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }}>
+                      <motion.div
+                        className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center"
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.6 }}
+                      >
                         <FiSliders className="w-5 h-5 text-blue-400" />
                       </motion.div>
                     }
@@ -1649,7 +1682,9 @@ const Sensitivity: React.FC = () => {
                           </div>
                           <div className="grid grid-cols-3 gap-3">
                             <div>
-                              <label className="block text-sm font-semibold text-gray-300 mb-2">Min</label>
+                              <label className="block text-sm font-semibold text-gray-300 mb-2">
+                                Min
+                              </label>
                               <input
                                 title="Min"
                                 type="number"
@@ -1660,7 +1695,9 @@ const Sensitivity: React.FC = () => {
                               />
                             </div>
                             <div>
-                              <label className="block text-sm font-semibold text-gray-300 mb-2">Nominal</label>
+                              <label className="block text-sm font-semibold text-gray-300 mb-2">
+                                Nominal
+                              </label>
                               <input
                                 title="Nominal"
                                 type="number"
@@ -1673,7 +1710,9 @@ const Sensitivity: React.FC = () => {
                               />
                             </div>
                             <div>
-                              <label className="block text-sm font-semibold text-gray-300 mb-2">Max</label>
+                              <label className="block text-sm font-semibold text-gray-300 mb-2">
+                                Max
+                              </label>
                               <input
                                 title="Max"
                                 type="number"
@@ -1705,7 +1744,11 @@ const Sensitivity: React.FC = () => {
                   <Card variant="glass" className="border-gray-700/50 shadow-2xl">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-2xl text-white font-semibold flex items-center space-x-3">
-                        <motion.div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center" whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }}>
+                        <motion.div
+                          className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center"
+                          whileHover={{ rotate: 360 }}
+                          transition={{ duration: 0.6 }}
+                        >
                           <FiInfo className="w-5 h-5 text-blue-400" />
                         </motion.div>
                         <span>About Monte Carlo</span>
@@ -1728,7 +1771,9 @@ const Sensitivity: React.FC = () => {
 
                   <Card variant="glass" className="border-gray-700/50 shadow-2xl">
                     <CardHeader className="pb-2">
-                      <CardTitle className="text-2xl text-white font-semibold">Distribution Types</CardTitle>
+                      <CardTitle className="text-2xl text-white font-semibold">
+                        Distribution Types
+                      </CardTitle>
                     </CardHeader>
                     <CardContent className="text-sm space-y-2">
                       {Object.entries(DISTRIBUTION_INFO).map(([key, dist]) => (
@@ -1800,39 +1845,49 @@ const Sensitivity: React.FC = () => {
 
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div className="lg:col-span-2 space-y-4">
-                  {/* Border-l-4 Summary Cards */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                    <div className="border-l-4 border-blue-400 bg-gray-800/50 rounded-r-xl p-4 flex items-center space-x-3">
-                      <FiCheck className="text-blue-400 w-5 h-5 flex-shrink-0" />
-                      <div>
-                        <div className="text-sm font-semibold text-white">Reliability Index</div>
-                        <div className="text-white font-bold">β = {statistics.reliabilityIndex.toFixed(2)}</div>
+                      {/* Border-l-4 Summary Cards */}
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div className="border-l-4 border-blue-400 bg-gray-800/50 rounded-r-xl p-4 flex items-center space-x-3">
+                          <FiCheck className="text-blue-400 w-5 h-5 flex-shrink-0" />
+                          <div>
+                            <div className="text-sm font-semibold text-white">
+                              Reliability Index
+                            </div>
+                            <div className="text-white font-bold">
+                              β = {statistics.reliabilityIndex.toFixed(2)}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="border-l-4 border-green-400 bg-gray-800/50 rounded-r-xl p-4 flex items-center space-x-3">
+                          <FiCheck className="text-green-400 w-5 h-5 flex-shrink-0" />
+                          <div>
+                            <div className="text-sm font-semibold text-white">Mean Utilisation</div>
+                            <div className="text-white font-bold">
+                              {statistics.mean.toFixed(1)}%
+                            </div>
+                          </div>
+                        </div>
+                        <div className="border-l-4 border-yellow-400 bg-gray-800/50 rounded-r-xl p-4 flex items-center space-x-3">
+                          <FiCheck className="text-yellow-400 w-5 h-5 flex-shrink-0" />
+                          <div>
+                            <div className="text-sm font-semibold text-white">
+                              Failure Probability
+                            </div>
+                            <div className="text-white font-bold">
+                              {statistics.probabilityOfFailure.toFixed(2)}%
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="border-l-4 border-green-400 bg-gray-800/50 rounded-r-xl p-4 flex items-center space-x-3">
-                      <FiCheck className="text-green-400 w-5 h-5 flex-shrink-0" />
-                      <div>
-                        <div className="text-sm font-semibold text-white">Mean Utilisation</div>
-                        <div className="text-white font-bold">{statistics.mean.toFixed(1)}%</div>
-                      </div>
-                    </div>
-                    <div className="border-l-4 border-yellow-400 bg-gray-800/50 rounded-r-xl p-4 flex items-center space-x-3">
-                      <FiCheck className="text-yellow-400 w-5 h-5 flex-shrink-0" />
-                      <div>
-                        <div className="text-sm font-semibold text-white">Failure Probability</div>
-                        <div className="text-white font-bold">{statistics.probabilityOfFailure.toFixed(2)}%</div>
-                      </div>
-                    </div>
-                  </div>
 
-                  {/* Statistics Summary */}
+                      {/* Statistics Summary */}
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <motion.div
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.1 }}
                         >
-                        <Card variant="glass" className="border-gray-700/50 shadow-2xl">
+                          <Card variant="glass" className="border-gray-700/50 shadow-2xl">
                             <CardContent className="py-4 text-center">
                               <div className="text-gray-400 text-sm">Mean Utilisation</div>
                               <div className="text-2xl font-bold text-white">
@@ -1846,7 +1901,7 @@ const Sensitivity: React.FC = () => {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.15 }}
                         >
-                        <Card variant="glass" className="border-gray-700/50 shadow-2xl">
+                          <Card variant="glass" className="border-gray-700/50 shadow-2xl">
                             <CardContent className="py-4 text-center">
                               <div className="text-gray-400 text-sm">Std Deviation</div>
                               <div className="text-2xl font-bold text-white">
@@ -1860,7 +1915,7 @@ const Sensitivity: React.FC = () => {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.2 }}
                         >
-                        <Card variant="glass" className="border-gray-700/50 shadow-2xl">
+                          <Card variant="glass" className="border-gray-700/50 shadow-2xl">
                             <CardContent className="py-4 text-center">
                               <div className="text-gray-400 text-sm">95th Percentile</div>
                               <div className="text-2xl font-bold text-amber-400">
@@ -2066,7 +2121,9 @@ const Sensitivity: React.FC = () => {
                       >
                         <Card variant="glass" className="border-gray-700/50 shadow-2xl">
                           <CardHeader className="pb-2">
-                            <CardTitle className="text-2xl text-white font-semibold">Detailed Statistics</CardTitle>
+                            <CardTitle className="text-2xl text-white font-semibold">
+                              Detailed Statistics
+                            </CardTitle>
                           </CardHeader>
                           <CardContent className="space-y-2 text-sm">
                             <div className="flex justify-between">
@@ -2119,7 +2176,9 @@ const Sensitivity: React.FC = () => {
                       >
                         <Card variant="glass" className="border-gray-700/50 shadow-2xl">
                           <CardHeader className="pb-2">
-                            <CardTitle className="text-2xl text-white font-semibold">Top 5 Sensitive Parameters</CardTitle>
+                            <CardTitle className="text-2xl text-white font-semibold">
+                              Top 5 Sensitive Parameters
+                            </CardTitle>
                           </CardHeader>
                           <CardContent>
                             <div className="space-y-2">
@@ -2150,7 +2209,11 @@ const Sensitivity: React.FC = () => {
                 <Card variant="glass" className="border-amber-500/40 shadow-2xl">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-white font-semibold text-sm flex items-center gap-2">
-                      <motion.div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center" whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }}>
+                      <motion.div
+                        className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center"
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.6 }}
+                      >
                         <FiAlertTriangle className="text-amber-400" size={18} />
                       </motion.div>
                       Warnings
@@ -2184,7 +2247,11 @@ const Sensitivity: React.FC = () => {
                     <CardHeader className="pb-2">
                       <CardTitle className="text-2xl text-white font-semibold flex items-center space-x-3">
                         <div className="flex items-center gap-2">
-                          <motion.div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center" whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }}>
+                          <motion.div
+                            className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center"
+                            whileHover={{ rotate: 360 }}
+                            transition={{ duration: 0.6 }}
+                          >
                             <FiLayers className="text-blue-400" size={18} />
                           </motion.div>
                           <span>Interactive 3D — Monte Carlo Distribution</span>
@@ -2265,7 +2332,11 @@ const Sensitivity: React.FC = () => {
                   <Card variant="glass" className="border-gray-700/50 shadow-2xl">
                     <CardHeader className="pb-2">
                       <CardTitle className="text-2xl text-white font-semibold flex items-center space-x-3">
-                        <motion.div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center" whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }}>
+                        <motion.div
+                          className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center"
+                          whileHover={{ rotate: 360 }}
+                          transition={{ duration: 0.6 }}
+                        >
                           <FiZap className="text-blue-400" size={18} />
                         </motion.div>
                         <span>Key Metrics</span>
@@ -2298,7 +2369,9 @@ const Sensitivity: React.FC = () => {
                   {/* Sensitivity Ranking */}
                   <Card variant="glass" className="border-gray-700/50 shadow-2xl">
                     <CardHeader className="pb-2">
-                      <CardTitle className="text-2xl text-white font-semibold">Parameter Ranking</CardTitle>
+                      <CardTitle className="text-2xl text-white font-semibold">
+                        Parameter Ranking
+                      </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-2">
@@ -2793,11 +2866,17 @@ const Sensitivity: React.FC = () => {
                     { label: 'Calculator', value: form.calculatorType },
                     { label: 'Simulations', value: form.numSimulations },
                     { label: 'Target β', value: form.targetReliability },
-                    { label: 'Active Params', value: `${parameters.filter((p) => p.enabled).length}` },
+                    {
+                      label: 'Active Params',
+                      value: `${parameters.filter((p) => p.enabled).length}`,
+                    },
                     { label: 'Project', value: form.projectName },
                     { label: 'Reference', value: form.reference },
                   ].map((stat) => (
-                    <div key={stat.label} className="flex justify-between text-xs py-1 border-b border-gray-800/50">
+                    <div
+                      key={stat.label}
+                      className="flex justify-between text-xs py-1 border-b border-gray-800/50"
+                    >
                       <span className="text-gray-500">{stat.label}</span>
                       <span className="text-white font-medium">{stat.value}</span>
                     </div>
@@ -2807,16 +2886,46 @@ const Sensitivity: React.FC = () => {
                 {/* ── Last Analysis ── */}
                 {statistics && (
                   <div className="mt-3 space-y-1">
-                    <div className="text-xs font-bold text-gray-400 uppercase mb-1">Last Analysis</div>
+                    <div className="text-xs font-bold text-gray-400 uppercase mb-1">
+                      Last Analysis
+                    </div>
                     {[
-                      { label: 'Reliability Index β', util: statistics.reliabilityIndex.toFixed(1), status: statistics.reliabilityIndex >= parseFloat(form.targetReliability) ? 'PASS' : 'FAIL' },
-                      { label: 'Mean Utilisation', util: fmtCompact(statistics.mean), status: statistics.mean <= 100 ? 'PASS' : 'FAIL' },
-                      { label: 'Failure Probability', util: statistics.probabilityOfFailure.toFixed(1), status: statistics.probabilityOfFailure < 5 ? 'PASS' : 'FAIL' },
-                      { label: '95th Percentile', util: fmtCompact(statistics.percentile95), status: statistics.percentile95 <= 100 ? 'PASS' : 'FAIL' },
+                      {
+                        label: 'Reliability Index β',
+                        util: statistics.reliabilityIndex.toFixed(1),
+                        status:
+                          statistics.reliabilityIndex >= parseFloat(form.targetReliability)
+                            ? 'PASS'
+                            : 'FAIL',
+                      },
+                      {
+                        label: 'Mean Utilisation',
+                        util: fmtCompact(statistics.mean),
+                        status: statistics.mean <= 100 ? 'PASS' : 'FAIL',
+                      },
+                      {
+                        label: 'Failure Probability',
+                        util: statistics.probabilityOfFailure.toFixed(1),
+                        status: statistics.probabilityOfFailure < 5 ? 'PASS' : 'FAIL',
+                      },
+                      {
+                        label: '95th Percentile',
+                        util: fmtCompact(statistics.percentile95),
+                        status: statistics.percentile95 <= 100 ? 'PASS' : 'FAIL',
+                      },
                     ].map((check) => (
                       <div key={check.label} className="flex justify-between text-xs py-0.5">
                         <span className="text-gray-500">{check.label}</span>
-                        <span className={cn('font-bold', check.status === 'FAIL' ? 'text-red-500' : (parseFloat(String(check.util || '0')) > 90 ? 'text-orange-400' : 'text-emerald-400'))}>
+                        <span
+                          className={cn(
+                            'font-bold',
+                            check.status === 'FAIL'
+                              ? 'text-red-500'
+                              : parseFloat(String(check.util || '0')) > 90
+                                ? 'text-orange-400'
+                                : 'text-emerald-400',
+                          )}
+                        >
                           {check.util ?? '—'}%
                         </span>
                       </div>

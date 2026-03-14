@@ -1,14 +1,14 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
-    FiActivity,
-    FiAlertTriangle,
-    FiCheck,
-    FiDownload,
-    FiEye,
-    FiInfo,
-    FiLayers,
-    FiZap,
+  FiActivity,
+  FiAlertTriangle,
+  FiCheck,
+  FiDownload,
+  FiEye,
+  FiInfo,
+  FiLayers,
+  FiZap,
 } from 'react-icons/fi';
 import Interactive3DDiagram from '../../components/3d/Interactive3DDiagram';
 import { DeckSlab3D } from '../../components/3d/scenes';
@@ -45,14 +45,17 @@ interface FormData {
 // ─── EN 1992-1-1 Material Database ────────────────────────────────────────
 // Adapter: shared library Ecm is in GPa, this calculator uses MPa
 const CONCRETE_GRADES = Object.fromEntries(
-  Object.entries(_CONCRETE_GRADES_LIB).map(([k, v]) => [k, { fck: v.fck, fctm: v.fctm, Ecm: v.Ecm * 1000 }])
+  Object.entries(_CONCRETE_GRADES_LIB).map(([k, v]) => [
+    k,
+    { fck: v.fck, fctm: v.fctm, Ecm: v.Ecm * 1000 },
+  ]),
 ) as Record<string, { fck: number; fctm: number; Ecm: number }>;
 
 // Adapter: map REBAR_GRADES to local shape
 const STEEL_GRADES = Object.fromEntries(
   Object.entries(REBAR_GRADES)
     .filter(([k]) => ['B500A', 'B500B', 'B500C'].includes(k))
-    .map(([k, v]) => [k, { fyk: v.fyk }])
+    .map(([k, v]) => [k, { fyk: v.fyk }]),
 ) as Record<string, { fyk: number }>;
 
 const BAR_SIZES = [8, 10, 12, 16, 20, 25, 32, 40];
@@ -623,7 +626,6 @@ const DeckSlab: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'input' | 'results' | 'visualization'>('input');
   const calcTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-
   // ── Auto-recalculate on any input change ──
   const doCalculation = useCallback(() => {
     const h = parseFloat(formData.thickness);
@@ -852,7 +854,7 @@ const DeckSlab: React.FC = () => {
   return (
     <div className="relative min-h-screen overflow-hidden">
       <MouseSpotlight />
-        <div className="absolute inset-0 bg-grid-pattern opacity-5" />
+      <div className="absolute inset-0 bg-grid-pattern opacity-5" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Hero Header */}
@@ -901,8 +903,15 @@ const DeckSlab: React.FC = () => {
             </motion.div>
           )}
 
+          <h1 className="text-6xl font-black mb-6">
+            <span className="bg-gradient-to-r from-neon-cyan via-white to-neon-purple bg-clip-text text-transparent">
+              Deck Slab
+            </span>
+          </h1>
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto">EN 1992-1-1 RC deck slab design</p>
+
           {/* Tab Navigation */}
-          <div className="flex justify-center gap-4 mb-8 bg-gray-800/40 backdrop-blur-md border border-gray-700/50 rounded-2xl p-2 mx-auto w-fit">
+          <div className="flex justify-center gap-4 mb-8 mt-8 bg-gray-800/40 backdrop-blur-md border border-gray-700/50 rounded-2xl p-2 mx-auto w-fit">
             {['input', 'results', 'visualization'].map((tab) => (
               <Button
                 key={tab}
@@ -924,13 +933,6 @@ const DeckSlab: React.FC = () => {
               </Button>
             ))}
           </div>
-
-          <h1 className="text-6xl font-black mb-6">
-            <span className="bg-gradient-to-r from-neon-cyan via-white to-neon-purple bg-clip-text text-transparent">
-              Deck Slab
-            </span>
-          </h1>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">EN 1992-1-1 RC deck slab design</p>
           <div className="flex items-center justify-center space-x-6 mt-8">
             <div className="flex items-center space-x-2 text-gray-400">
               <FiCheck className="text-green-400" />
@@ -950,8 +952,6 @@ const DeckSlab: React.FC = () => {
             </div>
           </div>
         </motion.div>
-
-
 
         <AnimatePresence mode="wait">
           {activeTab === 'input' && (
@@ -1328,11 +1328,31 @@ const DeckSlab: React.FC = () => {
               {/* Border-l-4 Summary Cards */}
               <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
                 {[
-                  { label: 'Bending (X)', util: results.bending_check_x.utilisation, status: results.bending_check_x.status },
-                  { label: 'Bending (Y)', util: results.bending_check_y.utilisation, status: results.bending_check_y.status },
-                  { label: 'Shear', util: results.shear_check.utilisation, status: results.shear_check.status },
-                  { label: 'Deflection', util: results.deflection_check.utilisation, status: results.deflection_check.status },
-                  { label: 'Crack Width', util: results.crack_width_check.utilisation, status: results.crack_width_check.status },
+                  {
+                    label: 'Bending (X)',
+                    util: results.bending_check_x.utilisation,
+                    status: results.bending_check_x.status,
+                  },
+                  {
+                    label: 'Bending (Y)',
+                    util: results.bending_check_y.utilisation,
+                    status: results.bending_check_y.status,
+                  },
+                  {
+                    label: 'Shear',
+                    util: results.shear_check.utilisation,
+                    status: results.shear_check.status,
+                  },
+                  {
+                    label: 'Deflection',
+                    util: results.deflection_check.utilisation,
+                    status: results.deflection_check.status,
+                  },
+                  {
+                    label: 'Crack Width',
+                    util: results.crack_width_check.utilisation,
+                    status: results.crack_width_check.status,
+                  },
                 ].map((check) => (
                   <motion.div
                     key={check.label}
@@ -1340,23 +1360,31 @@ const DeckSlab: React.FC = () => {
                     animate={{ opacity: 1, x: 0 }}
                     className={cn(
                       'p-4 rounded-xl bg-gray-900/60 border-l-4 flex items-center gap-3',
-                      check.status === 'PASS'
-                        ? 'border-l-green-500'
-                        : 'border-l-red-500',
+                      check.status === 'PASS' ? 'border-l-green-500' : 'border-l-red-500',
                     )}
                   >
-                    <div className={cn(
-                      'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0',
-                      check.status === 'PASS' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400',
-                    )}>
-                      {check.status === 'PASS' ? <FiCheck size={16} /> : <FiAlertTriangle size={16} />}
+                    <div
+                      className={cn(
+                        'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0',
+                        check.status === 'PASS'
+                          ? 'bg-green-500/20 text-green-400'
+                          : 'bg-red-500/20 text-red-400',
+                      )}
+                    >
+                      {check.status === 'PASS' ? (
+                        <FiCheck size={16} />
+                      ) : (
+                        <FiAlertTriangle size={16} />
+                      )}
                     </div>
                     <div>
                       <p className="text-xs text-gray-400">{check.label}</p>
-                      <p className={cn(
-                        'text-lg font-black',
-                        check.status === 'PASS' ? 'text-green-400' : 'text-red-400',
-                      )}>
+                      <p
+                        className={cn(
+                          'text-lg font-black',
+                          check.status === 'PASS' ? 'text-green-400' : 'text-red-400',
+                        )}
+                      >
                         {check.util}%
                       </p>
                     </div>

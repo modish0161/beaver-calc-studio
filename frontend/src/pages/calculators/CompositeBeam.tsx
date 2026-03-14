@@ -1077,8 +1077,15 @@ const CompositeBeam: React.FC = () => {
             <span className="text-white font-semibold">EN 1994-1-1 | Eurocode 4</span>
           </motion.div>
 
+          <h1 className="text-6xl font-black mb-6">
+            <span className="bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-purple bg-clip-text text-transparent">
+              Composite Beam
+            </span>
+          </h1>
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto">EN 1994-2 composite beam design</p>
+
           {/* Tab Navigation */}
-          <div className="flex justify-center gap-4 mb-8">
+          <div className="flex justify-center gap-4 mb-8 mt-8">
             {['input', 'results', 'visualization'].map((tab) => (
               <Button
                 key={tab}
@@ -1100,13 +1107,6 @@ const CompositeBeam: React.FC = () => {
               </Button>
             ))}
           </div>
-
-          <h1 className="text-6xl font-black mb-6">
-            <span className="bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-purple bg-clip-text text-transparent">
-              Composite Beam
-            </span>
-          </h1>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">EN 1994-2 composite beam design</p>
           <div className="flex items-center justify-center space-x-6 mt-8">
             <div className="flex items-center space-x-2 text-gray-400">
               <FiCheck className="text-green-400" />

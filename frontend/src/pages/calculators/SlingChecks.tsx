@@ -4,23 +4,23 @@
 // =============================================================================
 
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
-    FiActivity,
-    FiAlertTriangle,
-    FiCheck,
-    FiChevronDown,
-    FiChevronRight,
-    FiDownload,
-    FiGrid,
-    FiInfo,
-    FiLayers,
-    FiLink,
-    FiMinimize2,
-    FiSettings,
-    FiSliders,
-    FiX,
-    FiZap
+  FiActivity,
+  FiAlertTriangle,
+  FiCheck,
+  FiChevronDown,
+  FiChevronRight,
+  FiDownload,
+  FiGrid,
+  FiInfo,
+  FiLayers,
+  FiLink,
+  FiMinimize2,
+  FiSettings,
+  FiSliders,
+  FiX,
+  FiZap,
 } from 'react-icons/fi';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
@@ -34,8 +34,8 @@ import { generatePremiumPDF } from '../../lib/pdfGenerator';
 import Interactive3DDiagram from '../../components/3d/Interactive3DDiagram';
 import SlingChecks3D from '../../components/3d/scenes/SlingChecks3D';
 import ExplainableLabel from '../../components/ExplainableLabel';
-import WhatIfPreview from '../../components/WhatIfPreview';
 import MouseSpotlight from '../../components/MouseSpotlight';
+import WhatIfPreview from '../../components/WhatIfPreview';
 import { validateNumericInputs } from '../../lib/validation';
 // TYPE DEFINITIONS
 // =============================================================================
@@ -424,20 +424,20 @@ const SlingChecks = () => {
 
   const validateInputs = (): boolean => {
     const errs = validateNumericInputs(formData as unknown as Record<string, unknown>, [
-  { key: 'bottom_fitting', label: 'Bottom Fitting' },
-  { key: 'cog_offset', label: 'Cog Offset' },
-  { key: 'design_factor', label: 'Design Factor' },
-  { key: 'dynamic_factor', label: 'Dynamic Factor' },
-  { key: 'environmental_factor', label: 'Environmental Factor' },
-  { key: 'lift_height', label: 'Lift Height' },
-  { key: 'load_weight', label: 'Load Weight' },
-  { key: 'num_legs', label: 'Num Legs' },
-  { key: 'sling_angle', label: 'Sling Angle' },
-  { key: 'sling_config', label: 'Sling Config' },
-  { key: 'sling_length', label: 'Sling Length' },
-  { key: 'sling_type', label: 'Sling Type' },
-  { key: 'spread_width', label: 'Spread Width' },
-  { key: 'top_fitting', label: 'Top Fitting' },
+      { key: 'bottom_fitting', label: 'Bottom Fitting' },
+      { key: 'cog_offset', label: 'Cog Offset' },
+      { key: 'design_factor', label: 'Design Factor' },
+      { key: 'dynamic_factor', label: 'Dynamic Factor' },
+      { key: 'environmental_factor', label: 'Environmental Factor' },
+      { key: 'lift_height', label: 'Lift Height' },
+      { key: 'load_weight', label: 'Load Weight' },
+      { key: 'num_legs', label: 'Num Legs' },
+      { key: 'sling_angle', label: 'Sling Angle' },
+      { key: 'sling_config', label: 'Sling Config' },
+      { key: 'sling_length', label: 'Sling Length' },
+      { key: 'sling_type', label: 'Sling Type' },
+      { key: 'spread_width', label: 'Spread Width' },
+      { key: 'top_fitting', label: 'Top Fitting' },
     ]);
     if (errs.length > 0) {
       setWarnings(errs);
@@ -450,7 +450,7 @@ const SlingChecks = () => {
     { key: 'sling_type', label: 'Sling_type', min: 0, max: 100, step: 1, unit: '' },
     { key: 'sling_config', label: 'Sling_config', min: 0, max: 100, step: 1, unit: '' },
     { key: 'sling_length', label: 'Sling_length', min: 0, max: 100, step: 1, unit: '' },
-    { key: 'num_legs', label: 'Num_legs', min: 0, max: 100, step: 1, unit: '' }
+    { key: 'num_legs', label: 'Num_legs', min: 0, max: 100, step: 1, unit: '' },
   ];
 
   const [results, setResults] = useState<Results | null>(null);
@@ -666,13 +666,12 @@ const SlingChecks = () => {
           name: 'Sling Capacity Check',
           capacity: 'WLL Adequate',
           utilisation: `${(results.utilisation * 100)?.toFixed(1) || '-'}%`,
-          status: ((results as any).is_adequate ?? false ? 'PASS' : 'FAIL') as 'PASS' | 'FAIL',
+          status: (((results as any).is_adequate ?? false) ? 'PASS' : 'FAIL') as 'PASS' | 'FAIL',
         },
       ],
       footerNote: 'Beaver Bridges Ltd \u2014 Sling Checks Report',
     });
   }, [formData, results]);
-
 
   const InputField = ({
     label,
@@ -687,7 +686,11 @@ const SlingChecks = () => {
   }) => (
     <div>
       <div className="flex items-center gap-1.5 mb-1">
-        <ExplainableLabel label={label} field={field} className="text-sm font-semibold text-gray-200" />{' '}
+        <ExplainableLabel
+          label={label}
+          field={field}
+          className="text-sm font-semibold text-gray-200"
+        />{' '}
         {unit && <span className="text-xs text-neon-cyan">({unit})</span>}
       </div>
       <input
@@ -784,7 +787,7 @@ const SlingChecks = () => {
   return (
     <div className="relative min-h-screen overflow-hidden">
       <MouseSpotlight />
-        <div className="absolute inset-0 bg-grid-pattern opacity-30" />
+      <div className="absolute inset-0 bg-grid-pattern opacity-30" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Hero Header */}
@@ -793,6 +796,15 @@ const SlingChecks = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
+          <h1 className="text-6xl font-black mb-4">
+            <span className="bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-purple bg-clip-text text-transparent">
+              Sling Checks
+            </span>
+          </h1>
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-6">
+            BS 7121 sling capacity & safety checks
+          </p>
+
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 bg-gray-900/50 p-4 rounded-2xl border border-gray-800 glass">
             <div className="flex items-center gap-2">
               {results && (
@@ -814,7 +826,11 @@ const SlingChecks = () => {
                 </Button>
               )}
               {results && (
-                <SaveRunButton calculatorKey="sling-checks" inputs={formData as unknown as Record<string, string | number>} results={results} />
+                <SaveRunButton
+                  calculatorKey="sling-checks"
+                  inputs={formData as unknown as Record<string, string | number>}
+                  results={results}
+                />
               )}
             </div>
 
@@ -841,298 +857,297 @@ const SlingChecks = () => {
               ))}
             </div>
           </div>
-
-          <h1 className="text-6xl font-black mb-4">
-            <span className="bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-purple bg-clip-text text-transparent">
-              Sling Checks
-            </span>
-          </h1>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            BS 7121 sling capacity & safety checks
-          </p>
         </motion.div>
 
         {activeTab === 'input' && (
           <div className="grid lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-6">
-                {/* Presets */}
-                <Card variant="glass" className="border-neon-cyan/30 shadow-2xl">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-2xl text-white flex items-center space-x-3">
-                      <motion.div
-                        className="w-12 h-12 bg-gradient-to-br from-neon-cyan/20 to-neon-blue/20 rounded-2xl flex items-center justify-center"
-                        whileHover={{ rotate: 360 }}
-                        transition={{ duration: 0.6 }}
-                      >
-                        <FiZap className="w-6 h-6 text-neon-cyan" />
-                      </motion.div>
-                      <span>Quick Presets</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-2">
-                      {Object.entries(PRESETS).map(([key, preset]) => (
-                        <Button
-                          key={key}
-                          variant="outline"
-                          size="sm"
-                          onClick={() => applyPreset(key)}
-                          className="border-gray-600 hover:border-neon-cyan"
-                        >
-                          {preset.name}
-                        </Button>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Sling Selection */}
-                <CollapsibleSection
-                  title="Sling Selection"
-                  icon={
+              {/* Presets */}
+              <Card variant="glass" className="border-neon-cyan/30 shadow-2xl">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-2xl text-white flex items-center space-x-3">
                     <motion.div
                       className="w-12 h-12 bg-gradient-to-br from-neon-cyan/20 to-neon-blue/20 rounded-2xl flex items-center justify-center"
                       whileHover={{ rotate: 360 }}
                       transition={{ duration: 0.6 }}
                     >
-                      <FiLink className="w-6 h-6 text-neon-cyan" />
+                      <FiZap className="w-6 h-6 text-neon-cyan" />
                     </motion.div>
-                  }
-                  variant="amber"
-                >
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-200 mb-1">Sling Type</label>
-                      <select
-                        title="Sling Type"
-                        value={formData.sling_type}
-                        onChange={(e) => updateForm('sling_type', e.target.value)}
-                        className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-neon-cyan/50 focus:border-neon-cyan text-white"
+                    <span>Quick Presets</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-wrap gap-2">
+                    {Object.entries(PRESETS).map(([key, preset]) => (
+                      <Button
+                        key={key}
+                        variant="outline"
+                        size="sm"
+                        onClick={() => applyPreset(key)}
+                        className="border-gray-600 hover:border-neon-cyan"
                       >
-                        <optgroup label="Grade 80 Chain">
-                          {Object.entries(SLING_TYPES)
-                            .filter(([k]) => k.includes('chain') && k.includes('G80'))
-                            .map(([key, st]) => (
-                              <option key={key} value={key}>
-                                {st.name} ({st.wll_single}t)
-                              </option>
-                            ))}
-                        </optgroup>
-                        <optgroup label="Grade 100 Chain">
-                          {Object.entries(SLING_TYPES)
-                            .filter(([k]) => k.includes('G100'))
-                            .map(([key, st]) => (
-                              <option key={key} value={key}>
-                                {st.name} ({st.wll_single}t)
-                              </option>
-                            ))}
-                        </optgroup>
-                        <optgroup label="Wire Rope">
-                          {Object.entries(SLING_TYPES)
-                            .filter(([k]) => k.includes('wire'))
-                            .map(([key, st]) => (
-                              <option key={key} value={key}>
-                                {st.name} ({st.wll_single}t)
-                              </option>
-                            ))}
-                        </optgroup>
-                        <optgroup label="Webbing Slings">
-                          {Object.entries(SLING_TYPES)
-                            .filter(([k]) => k.includes('web'))
-                            .map(([key, st]) => (
-                              <option key={key} value={key}>
-                                {st.name} ({st.wll_single}t)
-                              </option>
-                            ))}
-                        </optgroup>
-                        <optgroup label="Round Slings">
-                          {Object.entries(SLING_TYPES)
-                            .filter(([k]) => k.includes('round'))
-                            .map(([key, st]) => (
-                              <option key={key} value={key}>
-                                {st.name} ({st.wll_single}t)
-                              </option>
-                            ))}
-                        </optgroup>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-200 mb-1">Configuration</label>
-                      <select
-                        title="Configuration"
-                        value={formData.sling_config}
-                        onChange={(e) => updateForm('sling_config', e.target.value)}
-                        className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-neon-cyan/50 focus:border-neon-cyan text-white"
-                      >
-                        {Object.entries(SLING_CONFIGS).map(([key, sc]) => (
-                          <option key={key} value={key}>
-                            {sc.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <InputField label="Sling Length" field="sling_length" unit="m" />
-                    <InputField
-                      label="Sling Angle"
-                      field="sling_angle"
-                      unit="°"
-                      tooltip="From vertical"
-                    />
+                        {preset.name}
+                      </Button>
+                    ))}
                   </div>
-                </CollapsibleSection>
+                </CardContent>
+              </Card>
 
-                {/* Loading */}
-                <CollapsibleSection
-                  title="Loading"
-                  icon={
-                    <motion.div
-                      className="w-12 h-12 bg-gradient-to-br from-neon-cyan/20 to-neon-blue/20 rounded-2xl flex items-center justify-center"
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.6 }}
-                    >
-                      <FiLayers className="w-6 h-6 text-neon-cyan" />
-                    </motion.div>
-                  }
-                  variant="blue"
-                >
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <InputField label="Load Weight" field="load_weight" unit="kN" />
-                    <InputField
-                      label="Dynamic Factor"
-                      field="dynamic_factor"
-                      tooltip="Typically 1.1"
-                    />
-                    <InputField
-                      label="Environmental Factor"
-                      field="environmental_factor"
-                      tooltip="Temperature, corrosion"
-                    />
-                    <InputField
-                      label="COG Offset"
-                      field="cog_offset"
-                      unit="m"
-                      tooltip="From centre"
-                    />
-                  </div>
-                </CollapsibleSection>
-
-                {/* Geometry */}
-                <CollapsibleSection
-                  title="Lift Geometry"
-                  icon={
-                    <motion.div
-                      className="w-12 h-12 bg-gradient-to-br from-neon-cyan/20 to-neon-blue/20 rounded-2xl flex items-center justify-center"
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.6 }}
-                    >
-                      <FiGrid className="w-6 h-6 text-neon-cyan" />
-                    </motion.div>
-                  }
-                  variant="emerald"
-                >
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <InputField
-                      label="Lift Height"
-                      field="lift_height"
-                      unit="m"
-                      tooltip="Hook to load"
-                    />
-                    <InputField
-                      label="Spread Width"
-                      field="spread_width"
-                      unit="m"
-                      tooltip="Between attachment points"
-                    />
-                    <InputField
-                      label="Design Factor"
-                      field="design_factor"
-                      tooltip="Additional factor"
-                    />
-                  </div>
-                </CollapsibleSection>
-
-                {/* Fittings */}
-                <CollapsibleSection
-                  title="End Fittings"
-                  icon={
-                    <motion.div
-                      className="w-12 h-12 bg-gradient-to-br from-neon-cyan/20 to-neon-blue/20 rounded-2xl flex items-center justify-center"
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.6 }}
-                    >
-                      <FiSettings className="w-6 h-6 text-neon-cyan" />
-                    </motion.div>
-                  }
-                  variant="purple"
-                  defaultOpen={false}
-                >
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-200 mb-1">Top Fitting</label>
-                      <select
-                        title="Top Fitting"
-                        value={formData.top_fitting}
-                        onChange={(e) => updateForm('top_fitting', e.target.value)}
-                        className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-neon-cyan/50 focus:border-neon-cyan text-white"
-                      >
-                        {Object.entries(END_FITTINGS).map(([key, ef]) => (
-                          <option key={key} value={key}>
-                            {ef.name} ({(ef.efficiency * 100).toFixed(0)}%)
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-200 mb-1">Bottom Fitting</label>
-                      <select
-                        title="Bottom Fitting"
-                        value={formData.bottom_fitting}
-                        onChange={(e) => updateForm('bottom_fitting', e.target.value)}
-                        className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-neon-cyan/50 focus:border-neon-cyan text-white"
-                      >
-                        {Object.entries(END_FITTINGS).map(([key, ef]) => (
-                          <option key={key} value={key}>
-                            {ef.name} ({(ef.efficiency * 100).toFixed(0)}%)
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                </CollapsibleSection>
-                {/* Calculate Button */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="flex justify-center pt-4"
-                >
-                  <Button
-                    onClick={() => {
-                      runCalculation();
-                      setActiveTab('results');
-                    }}
-                    disabled={isCalculating}
-                    className="px-16 py-8 text-xl font-black bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-purple hover:scale-105 transition-all shadow-[0_0_30px_rgba(0,217,255,0.3)] rounded-2xl"
+              {/* Sling Selection */}
+              <CollapsibleSection
+                title="Sling Selection"
+                icon={
+                  <motion.div
+                    className="w-12 h-12 bg-gradient-to-br from-neon-cyan/20 to-neon-blue/20 rounded-2xl flex items-center justify-center"
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6 }}
                   >
-                    {isCalculating ? (
-                      <div className="flex items-center gap-3">
-                        <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
-                        ANALYSING...
-                      </div>
-                    ) : (
-                      'RUN FULL ANALYSIS'
-                    )}
-                  </Button>
-                </motion.div>
-              </div>
+                    <FiLink className="w-6 h-6 text-neon-cyan" />
+                  </motion.div>
+                }
+                variant="amber"
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-200 mb-1">
+                      Sling Type
+                    </label>
+                    <select
+                      title="Sling Type"
+                      value={formData.sling_type}
+                      onChange={(e) => updateForm('sling_type', e.target.value)}
+                      className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-neon-cyan/50 focus:border-neon-cyan text-white"
+                    >
+                      <optgroup label="Grade 80 Chain">
+                        {Object.entries(SLING_TYPES)
+                          .filter(([k]) => k.includes('chain') && k.includes('G80'))
+                          .map(([key, st]) => (
+                            <option key={key} value={key}>
+                              {st.name} ({st.wll_single}t)
+                            </option>
+                          ))}
+                      </optgroup>
+                      <optgroup label="Grade 100 Chain">
+                        {Object.entries(SLING_TYPES)
+                          .filter(([k]) => k.includes('G100'))
+                          .map(([key, st]) => (
+                            <option key={key} value={key}>
+                              {st.name} ({st.wll_single}t)
+                            </option>
+                          ))}
+                      </optgroup>
+                      <optgroup label="Wire Rope">
+                        {Object.entries(SLING_TYPES)
+                          .filter(([k]) => k.includes('wire'))
+                          .map(([key, st]) => (
+                            <option key={key} value={key}>
+                              {st.name} ({st.wll_single}t)
+                            </option>
+                          ))}
+                      </optgroup>
+                      <optgroup label="Webbing Slings">
+                        {Object.entries(SLING_TYPES)
+                          .filter(([k]) => k.includes('web'))
+                          .map(([key, st]) => (
+                            <option key={key} value={key}>
+                              {st.name} ({st.wll_single}t)
+                            </option>
+                          ))}
+                      </optgroup>
+                      <optgroup label="Round Slings">
+                        {Object.entries(SLING_TYPES)
+                          .filter(([k]) => k.includes('round'))
+                          .map(([key, st]) => (
+                            <option key={key} value={key}>
+                              {st.name} ({st.wll_single}t)
+                            </option>
+                          ))}
+                      </optgroup>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-200 mb-1">
+                      Configuration
+                    </label>
+                    <select
+                      title="Configuration"
+                      value={formData.sling_config}
+                      onChange={(e) => updateForm('sling_config', e.target.value)}
+                      className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-neon-cyan/50 focus:border-neon-cyan text-white"
+                    >
+                      {Object.entries(SLING_CONFIGS).map(([key, sc]) => (
+                        <option key={key} value={key}>
+                          {sc.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <InputField label="Sling Length" field="sling_length" unit="m" />
+                  <InputField
+                    label="Sling Angle"
+                    field="sling_angle"
+                    unit="°"
+                    tooltip="From vertical"
+                  />
+                </div>
+              </CollapsibleSection>
 
-              {/* Right Column — Sticky Sidebar */}
-              <div className="lg:col-span-1">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.4 }}
-                  className="sticky top-32 space-y-4"
+              {/* Loading */}
+              <CollapsibleSection
+                title="Loading"
+                icon={
+                  <motion.div
+                    className="w-12 h-12 bg-gradient-to-br from-neon-cyan/20 to-neon-blue/20 rounded-2xl flex items-center justify-center"
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    <FiLayers className="w-6 h-6 text-neon-cyan" />
+                  </motion.div>
+                }
+                variant="blue"
+              >
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <InputField label="Load Weight" field="load_weight" unit="kN" />
+                  <InputField
+                    label="Dynamic Factor"
+                    field="dynamic_factor"
+                    tooltip="Typically 1.1"
+                  />
+                  <InputField
+                    label="Environmental Factor"
+                    field="environmental_factor"
+                    tooltip="Temperature, corrosion"
+                  />
+                  <InputField
+                    label="COG Offset"
+                    field="cog_offset"
+                    unit="m"
+                    tooltip="From centre"
+                  />
+                </div>
+              </CollapsibleSection>
+
+              {/* Geometry */}
+              <CollapsibleSection
+                title="Lift Geometry"
+                icon={
+                  <motion.div
+                    className="w-12 h-12 bg-gradient-to-br from-neon-cyan/20 to-neon-blue/20 rounded-2xl flex items-center justify-center"
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    <FiGrid className="w-6 h-6 text-neon-cyan" />
+                  </motion.div>
+                }
+                variant="emerald"
+              >
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  <InputField
+                    label="Lift Height"
+                    field="lift_height"
+                    unit="m"
+                    tooltip="Hook to load"
+                  />
+                  <InputField
+                    label="Spread Width"
+                    field="spread_width"
+                    unit="m"
+                    tooltip="Between attachment points"
+                  />
+                  <InputField
+                    label="Design Factor"
+                    field="design_factor"
+                    tooltip="Additional factor"
+                  />
+                </div>
+              </CollapsibleSection>
+
+              {/* Fittings */}
+              <CollapsibleSection
+                title="End Fittings"
+                icon={
+                  <motion.div
+                    className="w-12 h-12 bg-gradient-to-br from-neon-cyan/20 to-neon-blue/20 rounded-2xl flex items-center justify-center"
+                    whileHover={{ rotate: 360 }}
+                    transition={{ duration: 0.6 }}
+                  >
+                    <FiSettings className="w-6 h-6 text-neon-cyan" />
+                  </motion.div>
+                }
+                variant="purple"
+                defaultOpen={false}
+              >
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-200 mb-1">
+                      Top Fitting
+                    </label>
+                    <select
+                      title="Top Fitting"
+                      value={formData.top_fitting}
+                      onChange={(e) => updateForm('top_fitting', e.target.value)}
+                      className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-neon-cyan/50 focus:border-neon-cyan text-white"
+                    >
+                      {Object.entries(END_FITTINGS).map(([key, ef]) => (
+                        <option key={key} value={key}>
+                          {ef.name} ({(ef.efficiency * 100).toFixed(0)}%)
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-200 mb-1">
+                      Bottom Fitting
+                    </label>
+                    <select
+                      title="Bottom Fitting"
+                      value={formData.bottom_fitting}
+                      onChange={(e) => updateForm('bottom_fitting', e.target.value)}
+                      className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-xl focus:ring-2 focus:ring-neon-cyan/50 focus:border-neon-cyan text-white"
+                    >
+                      {Object.entries(END_FITTINGS).map(([key, ef]) => (
+                        <option key={key} value={key}>
+                          {ef.name} ({(ef.efficiency * 100).toFixed(0)}%)
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              </CollapsibleSection>
+              {/* Calculate Button */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="flex justify-center pt-4"
+              >
+                <Button
+                  onClick={() => {
+                    runCalculation();
+                    setActiveTab('results');
+                  }}
+                  disabled={isCalculating}
+                  className="px-16 py-8 text-xl font-black bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-purple hover:scale-105 transition-all shadow-[0_0_30px_rgba(0,217,255,0.3)] rounded-2xl"
                 >
+                  {isCalculating ? (
+                    <div className="flex items-center gap-3">
+                      <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
+                      ANALYSING...
+                    </div>
+                  ) : (
+                    'RUN FULL ANALYSIS'
+                  )}
+                </Button>
+              </motion.div>
+            </div>
+
+            {/* Right Column — Sticky Sidebar */}
+            <div className="lg:col-span-1">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.4 }}
+                className="sticky top-32 space-y-4"
+              >
                 <WhatIfPreview
                   title="Sling Checks — 3D Preview"
                   sliders={whatIfSliders}
@@ -1170,8 +1185,8 @@ const SlingChecks = () => {
                     <p className="pt-2 text-neon-cyan">LOLER inspection required</p>
                   </CardContent>
                 </Card>
-                </motion.div>
-              </div>
+              </motion.div>
+            </div>
           </div>
         )}
         {/* Results Tab Content */}
@@ -1186,12 +1201,42 @@ const SlingChecks = () => {
             {/* Top Summary Check Cards — border-l-4 */}
             <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-4">
               {[
-                { label: 'Applied Load', value: `${formData.load_weight} kN`, icon: <FiLayers />, pass: true },
-                { label: 'Factored Load', value: `${results.factored_load.toFixed(1)} kN`, icon: <FiZap />, pass: true },
-                { label: 'Load/Leg', value: `${results.load_per_leg.toFixed(2)} t`, icon: <FiActivity />, pass: results.status === 'PASS' },
-                { label: 'Angle', value: `${results.actual_angle.toFixed(1)}°`, icon: <FiGrid />, pass: results.actual_angle <= 60 },
-                { label: 'Utilisation', value: `${(results.utilisation * 100).toFixed(1)}%`, icon: <FiLink />, pass: results.utilisation <= 1.0 },
-                { label: 'Rating', value: results.rating, icon: <FiCheck />, pass: results.status === 'PASS' },
+                {
+                  label: 'Applied Load',
+                  value: `${formData.load_weight} kN`,
+                  icon: <FiLayers />,
+                  pass: true,
+                },
+                {
+                  label: 'Factored Load',
+                  value: `${results.factored_load.toFixed(1)} kN`,
+                  icon: <FiZap />,
+                  pass: true,
+                },
+                {
+                  label: 'Load/Leg',
+                  value: `${results.load_per_leg.toFixed(2)} t`,
+                  icon: <FiActivity />,
+                  pass: results.status === 'PASS',
+                },
+                {
+                  label: 'Angle',
+                  value: `${results.actual_angle.toFixed(1)}°`,
+                  icon: <FiGrid />,
+                  pass: results.actual_angle <= 60,
+                },
+                {
+                  label: 'Utilisation',
+                  value: `${(results.utilisation * 100).toFixed(1)}%`,
+                  icon: <FiLink />,
+                  pass: results.utilisation <= 1.0,
+                },
+                {
+                  label: 'Rating',
+                  value: results.rating,
+                  icon: <FiCheck />,
+                  pass: results.status === 'PASS',
+                },
               ].map((item, i) => (
                 <Card
                   key={i}
@@ -1435,94 +1480,128 @@ const SlingChecks = () => {
         )}
       </div>
 
-          {/* Fullscreen Preview Overlay */}
-          {previewMaximized && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 bg-gray-950/95 backdrop-blur-sm flex"
+      {/* Fullscreen Preview Overlay */}
+      {previewMaximized && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 bg-gray-950/95 backdrop-blur-sm flex"
+        >
+          <div className="flex-1 relative">
+            <Interactive3DDiagram height="h-full" cameraPosition={[8, 6, 8]}>
+              <SlingChecks3D />
+            </Interactive3DDiagram>
+            <button
+              onClick={() => setPreviewMaximized(false)}
+              className="absolute top-4 right-4 p-2 bg-gray-900/80 border border-neon-cyan/30 rounded-lg text-neon-cyan hover:bg-gray-800 transition-colors z-10"
+              aria-label="Minimize preview"
             >
-              <div className="flex-1 relative">
-                <Interactive3DDiagram height="h-full" cameraPosition={[8, 6, 8]}>
-                  <SlingChecks3D />
-                </Interactive3DDiagram>
-                <button
-                  onClick={() => setPreviewMaximized(false)}
-                  className="absolute top-4 right-4 p-2 bg-gray-900/80 border border-neon-cyan/30 rounded-lg text-neon-cyan hover:bg-gray-800 transition-colors z-10"
-                  aria-label="Minimize preview"
-                >
-                  <FiMinimize2 size={20} />
-                </button>
-                <div className="absolute top-4 left-4 text-neon-cyan/60 text-xs font-mono z-10">
-                  SLING CHECKS — REAL-TIME PREVIEW
-                </div>
+              <FiMinimize2 size={20} />
+            </button>
+            <div className="absolute top-4 left-4 text-neon-cyan/60 text-xs font-mono z-10">
+              SLING CHECKS — REAL-TIME PREVIEW
+            </div>
+          </div>
+          <div className="w-80 bg-gray-900/90 border-l border-neon-cyan/20 overflow-y-auto p-5 space-y-4">
+            <h3 className="text-sm font-bold text-neon-cyan uppercase tracking-wider flex items-center gap-2">
+              <FiSliders size={14} /> Live Parameters
+            </h3>
+            {[
+              { label: 'Sling Type', value: formData.sling_type || '-' },
+              { label: 'Config', value: formData.sling_config || '-' },
+              { label: 'Sling Length', value: `${formData.sling_length || '0'} m` },
+              { label: 'No. Legs', value: formData.num_legs || '-' },
+              { label: 'Load Weight', value: `${formData.load_weight || '0'} kN` },
+              { label: 'Sling Angle', value: `${formData.sling_angle || '0'}°` },
+              { label: 'Dynamic Factor', value: formData.dynamic_factor || '-' },
+              { label: 'Design Factor', value: formData.design_factor || '-' },
+            ].map((stat) => (
+              <div
+                key={stat.label}
+                className="flex justify-between text-xs py-1 border-b border-gray-800/50"
+              >
+                <span className="text-gray-500">{stat.label}</span>
+                <span className="text-white font-medium">{stat.value}</span>
               </div>
-              <div className="w-80 bg-gray-900/90 border-l border-neon-cyan/20 overflow-y-auto p-5 space-y-4">
-                <h3 className="text-sm font-bold text-neon-cyan uppercase tracking-wider flex items-center gap-2">
-                  <FiSliders size={14} /> Live Parameters
-                </h3>
-                {[
-                  { label: 'Sling Type', value: formData.sling_type || '-' },
-                  { label: 'Config', value: formData.sling_config || '-' },
-                  { label: 'Sling Length', value: `${formData.sling_length || '0'} m` },
-                  { label: 'No. Legs', value: formData.num_legs || '-' },
-                  { label: 'Load Weight', value: `${formData.load_weight || '0'} kN` },
-                  { label: 'Sling Angle', value: `${formData.sling_angle || '0'}°` },
-                  { label: 'Dynamic Factor', value: formData.dynamic_factor || '-' },
-                  { label: 'Design Factor', value: formData.design_factor || '-' },
-                ].map((stat) => (
-                  <div key={stat.label} className="flex justify-between text-xs py-1 border-b border-gray-800/50">
-                    <span className="text-gray-500">{stat.label}</span>
-                    <span className="text-white font-medium">{stat.value}</span>
-                  </div>
-                ))}
-                <div className="border-t border-gray-700 pt-4">
-                  <h3 className="text-sm font-bold text-neon-cyan uppercase tracking-wider flex items-center gap-2 mb-3">
-                    <FiActivity size={14} /> Live Readout
-                  </h3>
-                  {results ? (
-                    <>
-                      {[
-                        { label: 'Load/Leg', value: `${results.load_per_leg.toFixed(2)} t` },
-                        { label: 'Factored Load', value: `${results.factored_load.toFixed(1)} kN` },
-                        { label: 'Angle Factor', value: results.angle_factor.toFixed(3) },
-                        { label: 'Utilisation', value: `${(results.utilisation * 100).toFixed(1)}%` },
-                        { label: 'Status', value: results.status },
-                      ].map((stat) => (
-                        <div key={stat.label} className="flex justify-between text-xs py-1 border-b border-gray-800/50">
-                          <span className="text-gray-500">{stat.label}</span>
-                          <span className={cn('font-medium', results.status === 'FAIL' ? 'text-red-400' : 'text-emerald-400')}>{stat.value}</span>
-                        </div>
-                      ))}
-                      <div className="mt-3 space-y-1">
-                        <div className="text-xs font-bold text-gray-400 uppercase mb-1">Last Analysis</div>
-                        {[
-                          { label: 'Sling WLL', value: `${results.sling_wll_single.toFixed(1)} t`, pass: true },
-                          { label: 'Capacity (config)', value: `${results.sling_capacity_config.toFixed(1)} t`, pass: true },
-                          { label: 'Efficiency', value: `${(results.efficiency * 100).toFixed(0)}%`, pass: results.efficiency >= 0.8 },
-                        ].map((check) => (
-                          <div key={check.label} className="flex justify-between text-xs py-0.5">
-                            <span className="text-gray-500">{check.label}</span>
-                            <span className={cn('font-bold', check.pass ? 'text-emerald-400' : 'text-red-500')}>{check.value}</span>
-                          </div>
-                        ))}
+            ))}
+            <div className="border-t border-gray-700 pt-4">
+              <h3 className="text-sm font-bold text-neon-cyan uppercase tracking-wider flex items-center gap-2 mb-3">
+                <FiActivity size={14} /> Live Readout
+              </h3>
+              {results ? (
+                <>
+                  {[
+                    { label: 'Load/Leg', value: `${results.load_per_leg.toFixed(2)} t` },
+                    { label: 'Factored Load', value: `${results.factored_load.toFixed(1)} kN` },
+                    { label: 'Angle Factor', value: results.angle_factor.toFixed(3) },
+                    { label: 'Utilisation', value: `${(results.utilisation * 100).toFixed(1)}%` },
+                    { label: 'Status', value: results.status },
+                  ].map((stat) => (
+                    <div
+                      key={stat.label}
+                      className="flex justify-between text-xs py-1 border-b border-gray-800/50"
+                    >
+                      <span className="text-gray-500">{stat.label}</span>
+                      <span
+                        className={cn(
+                          'font-medium',
+                          results.status === 'FAIL' ? 'text-red-400' : 'text-emerald-400',
+                        )}
+                      >
+                        {stat.value}
+                      </span>
+                    </div>
+                  ))}
+                  <div className="mt-3 space-y-1">
+                    <div className="text-xs font-bold text-gray-400 uppercase mb-1">
+                      Last Analysis
+                    </div>
+                    {[
+                      {
+                        label: 'Sling WLL',
+                        value: `${results.sling_wll_single.toFixed(1)} t`,
+                        pass: true,
+                      },
+                      {
+                        label: 'Capacity (config)',
+                        value: `${results.sling_capacity_config.toFixed(1)} t`,
+                        pass: true,
+                      },
+                      {
+                        label: 'Efficiency',
+                        value: `${(results.efficiency * 100).toFixed(0)}%`,
+                        pass: results.efficiency >= 0.8,
+                      },
+                    ].map((check) => (
+                      <div key={check.label} className="flex justify-between text-xs py-0.5">
+                        <span className="text-gray-500">{check.label}</span>
+                        <span
+                          className={cn(
+                            'font-bold',
+                            check.pass ? 'text-emerald-400' : 'text-red-500',
+                          )}
+                        >
+                          {check.value}
+                        </span>
                       </div>
-                    </>
-                  ) : (
-                    <p className="text-xs text-gray-600 italic">Run analysis to see results</p>
-                  )}
-                </div>
-                <button
-                  onClick={() => setPreviewMaximized(false)}
-                  className="w-full py-2 mt-4 text-sm font-bold text-gray-400 hover:text-white border border-gray-700 hover:border-neon-cyan/40 rounded-lg transition-colors"
-                >
-                  Close Fullscreen
-                </button>
-              </div>
-            </motion.div>
-          )}
-      </div>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <p className="text-xs text-gray-600 italic">Run analysis to see results</p>
+              )}
+            </div>
+            <button
+              onClick={() => setPreviewMaximized(false)}
+              className="w-full py-2 mt-4 text-sm font-bold text-gray-400 hover:text-white border border-gray-700 hover:border-neon-cyan/40 rounded-lg transition-colors"
+            >
+              Close Fullscreen
+            </button>
+          </div>
+        </motion.div>
+      )}
+    </div>
   );
 };
 

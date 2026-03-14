@@ -742,6 +742,15 @@ const SteelPlateGirder: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
+          <h1 className="text-6xl font-black mb-4">
+            <span className="bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-purple bg-clip-text text-transparent">
+              Steel Plate Girder
+            </span>
+          </h1>
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-6">
+            Interactive Eurocode design assistant with real-time analysis
+          </p>
+
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 bg-gray-900/50 p-4 rounded-2xl border border-gray-800 glass">
             {/* Quick Actions Toolbar */}
             <div className="flex items-center gap-2">
@@ -832,15 +841,6 @@ const SteelPlateGirder: React.FC = () => {
               )}
             </div>
           </div>
-
-          <h1 className="text-6xl font-black mb-4">
-            <span className="bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-purple bg-clip-text text-transparent">
-              Steel Plate Girder
-            </span>
-          </h1>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Interactive Eurocode design assistant with real-time analysis
-          </p>
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-8">

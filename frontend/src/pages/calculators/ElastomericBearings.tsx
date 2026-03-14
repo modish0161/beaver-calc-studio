@@ -6,18 +6,18 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
-    FiActivity,
-    FiAlertTriangle,
-    FiBarChart2,
-    FiCheck,
-    FiChevronDown,
-    FiDownload,
-    FiEye,
-    FiLayers,
-    FiSettings,
-    FiTrash2,
-    FiX,
-    FiZap,
+  FiActivity,
+  FiAlertTriangle,
+  FiBarChart2,
+  FiCheck,
+  FiChevronDown,
+  FiDownload,
+  FiEye,
+  FiLayers,
+  FiSettings,
+  FiTrash2,
+  FiX,
+  FiZap,
 } from 'react-icons/fi';
 import Interactive3DDiagram from '../../components/3d/Interactive3DDiagram';
 import ElastomericBearings3D from '../../components/3d/scenes/ElastomericBearings3D';
@@ -245,31 +245,31 @@ const ElastomericBearings: React.FC = () => {
 
   const validateInputs = (): boolean => {
     const errs = validateNumericInputs(formData as unknown as Record<string, unknown>, [
-  { key: 'length', label: 'Length' },
-  { key: 'width', label: 'Width' },
-  { key: 'diameter', label: 'Diameter' },
-  { key: 'thickness_mm', label: 'Thickness Mm' },
-  { key: 'shear_modulus_mpa', label: 'Shear Modulus Mpa' },
-  { key: 'bulk_modulus_mpa', label: 'Bulk Modulus Mpa' },
-  { key: 'thickness_mm', label: 'Thickness Mm' },
-  { key: 'shear_modulus_mpa', label: 'Shear Modulus Mpa' },
-  { key: 'bulk_modulus_mpa', label: 'Bulk Modulus Mpa' },
-  { key: 'thickness_mm', label: 'Thickness Mm' },
-  { key: 'shear_modulus_mpa', label: 'Shear Modulus Mpa' },
-  { key: 'bulk_modulus_mpa', label: 'Bulk Modulus Mpa' },
-  { key: 'number_of_shims', label: 'Number Of Shims' },
-  { key: 'shim_thickness_mm', label: 'Shim Thickness Mm' },
-  { key: 'shim_modulus_mpa', label: 'Shim Modulus Mpa' },
-  { key: 'topPlateThickness', label: 'Top Plate Thickness' },
-  { key: 'bottomPlateThickness', label: 'Bottom Plate Thickness' },
-  { key: 'designVerticalLoad', label: 'Design Vertical Load' },
-  { key: 'designShearLoad', label: 'Design Shear Load' },
-  { key: 'serviceTemperature', label: 'Service Temperature' },
-  { key: 'temperatureRange', label: 'Temperature Range' },
-  { key: 'shapeFactorMin', label: 'Shape Factor Min' },
-  { key: 'shapeFactorMax', label: 'Shape Factor Max' },
-  { key: 'strainLimit', label: 'Strain Limit' },
-  { key: 'compressionStressLimit', label: 'Compression Stress Limit' },
+      { key: 'length', label: 'Length' },
+      { key: 'width', label: 'Width' },
+      { key: 'diameter', label: 'Diameter' },
+      { key: 'thickness_mm', label: 'Thickness Mm' },
+      { key: 'shear_modulus_mpa', label: 'Shear Modulus Mpa' },
+      { key: 'bulk_modulus_mpa', label: 'Bulk Modulus Mpa' },
+      { key: 'thickness_mm', label: 'Thickness Mm' },
+      { key: 'shear_modulus_mpa', label: 'Shear Modulus Mpa' },
+      { key: 'bulk_modulus_mpa', label: 'Bulk Modulus Mpa' },
+      { key: 'thickness_mm', label: 'Thickness Mm' },
+      { key: 'shear_modulus_mpa', label: 'Shear Modulus Mpa' },
+      { key: 'bulk_modulus_mpa', label: 'Bulk Modulus Mpa' },
+      { key: 'number_of_shims', label: 'Number Of Shims' },
+      { key: 'shim_thickness_mm', label: 'Shim Thickness Mm' },
+      { key: 'shim_modulus_mpa', label: 'Shim Modulus Mpa' },
+      { key: 'topPlateThickness', label: 'Top Plate Thickness' },
+      { key: 'bottomPlateThickness', label: 'Bottom Plate Thickness' },
+      { key: 'designVerticalLoad', label: 'Design Vertical Load' },
+      { key: 'designShearLoad', label: 'Design Shear Load' },
+      { key: 'serviceTemperature', label: 'Service Temperature' },
+      { key: 'temperatureRange', label: 'Temperature Range' },
+      { key: 'shapeFactorMin', label: 'Shape Factor Min' },
+      { key: 'shapeFactorMax', label: 'Shape Factor Max' },
+      { key: 'strainLimit', label: 'Strain Limit' },
+      { key: 'compressionStressLimit', label: 'Compression Stress Limit' },
     ]);
     if (errs.length > 0) {
       setWarnings(errs);
@@ -286,7 +286,6 @@ const ElastomericBearings: React.FC = () => {
 
   const [showPresets, setShowPresets] = useState(false);
   const calcTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
 
   // ===== HANDLERS =====
   const toggleSection = (id: string) => {
@@ -710,7 +709,11 @@ const ElastomericBearings: React.FC = () => {
   const InputField = ({ label, field, unit }: { label: string; field: string; unit?: string }) => (
     <div>
       <div className="flex items-center gap-1.5 mb-1">
-        <ExplainableLabel label={label} field={field} className="text-sm text-gray-200 font-semibold" />{' '}
+        <ExplainableLabel
+          label={label}
+          field={field}
+          className="text-sm text-gray-200 font-semibold"
+        />{' '}
         {unit && <span className="text-xs text-neon-cyan">({unit})</span>}
       </div>
       <div className="relative">
@@ -786,7 +789,7 @@ const ElastomericBearings: React.FC = () => {
   return (
     <div className="relative min-h-screen overflow-hidden">
       <MouseSpotlight />
-        <div className="absolute inset-0 bg-grid-pattern opacity-30" />
+      <div className="absolute inset-0 bg-grid-pattern opacity-30" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Hero Header */}
@@ -795,6 +798,16 @@ const ElastomericBearings: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
+          <h1 className="text-6xl font-black mb-4">
+            <span className="bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-purple bg-clip-text text-transparent">
+              Elastomeric Bearings
+            </span>
+          </h1>
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-6">
+            EN 1337-3 laminated elastomeric bearing design with shape factor analysis, strain
+            verification and stability assessment
+          </p>
+
           {/* Consolidated Toolbar */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8 bg-gray-900/50 p-4 rounded-2xl border border-gray-800 glass">
             {/* Presets Dropdown */}
@@ -812,7 +825,10 @@ const ElastomericBearings: React.FC = () => {
                     {Object.entries(PRESETS).map(([key, p]) => (
                       <button
                         key={key}
-                        onClick={() => { applyPreset(key); setShowPresets(false); }}
+                        onClick={() => {
+                          applyPreset(key);
+                          setShowPresets(false);
+                        }}
                         className="w-full px-4 py-3 text-left text-sm text-gray-300 hover:bg-neon-cyan/10 hover:text-neon-cyan transition-colors border-b border-gray-800 last:border-0"
                       >
                         {p.name}
@@ -828,7 +844,12 @@ const ElastomericBearings: React.FC = () => {
               {[
                 { id: 'input', label: 'Inputs', icon: <FiSettings /> },
                 { id: 'results', label: 'Results', icon: <FiActivity />, disabled: !results },
-                { id: 'visualization', label: 'Diagrams', icon: <FiBarChart2 />, disabled: !results },
+                {
+                  id: 'visualization',
+                  label: 'Diagrams',
+                  icon: <FiBarChart2 />,
+                  disabled: !results,
+                },
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -871,16 +892,6 @@ const ElastomericBearings: React.FC = () => {
               </Button>
             </div>
           </div>
-
-          <h1 className="text-6xl font-black mb-4">
-            <span className="bg-gradient-to-r from-neon-cyan via-neon-blue to-neon-purple bg-clip-text text-transparent">
-              Elastomeric Bearings
-            </span>
-          </h1>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            EN 1337-3 laminated elastomeric bearing design with shape factor analysis, strain verification and
-            stability assessment
-          </p>
         </motion.div>
 
         <AnimatePresence mode="wait">
@@ -909,7 +920,9 @@ const ElastomericBearings: React.FC = () => {
                 >
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div className="col-span-2">
-                      <label className="block text-sm text-gray-200 font-semibold mb-1">Shape</label>
+                      <label className="block text-sm text-gray-200 font-semibold mb-1">
+                        Shape
+                      </label>
                       <select
                         value={formData.shape}
                         onChange={(e) => updateForm('shape', e.target.value)}
@@ -1029,7 +1042,9 @@ const ElastomericBearings: React.FC = () => {
                 >
                   <div className="grid grid-cols-3 gap-4">
                     <div>
-                      <label className="block text-sm text-gray-200 font-semibold mb-1">No. of Shims</label>
+                      <label className="block text-sm text-gray-200 font-semibold mb-1">
+                        No. of Shims
+                      </label>
                       <input
                         type="number"
                         value={formData.steelShims.number_of_shims}
@@ -1039,7 +1054,9 @@ const ElastomericBearings: React.FC = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm text-gray-200 font-semibold mb-1">Thickness (mm)</label>
+                      <label className="block text-sm text-gray-200 font-semibold mb-1">
+                        Thickness (mm)
+                      </label>
                       <input
                         type="number"
                         step="0.1"
@@ -1050,7 +1067,9 @@ const ElastomericBearings: React.FC = () => {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm text-gray-200 font-semibold mb-1">Modulus (MPa)</label>
+                      <label className="block text-sm text-gray-200 font-semibold mb-1">
+                        Modulus (MPa)
+                      </label>
                       <input
                         type="number"
                         step="1000"
@@ -1122,7 +1141,13 @@ const ElastomericBearings: React.FC = () => {
                   sliders={whatIfSliders}
                   form={formData}
                   updateForm={updateForm}
-                  status={results ? (results.overall_check ? 'PASS' as const : 'FAIL' as const) : undefined}
+                  status={
+                    results
+                      ? results.overall_check
+                        ? ('PASS' as const)
+                        : ('FAIL' as const)
+                      : undefined
+                  }
                   utilisation={maxUtil}
                   renderScene={(fsHeight) => (
                     <Interactive3DDiagram height={fsHeight} cameraPosition={[6, 4, 6]}>
@@ -1275,7 +1300,9 @@ const ElastomericBearings: React.FC = () => {
                   >
                     <CardContent className="p-4">
                       <div className="flex justify-between items-start mb-3">
-                        <div className="p-1.5 bg-gray-800 rounded-lg text-gray-400">{item.icon}</div>
+                        <div className="p-1.5 bg-gray-800 rounded-lg text-gray-400">
+                          {item.icon}
+                        </div>
                         <span
                           className={cn(
                             'px-2 py-1 rounded-md text-[10px] font-bold uppercase',
@@ -1288,7 +1315,9 @@ const ElastomericBearings: React.FC = () => {
                         </span>
                       </div>
                       <p className="text-gray-400 text-xs mb-1">{item.label}</p>
-                      <p className="text-2xl font-black text-white">{(item.val.utilisation * 100).toFixed(1)}%</p>
+                      <p className="text-2xl font-black text-white">
+                        {(item.val.utilisation * 100).toFixed(1)}%
+                      </p>
                       <div className="mt-2 h-1.5 bg-gray-900 rounded-full overflow-hidden">
                         <motion.div
                           initial={{ width: 0 }}
@@ -1328,17 +1357,45 @@ const ElastomericBearings: React.FC = () => {
                     <CardContent>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                         {[
-                          { label: 'Plan Area', value: (results.geometry.area_mm2 / 1e6).toFixed(3), unit: 'm²' },
-                          { label: 'Perimeter', value: (results.geometry.perimeter_mm / 1000).toFixed(2), unit: 'm' },
-                          { label: 'Elastomer', value: `${results.geometry.total_elastomer_thickness_mm}`, unit: 'mm' },
-                          { label: 'Shape Factor', value: results.shape_factors.average_shape_factor.toFixed(1), unit: 'S_avg', highlight: true },
+                          {
+                            label: 'Plan Area',
+                            value: (results.geometry.area_mm2 / 1e6).toFixed(3),
+                            unit: 'm²',
+                          },
+                          {
+                            label: 'Perimeter',
+                            value: (results.geometry.perimeter_mm / 1000).toFixed(2),
+                            unit: 'm',
+                          },
+                          {
+                            label: 'Elastomer',
+                            value: `${results.geometry.total_elastomer_thickness_mm}`,
+                            unit: 'mm',
+                          },
+                          {
+                            label: 'Shape Factor',
+                            value: results.shape_factors.average_shape_factor.toFixed(1),
+                            unit: 'S_avg',
+                            highlight: true,
+                          },
                         ].map((item) => (
-                          <div key={item.label} className="p-3 bg-gray-900/50 rounded-xl border border-gray-800">
+                          <div
+                            key={item.label}
+                            className="p-3 bg-gray-900/50 rounded-xl border border-gray-800"
+                          >
                             <span className="text-[10px] text-gray-500 block mb-0.5 uppercase tracking-wider">
                               {item.label}
                             </span>
-                            <span className={cn('text-sm font-bold', item.highlight ? 'text-neon-cyan' : 'text-white')}>
-                              {item.value} <span className="text-[10px] text-gray-500 font-normal">{item.unit}</span>
+                            <span
+                              className={cn(
+                                'text-sm font-bold',
+                                item.highlight ? 'text-neon-cyan' : 'text-white',
+                              )}
+                            >
+                              {item.value}{' '}
+                              <span className="text-[10px] text-gray-500 font-normal">
+                                {item.unit}
+                              </span>
                             </span>
                           </div>
                         ))}
@@ -1378,7 +1435,9 @@ const ElastomericBearings: React.FC = () => {
                         value={results.stability_check.utilisation}
                       />
                       <p className="text-xs font-mono text-neon-cyan mt-3">
-                        EN 1337-3 §5.3.3 | G_eff = {results.effective_properties.G_eff_mpa.toFixed(2)} MPa, E_c = {results.effective_properties.E_c_mpa.toFixed(0)} MPa
+                        EN 1337-3 §5.3.3 | G_eff ={' '}
+                        {results.effective_properties.G_eff_mpa.toFixed(2)} MPa, E_c ={' '}
+                        {results.effective_properties.E_c_mpa.toFixed(0)} MPa
                       </p>
                     </CardContent>
                   </Card>
@@ -1431,9 +1490,14 @@ const ElastomericBearings: React.FC = () => {
                             key={item.label}
                             className="p-3 bg-gray-900/50 rounded-xl border border-gray-800"
                           >
-                            <span className="text-[10px] text-gray-500 block mb-0.5 uppercase tracking-wider">{item.label}</span>
+                            <span className="text-[10px] text-gray-500 block mb-0.5 uppercase tracking-wider">
+                              {item.label}
+                            </span>
                             <span className="text-sm font-bold text-white">
-                              {item.value} <span className="text-[10px] text-gray-500 font-normal">{item.unit}</span>
+                              {item.value}{' '}
+                              <span className="text-[10px] text-gray-500 font-normal">
+                                {item.unit}
+                              </span>
                             </span>
                           </div>
                         ))}
@@ -2045,8 +2109,6 @@ const ElastomericBearings: React.FC = () => {
           )}
         </AnimatePresence>
       </div>
-
-
 
       {/* Additional CSS for grid pattern */}
       <style>{`

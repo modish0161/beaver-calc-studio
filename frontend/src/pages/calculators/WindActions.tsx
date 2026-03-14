@@ -4,24 +4,24 @@
 // =============================================================================
 
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
-    FiActivity,
-    FiAlertTriangle,
-    FiCheck,
-    FiCheckCircle,
-    FiChevronDown,
-    FiChevronRight,
-    FiDownload,
-    FiGrid,
-    FiInfo,
-    FiLayers,
-    FiMapPin,
-    FiMinimize2,
-    FiSliders,
-    FiTarget,
-    FiWind,
-    FiZap
+  FiActivity,
+  FiAlertTriangle,
+  FiCheck,
+  FiCheckCircle,
+  FiChevronDown,
+  FiChevronRight,
+  FiDownload,
+  FiGrid,
+  FiInfo,
+  FiLayers,
+  FiMapPin,
+  FiMinimize2,
+  FiSliders,
+  FiTarget,
+  FiWind,
+  FiZap,
 } from 'react-icons/fi';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
@@ -35,8 +35,8 @@ import { generatePremiumPDF } from '../../lib/pdfGenerator';
 import Interactive3DDiagram from '../../components/3d/Interactive3DDiagram';
 import WindLoad3D from '../../components/3d/scenes/WindLoad3D';
 import ExplainableLabel from '../../components/ExplainableLabel';
-import WhatIfPreview from '../../components/WhatIfPreview';
 import MouseSpotlight from '../../components/MouseSpotlight';
+import WhatIfPreview from '../../components/WhatIfPreview';
 // TYPE DEFINITIONS
 // =============================================================================
 
@@ -319,7 +319,7 @@ const WindActions = () => {
     { key: 'wind_zone', label: 'Wind_zone', min: 0, max: 100, step: 1, unit: '' },
     { key: 'terrain_category', label: 'Terrain_category', min: 0, max: 100, step: 1, unit: '' },
     { key: 'orography', label: 'Orography', min: 0, max: 100, step: 1, unit: '' },
-    { key: 'altitude', label: 'Altitude', min: 0, max: 100, step: 1, unit: '' }
+    { key: 'altitude', label: 'Altitude', min: 0, max: 100, step: 1, unit: '' },
   ];
 
   const [results, setResults] = useState<Results | null>(null);
@@ -553,7 +553,6 @@ const WindActions = () => {
     });
   }, [formData, results]);
 
-
   const InputField = ({
     label,
     field,
@@ -567,7 +566,11 @@ const WindActions = () => {
   }) => (
     <div>
       <div className="flex items-center justify-between mb-2">
-        <ExplainableLabel label={label} field={field} className="block text-sm font-semibold text-gray-300" />
+        <ExplainableLabel
+          label={label}
+          field={field}
+          className="block text-sm font-semibold text-gray-300"
+        />
         {unit && <span className="text-blue-400 text-xs">{unit}</span>}
       </div>
       <input
@@ -668,7 +671,8 @@ const WindActions = () => {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
         }}
       />
 
@@ -679,6 +683,13 @@ const WindActions = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent mb-4">
+            Wind Actions
+          </h2>
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-6">
+            EN 1991-1-4 wind loading analysis
+          </p>
+
           <div className="flex items-center gap-3 bg-gray-900/40 backdrop-blur-md border border-gray-700/50 rounded-xl p-3 mb-6">
             <div className="flex items-center gap-2">
               {results && (
@@ -700,7 +711,11 @@ const WindActions = () => {
                 </Button>
               )}
               {results && (
-                <SaveRunButton calculatorKey="wind-actions" inputs={formData as unknown as Record<string, string | number>} results={results} />
+                <SaveRunButton
+                  calculatorKey="wind-actions"
+                  inputs={formData as unknown as Record<string, string | number>}
+                  results={results}
+                />
               )}
             </div>
 
@@ -709,7 +724,12 @@ const WindActions = () => {
               {[
                 { id: 'input', label: 'Inputs', icon: <FiGrid /> },
                 { id: 'results', label: 'Analysis', icon: <FiActivity />, disabled: !results },
-                { id: 'visualization', label: 'Visualization', icon: <FiTarget />, disabled: !results },
+                {
+                  id: 'visualization',
+                  label: 'Visualization',
+                  icon: <FiTarget />,
+                  disabled: !results,
+                },
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -727,245 +747,248 @@ const WindActions = () => {
               ))}
             </div>
           </div>
-
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent mb-4">
-              Wind Actions
-          </h2>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            EN 1991-1-4 wind loading analysis
-          </p>
         </motion.div>
 
         {activeTab === 'input' && (
-        <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Input Content */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Presets */}
+              <Card
+                variant="glass"
+                className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+              >
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-2xl text-white font-semibold flex items-center space-x-3">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                      <FiZap className="w-6 h-6 text-blue-400" />
+                    </div>
+                    <span>Quick Presets</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-wrap gap-2">
+                    {Object.entries(PRESETS).map(([key, preset]) => (
+                      <Button
+                        key={key}
+                        variant="glass"
+                        size="sm"
+                        onClick={() => applyPreset(key)}
+                        className="border-blue-500/30 text-blue-400 hover:bg-blue-500/10"
+                      >
+                        {preset.name}
+                      </Button>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
 
-          {/* Input Content */}
-          <div className="lg:col-span-2 space-y-6">
-                {/* Presets */}
-                <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-2xl text-white font-semibold flex items-center space-x-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                        <FiZap className="w-6 h-6 text-blue-400" />
-                      </div>
-                      <span>Quick Presets</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-2">
-                      {Object.entries(PRESETS).map(([key, preset]) => (
-                        <Button
-                          key={key}
-                          variant="glass"
-                          size="sm"
-                          onClick={() => applyPreset(key)}
-                          className="border-blue-500/30 text-blue-400 hover:bg-blue-500/10"
-                        >
-                          {preset.name}
-                        </Button>
+              {/* Location */}
+              <CollapsibleSection
+                title="Location & Terrain"
+                icon={
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                    <FiMapPin className="w-6 h-6 text-blue-400" />
+                  </div>
+                }
+                variant="blue"
+              >
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">
+                      UK Wind Zone
+                    </label>
+                    <select
+                      title="UK Wind Zone"
+                      value={formData.wind_zone}
+                      onChange={(e) => updateForm('wind_zone', e.target.value)}
+                      className="w-full bg-gray-800/50 border border-gray-600/50 rounded-lg px-4 py-2.5 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
+                    >
+                      {Object.entries(UK_WIND_ZONES).map(([key, z]) => (
+                        <option key={key} value={key}>
+                          {z.name} (vb,0={z.vb_0} m/s)
+                        </option>
                       ))}
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Location */}
-                <CollapsibleSection
-                  title="Location & Terrain"
-                  icon={
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                      <FiMapPin className="w-6 h-6 text-blue-400" />
-                    </div>
-                  }
-                  variant="blue"
-                >
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-300 mb-2">UK Wind Zone</label>
-                      <select
-                        title="UK Wind Zone"
-                        value={formData.wind_zone}
-                        onChange={(e) => updateForm('wind_zone', e.target.value)}
-                        className="w-full bg-gray-800/50 border border-gray-600/50 rounded-lg px-4 py-2.5 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
-                      >
-                        {Object.entries(UK_WIND_ZONES).map(([key, z]) => (
-                          <option key={key} value={key}>
-                            {z.name} (vb,0={z.vb_0} m/s)
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-300 mb-2">Terrain Category</label>
-                      <select
-                        title="Terrain Category"
-                        value={formData.terrain_category}
-                        onChange={(e) => updateForm('terrain_category', e.target.value)}
-                        className="w-full bg-gray-800/50 border border-gray-600/50 rounded-lg px-4 py-2.5 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
-                      >
-                        {Object.entries(TERRAIN_CATEGORIES).map(([key, tc]) => (
-                          <option key={key} value={key}>
-                            {tc.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-300 mb-2">Orography</label>
-                      <select
-                        title="Orography"
-                        value={formData.orography}
-                        onChange={(e) => updateForm('orography', e.target.value)}
-                        className="w-full bg-gray-800/50 border border-gray-600/50 rounded-lg px-4 py-2.5 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
-                      >
-                        {Object.entries(OROGRAPHY_FACTORS).map(([key, of]) => (
-                          <option key={key} value={key}>
-                            {of.name} (co={of.co})
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <InputField label="Altitude" field="altitude" unit="m" />
-                    <InputField label="Distance to Sea" field="distance_sea" unit="km" />
+                    </select>
                   </div>
-                </CollapsibleSection>
-
-                {/* Structure */}
-                <CollapsibleSection
-                  title="Structure Geometry"
-                  icon={
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                      <FiGrid className="w-6 h-6 text-blue-400" />
-                    </div>
-                  }
-                  variant="emerald"
-                >
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-300 mb-2">Structure Type</label>
-                      <select
-                        title="Structure Type"
-                        value={formData.structure_type}
-                        onChange={(e) => updateForm('structure_type', e.target.value)}
-                        className="w-full bg-gray-800/50 border border-gray-600/50 rounded-lg px-4 py-2.5 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
-                      >
-                        {Object.entries(STRUCTURE_TYPES).map(([key, st]) => (
-                          <option key={key} value={key}>
-                            {st.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <InputField label="Height" field="height" unit="m" />
-                    <InputField label="Width (perpendicular to wind)" field="width" unit="m" />
-                    <InputField label="Depth (parallel to wind)" field="depth" unit="m" />
-                    <InputField
-                      label="Reference Height z"
-                      field="reference_height"
-                      unit="m"
-                      tooltip="Usually building height"
-                    />
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">
+                      Terrain Category
+                    </label>
+                    <select
+                      title="Terrain Category"
+                      value={formData.terrain_category}
+                      onChange={(e) => updateForm('terrain_category', e.target.value)}
+                      className="w-full bg-gray-800/50 border border-gray-600/50 rounded-lg px-4 py-2.5 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
+                    >
+                      {Object.entries(TERRAIN_CATEGORIES).map(([key, tc]) => (
+                        <option key={key} value={key}>
+                          {tc.name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
-                </CollapsibleSection>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">
+                      Orography
+                    </label>
+                    <select
+                      title="Orography"
+                      value={formData.orography}
+                      onChange={(e) => updateForm('orography', e.target.value)}
+                      className="w-full bg-gray-800/50 border border-gray-600/50 rounded-lg px-4 py-2.5 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
+                    >
+                      {Object.entries(OROGRAPHY_FACTORS).map(([key, of]) => (
+                        <option key={key} value={key}>
+                          {of.name} (co={of.co})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <InputField label="Altitude" field="altitude" unit="m" />
+                  <InputField label="Distance to Sea" field="distance_sea" unit="km" />
+                </div>
+              </CollapsibleSection>
 
-                {/* Factors */}
-                <CollapsibleSection
-                  title="Modification Factors"
-                  icon={
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                      <FiTarget className="w-6 h-6 text-blue-400" />
+              {/* Structure */}
+              <CollapsibleSection
+                title="Structure Geometry"
+                icon={
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                    <FiGrid className="w-6 h-6 text-blue-400" />
+                  </div>
+                }
+                variant="emerald"
+              >
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">
+                      Structure Type
+                    </label>
+                    <select
+                      title="Structure Type"
+                      value={formData.structure_type}
+                      onChange={(e) => updateForm('structure_type', e.target.value)}
+                      className="w-full bg-gray-800/50 border border-gray-600/50 rounded-lg px-4 py-2.5 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
+                    >
+                      {Object.entries(STRUCTURE_TYPES).map(([key, st]) => (
+                        <option key={key} value={key}>
+                          {st.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <InputField label="Height" field="height" unit="m" />
+                  <InputField label="Width (perpendicular to wind)" field="width" unit="m" />
+                  <InputField label="Depth (parallel to wind)" field="depth" unit="m" />
+                  <InputField
+                    label="Reference Height z"
+                    field="reference_height"
+                    unit="m"
+                    tooltip="Usually building height"
+                  />
+                </div>
+              </CollapsibleSection>
+
+              {/* Factors */}
+              <CollapsibleSection
+                title="Modification Factors"
+                icon={
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                    <FiTarget className="w-6 h-6 text-blue-400" />
+                  </div>
+                }
+                variant="purple"
+                defaultOpen={false}
+              >
+                <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
+                  <InputField
+                    label="c_season"
+                    field="cseason"
+                    tooltip="Seasonal factor (usually 1.0)"
+                  />
+                  <InputField label="c_dir" field="cdir" tooltip="Directional factor" />
+                  <InputField
+                    label="c_prob"
+                    field="cprob"
+                    tooltip="Probability factor (return period)"
+                  />
+                  <InputField
+                    label="c_f (force coeff)"
+                    field="cf"
+                    tooltip="Force coefficient for structure"
+                  />
+                </div>
+              </CollapsibleSection>
+
+              {/* Pressure Coefficients */}
+              <CollapsibleSection
+                title="Pressure Coefficients"
+                icon={
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                    <FiLayers className="w-6 h-6 text-blue-400" />
+                  </div>
+                }
+                variant="amber"
+                defaultOpen={false}
+              >
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <InputField
+                    label="cpe (windward)"
+                    field="cpe_windward"
+                    tooltip="External pressure coefficient - windward"
+                  />
+                  <InputField
+                    label="cpe (leeward)"
+                    field="cpe_leeward"
+                    tooltip="External pressure coefficient - leeward (negative)"
+                  />
+                  <InputField
+                    label="cpi (internal)"
+                    field="cpi"
+                    tooltip="Internal pressure coefficient"
+                  />
+                </div>
+                <div className="mt-3 p-3 bg-gray-900/50 rounded-xl text-sm text-gray-400">
+                  <strong>Typical values:</strong> Windward +0.8, Leeward -0.5, Internal ±0.2
+                  (openings controlled)
+                </div>
+              </CollapsibleSection>
+
+              {/* Calculate Button */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="flex justify-center pt-4"
+              >
+                <Button
+                  onClick={() => {
+                    runCalculation();
+                    setActiveTab('results');
+                  }}
+                  disabled={isCalculating}
+                  className="w-full py-4 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:via-blue-400 hover:to-cyan-400 text-white font-bold text-lg rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  {isCalculating ? (
+                    <div className="flex items-center gap-3">
+                      <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
+                      ANALYSING...
                     </div>
-                  }
-                  variant="purple"
-                  defaultOpen={false}
-                >
-                  <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
-                    <InputField
-                      label="c_season"
-                      field="cseason"
-                      tooltip="Seasonal factor (usually 1.0)"
-                    />
-                    <InputField label="c_dir" field="cdir" tooltip="Directional factor" />
-                    <InputField
-                      label="c_prob"
-                      field="cprob"
-                      tooltip="Probability factor (return period)"
-                    />
-                    <InputField
-                      label="c_f (force coeff)"
-                      field="cf"
-                      tooltip="Force coefficient for structure"
-                    />
-                  </div>
-                </CollapsibleSection>
+                  ) : (
+                    '▶ RUN FULL ANALYSIS'
+                  )}
+                </Button>
+              </motion.div>
+            </div>
 
-                {/* Pressure Coefficients */}
-                <CollapsibleSection
-                  title="Pressure Coefficients"
-                  icon={
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                      <FiLayers className="w-6 h-6 text-blue-400" />
-                    </div>
-                  }
-                  variant="amber"
-                  defaultOpen={false}
-                >
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <InputField
-                      label="cpe (windward)"
-                      field="cpe_windward"
-                      tooltip="External pressure coefficient - windward"
-                    />
-                    <InputField
-                      label="cpe (leeward)"
-                      field="cpe_leeward"
-                      tooltip="External pressure coefficient - leeward (negative)"
-                    />
-                    <InputField
-                      label="cpi (internal)"
-                      field="cpi"
-                      tooltip="Internal pressure coefficient"
-                    />
-                  </div>
-                  <div className="mt-3 p-3 bg-gray-900/50 rounded-xl text-sm text-gray-400">
-                    <strong>Typical values:</strong> Windward +0.8, Leeward -0.5, Internal ±0.2
-                    (openings controlled)
-                  </div>
-                </CollapsibleSection>
-
-                {/* Calculate Button */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="flex justify-center pt-4"
-                >
-                  <Button
-                    onClick={() => {
-                      runCalculation();
-                      setActiveTab('results');
-                    }}
-                    disabled={isCalculating}
-                    className="w-full py-4 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:via-blue-400 hover:to-cyan-400 text-white font-bold text-lg rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
-                  >
-                    {isCalculating ? (
-                      <div className="flex items-center gap-3">
-                        <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
-                        ANALYSING...
-                      </div>
-                    ) : (
-                      '▶ RUN FULL ANALYSIS'
-                    )}
-                  </Button>
-                </motion.div>
-              </div>
-
-              {/* Right Column — Sticky Sidebar */}
-              <div className="lg:col-span-1">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.4 }}
-                  className="sticky top-8 space-y-4"
-                >
+            {/* Right Column — Sticky Sidebar */}
+            <div className="lg:col-span-1">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.4 }}
+                className="sticky top-8 space-y-4"
+              >
                 {/* Fullscreen Preview Overlay */}
                 {previewMaximized && (
                   <motion.div
@@ -994,19 +1017,77 @@ const WindActions = () => {
                         <FiSliders size={14} /> Live Parameters
                       </h3>
                       {[
-                        { label: 'Altitude', field: 'altitude' as keyof FormData, min: 0, max: 500, step: 5, unit: 'm' },
-                        { label: 'Height', field: 'height' as keyof FormData, min: 1, max: 100, step: 1, unit: 'm' },
-                        { label: 'Width', field: 'width' as keyof FormData, min: 1, max: 100, step: 1, unit: 'm' },
-                        { label: 'Depth', field: 'depth' as keyof FormData, min: 1, max: 100, step: 1, unit: 'm' },
-                        { label: 'Ref Height', field: 'reference_height' as keyof FormData, min: 1, max: 100, step: 1, unit: 'm' },
-                        { label: 'Force Coeff', field: 'cf' as keyof FormData, min: 0.5, max: 3.0, step: 0.1, unit: '' },
-                        { label: 'Cpe Windward', field: 'cpe_windward' as keyof FormData, min: -1.5, max: 1.5, step: 0.1, unit: '' },
-                        { label: 'Cpe Leeward', field: 'cpe_leeward' as keyof FormData, min: -1.5, max: 0, step: 0.1, unit: '' },
+                        {
+                          label: 'Altitude',
+                          field: 'altitude' as keyof FormData,
+                          min: 0,
+                          max: 500,
+                          step: 5,
+                          unit: 'm',
+                        },
+                        {
+                          label: 'Height',
+                          field: 'height' as keyof FormData,
+                          min: 1,
+                          max: 100,
+                          step: 1,
+                          unit: 'm',
+                        },
+                        {
+                          label: 'Width',
+                          field: 'width' as keyof FormData,
+                          min: 1,
+                          max: 100,
+                          step: 1,
+                          unit: 'm',
+                        },
+                        {
+                          label: 'Depth',
+                          field: 'depth' as keyof FormData,
+                          min: 1,
+                          max: 100,
+                          step: 1,
+                          unit: 'm',
+                        },
+                        {
+                          label: 'Ref Height',
+                          field: 'reference_height' as keyof FormData,
+                          min: 1,
+                          max: 100,
+                          step: 1,
+                          unit: 'm',
+                        },
+                        {
+                          label: 'Force Coeff',
+                          field: 'cf' as keyof FormData,
+                          min: 0.5,
+                          max: 3.0,
+                          step: 0.1,
+                          unit: '',
+                        },
+                        {
+                          label: 'Cpe Windward',
+                          field: 'cpe_windward' as keyof FormData,
+                          min: -1.5,
+                          max: 1.5,
+                          step: 0.1,
+                          unit: '',
+                        },
+                        {
+                          label: 'Cpe Leeward',
+                          field: 'cpe_leeward' as keyof FormData,
+                          min: -1.5,
+                          max: 0,
+                          step: 0.1,
+                          unit: '',
+                        },
                       ].map((s) => (
                         <div key={s.field} className="space-y-1">
                           <div className="flex justify-between text-xs font-mono">
                             <span className="text-gray-400">{s.label}</span>
-                            <span className="text-white">{formData[s.field]} {s.unit}</span>
+                            <span className="text-white">
+                              {formData[s.field]} {s.unit}
+                            </span>
                           </div>
                           <input
                             title={s.label}
@@ -1029,27 +1110,52 @@ const WindActions = () => {
                           { label: 'Wind Zone', value: formData.wind_zone || '—' },
                           { label: 'Terrain', value: formData.terrain_category || '—' },
                           { label: 'Structure', value: formData.structure_type || '—' },
-                          { label: 'Building HxWxD', value: `${formData.height || 0} × ${formData.width || 0} × ${formData.depth || 0} m` },
+                          {
+                            label: 'Building HxWxD',
+                            value: `${formData.height || 0} × ${formData.width || 0} × ${formData.depth || 0} m`,
+                          },
                         ].map((stat) => (
-                          <div key={stat.label} className="flex justify-between text-xs py-1 border-b border-gray-800/50">
+                          <div
+                            key={stat.label}
+                            className="flex justify-between text-xs py-1 border-b border-gray-800/50"
+                          >
                             <span className="text-gray-500">{stat.label}</span>
                             <span className="text-white font-medium">{stat.value}</span>
                           </div>
                         ))}
                         {results && (
                           <div className="mt-3 space-y-1">
-                            <div className="text-xs font-bold text-gray-400 uppercase mb-1">Last Analysis</div>
+                            <div className="text-xs font-bold text-gray-400 uppercase mb-1">
+                              Last Analysis
+                            </div>
                             {[
                               { label: 'vb', value: `${results.vb.toFixed(1)} m/s` },
                               { label: 'qp', value: `${results.qp.toFixed(1)} Pa` },
-                              { label: 'We (windward)', value: `${results.we_windward.toFixed(1)} Pa` },
-                              { label: 'We (leeward)', value: `${results.we_leeward.toFixed(1)} Pa` },
-                              { label: 'Net Pressure', value: `${results.net_pressure.toFixed(1)} Pa` },
+                              {
+                                label: 'We (windward)',
+                                value: `${results.we_windward.toFixed(1)} Pa`,
+                              },
+                              {
+                                label: 'We (leeward)',
+                                value: `${results.we_leeward.toFixed(1)} Pa`,
+                              },
+                              {
+                                label: 'Net Pressure',
+                                value: `${results.net_pressure.toFixed(1)} Pa`,
+                              },
                               { label: 'Wind Force', value: `${results.wind_force.toFixed(1)} kN` },
                             ].map((check) => (
-                              <div key={check.label} className="flex justify-between text-xs py-0.5">
+                              <div
+                                key={check.label}
+                                className="flex justify-between text-xs py-0.5"
+                              >
                                 <span className="text-gray-500">{check.label}</span>
-                                <span className={cn('font-bold', results.status === 'FAIL' ? 'text-red-500' : 'text-emerald-400')}>
+                                <span
+                                  className={cn(
+                                    'font-bold',
+                                    results.status === 'FAIL' ? 'text-red-500' : 'text-emerald-400',
+                                  )}
+                                >
                                   {check.value}
                                 </span>
                               </div>
@@ -1081,7 +1187,10 @@ const WindActions = () => {
                   )}
                 />
 
-                <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
+                <Card
+                  variant="glass"
+                  className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                >
                   <CardHeader className="pb-2">
                     <CardTitle className="text-lg text-white font-semibold flex items-center gap-2">
                       <FiWind className="text-blue-400" />
@@ -1107,7 +1216,10 @@ const WindActions = () => {
                   </CardContent>
                 </Card>
 
-                <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
+                <Card
+                  variant="glass"
+                  className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                >
                   <CardHeader className="pb-2">
                     <CardTitle className="text-lg text-white font-semibold flex items-center gap-2">
                       <FiInfo className="text-blue-400" />
@@ -1129,9 +1241,9 @@ const WindActions = () => {
                     </p>
                   </CardContent>
                 </Card>
-                </motion.div>
-              </div>
+              </motion.div>
             </div>
+          </div>
         )}
         {activeTab === 'results' && (
           <motion.div
@@ -1145,12 +1257,42 @@ const WindActions = () => {
                 {/* Top Results Summary — border-l-4 check cards */}
                 <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-4">
                   {[
-                    { label: 'Wind Velocity', value: `${results.vb.toFixed(1)} m/s`, icon: <FiWind />, status: 'PASS' },
-                    { label: 'Peak Pressure', value: `${results.qp.toFixed(2)} kN/m²`, icon: <FiActivity />, status: results.classification === 'VERY HIGH' ? 'WARN' : 'PASS' },
-                    { label: 'Roughness', value: results.cr.toFixed(3), icon: <FiLayers />, status: 'PASS' },
-                    { label: 'Turbulence', value: results.Iv.toFixed(3), icon: <FiTarget />, status: 'PASS' },
-                    { label: 'Net Pressure', value: `${(results.net_pressure / 1000).toFixed(2)} kN/m²`, icon: <FiGrid />, status: 'PASS' },
-                    { label: 'Wind Force', value: `${results.wind_force.toFixed(1)} kN`, icon: <FiZap />, status: 'PASS' },
+                    {
+                      label: 'Wind Velocity',
+                      value: `${results.vb.toFixed(1)} m/s`,
+                      icon: <FiWind />,
+                      status: 'PASS',
+                    },
+                    {
+                      label: 'Peak Pressure',
+                      value: `${results.qp.toFixed(2)} kN/m²`,
+                      icon: <FiActivity />,
+                      status: results.classification === 'VERY HIGH' ? 'WARN' : 'PASS',
+                    },
+                    {
+                      label: 'Roughness',
+                      value: results.cr.toFixed(3),
+                      icon: <FiLayers />,
+                      status: 'PASS',
+                    },
+                    {
+                      label: 'Turbulence',
+                      value: results.Iv.toFixed(3),
+                      icon: <FiTarget />,
+                      status: 'PASS',
+                    },
+                    {
+                      label: 'Net Pressure',
+                      value: `${(results.net_pressure / 1000).toFixed(2)} kN/m²`,
+                      icon: <FiGrid />,
+                      status: 'PASS',
+                    },
+                    {
+                      label: 'Wind Force',
+                      value: `${results.wind_force.toFixed(1)} kN`,
+                      icon: <FiZap />,
+                      status: 'PASS',
+                    },
                   ].map((item, i) => (
                     <Card
                       key={i}
@@ -1162,7 +1304,9 @@ const WindActions = () => {
                     >
                       <CardContent className="p-4">
                         <div className="flex justify-between items-start mb-3">
-                          <div className="p-1.5 bg-gray-800 rounded-lg text-gray-400">{item.icon}</div>
+                          <div className="p-1.5 bg-gray-800 rounded-lg text-gray-400">
+                            {item.icon}
+                          </div>
                           <span
                             className={cn(
                               'px-2 py-1 rounded-md text-[10px] font-bold uppercase',
@@ -1181,292 +1325,319 @@ const WindActions = () => {
                   ))}
                 </div>
 
-              <div className="grid lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-2 space-y-6">
-                  {/* Basic Wind Velocity */}
-                  <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
-                    <CardHeader>
-                      <CardTitle className="text-2xl text-white font-semibold flex items-center space-x-3">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                          <FiWind className="w-6 h-6 text-blue-400" />
-                        </div>
-                        <span>Basic Wind Velocity</span>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div className="p-3 bg-gray-950/50 rounded-lg text-center">
-                          <div className="text-gray-400 text-xs">
-                            v<sub>b,0</sub> (fundamental)
+                <div className="grid lg:grid-cols-3 gap-8">
+                  <div className="lg:col-span-2 space-y-6">
+                    {/* Basic Wind Velocity */}
+                    <Card
+                      variant="glass"
+                      className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                    >
+                      <CardHeader>
+                        <CardTitle className="text-2xl text-white font-semibold flex items-center space-x-3">
+                          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                            <FiWind className="w-6 h-6 text-blue-400" />
                           </div>
-                          <div className="text-xl font-bold text-white">
-                            {results.vb_0.toFixed(1)} m/s
+                          <span>Basic Wind Velocity</span>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                          <div className="p-3 bg-gray-950/50 rounded-lg text-center">
+                            <div className="text-gray-400 text-xs">
+                              v<sub>b,0</sub> (fundamental)
+                            </div>
+                            <div className="text-xl font-bold text-white">
+                              {results.vb_0.toFixed(1)} m/s
+                            </div>
                           </div>
-                        </div>
-                        <div className="p-3 bg-gray-950/50 rounded-lg text-center">
-                          <div className="text-gray-400 text-xs">
-                            v<sub>b</sub> (basic)
+                          <div className="p-3 bg-gray-950/50 rounded-lg text-center">
+                            <div className="text-gray-400 text-xs">
+                              v<sub>b</sub> (basic)
+                            </div>
+                            <div className="text-xl font-bold text-blue-400">
+                              {results.vb.toFixed(1)} m/s
+                            </div>
                           </div>
-                          <div className="text-xl font-bold text-blue-400">
-                            {results.vb.toFixed(1)} m/s
+                          <div className="p-3 bg-gray-950/50 rounded-lg text-center">
+                            <div className="text-gray-400 text-xs">
+                              c<sub>r</sub> (roughness)
+                            </div>
+                            <div className="text-xl font-bold text-white">
+                              {results.cr.toFixed(3)}
+                            </div>
                           </div>
-                        </div>
-                        <div className="p-3 bg-gray-950/50 rounded-lg text-center">
-                          <div className="text-gray-400 text-xs">
-                            c<sub>r</sub> (roughness)
-                          </div>
-                          <div className="text-xl font-bold text-white">
-                            {results.cr.toFixed(3)}
-                          </div>
-                        </div>
-                        <div className="p-3 bg-gray-950/50 rounded-lg text-center">
-                          <div className="text-gray-400 text-xs">
-                            v<sub>m</sub> (mean)
-                          </div>
-                          <div className="text-xl font-bold text-white">
-                            {results.vm.toFixed(1)} m/s
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* Peak Velocity Pressure */}
-                  <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
-                    <CardHeader>
-                      <CardTitle className="text-2xl text-white font-semibold flex items-center space-x-3">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                          <FiActivity className="w-6 h-6 text-blue-400" />
-                        </div>
-                        <span>Peak Velocity Pressure</span>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div className="p-3 bg-gray-950/50 rounded-lg text-center">
-                          <div className="text-gray-400 text-xs">
-                            q<sub>b</sub> (basic)
-                          </div>
-                          <div className="text-lg font-bold text-white">
-                            {results.qb.toFixed(0)} Pa
+                          <div className="p-3 bg-gray-950/50 rounded-lg text-center">
+                            <div className="text-gray-400 text-xs">
+                              v<sub>m</sub> (mean)
+                            </div>
+                            <div className="text-xl font-bold text-white">
+                              {results.vm.toFixed(1)} m/s
+                            </div>
                           </div>
                         </div>
-                        <div className="p-3 bg-gray-950/50 rounded-lg text-center">
-                          <div className="text-gray-400 text-xs">
-                            c<sub>e</sub> (exposure)
-                          </div>
-                          <div className="text-lg font-bold text-white">
-                            {results.ce.toFixed(2)}
-                          </div>
-                        </div>
-                        <div className="p-3 bg-gray-950/50 rounded-lg text-center">
-                          <div className="text-gray-400 text-xs">
-                            I<sub>v</sub> (turbulence)
-                          </div>
-                          <div className="text-lg font-bold text-white">
-                            {results.Iv.toFixed(3)}
-                          </div>
-                        </div>
-                        <div
-                          className="p-3 bg-gray-950/50 rounded-lg text-center border-2"
-                          style={{ borderColor: results.classColor }}
-                        >
-                          <div className="text-gray-400 text-xs">
-                            q<sub>p</sub> (peak)
-                          </div>
-                          <div className="text-xl font-bold" style={{ color: results.classColor }}>
-                            {results.qp.toFixed(0)} Pa
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* Wind Pressure */}
-                  <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
-                    <CardHeader>
-                      <CardTitle className="text-2xl text-white font-semibold flex items-center space-x-3">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                          <FiLayers className="w-6 h-6 text-blue-400" />
-                        </div>
-                        <span>Wind Pressure</span>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                        <div className="p-3 bg-gray-950/50 rounded-lg text-center">
-                          <div className="text-gray-400 text-xs">
-                            w<sub>e</sub> (windward)
-                          </div>
-                          <div className="text-lg font-bold text-blue-400">
-                            +{results.we_windward.toFixed(0)} Pa
-                          </div>
-                        </div>
-                        <div className="p-3 bg-gray-950/50 rounded-lg text-center">
-                          <div className="text-gray-400 text-xs">
-                            w<sub>e</sub> (leeward)
-                          </div>
-                          <div className="text-lg font-bold text-cyan-400">
-                            {results.we_leeward.toFixed(0)} Pa
-                          </div>
-                        </div>
-                        <div className="p-3 bg-gray-950/50 rounded-lg text-center">
-                          <div className="text-gray-400 text-xs">Net Pressure</div>
-                          <div className="text-xl font-bold text-amber-400">
-                            {results.net_pressure.toFixed(0)} Pa
-                          </div>
-                          <div className="text-xs text-gray-500">
-                            {(results.net_pressure / 1000).toFixed(2)} kN/m²
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* Wind Force */}
-                  <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
-                    <CardHeader>
-                      <CardTitle className="text-2xl text-white font-semibold flex items-center space-x-3">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                          <FiZap className="w-6 h-6 text-blue-400" />
-                        </div>
-                        <span>Total Wind Force</span>
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid grid-cols-3 gap-4">
-                        <div className="p-3 bg-gray-950/50 rounded-lg text-center">
-                          <div className="text-gray-400 text-xs">Reference Area</div>
-                          <div className="text-lg font-bold text-white">
-                            {results.area.toFixed(0)} m²
-                          </div>
-                        </div>
-                        <div className="p-3 bg-gray-950/50 rounded-lg text-center">
-                          <div className="text-gray-400 text-xs">
-                            c<sub>s</sub>c<sub>d</sub> (structural)
-                          </div>
-                          <div className="text-lg font-bold text-white">
-                            {results.cscd.toFixed(2)}
-                          </div>
-                        </div>
-                        <div className="p-3 bg-gray-950/50 rounded-lg text-center border-2 border-blue-500">
-                          <div className="text-gray-400 text-xs">
-                            Wind Force F<sub>w</sub>
-                          </div>
-                          <div className="text-2xl font-bold text-blue-400">
-                            {results.wind_force.toFixed(1)} kN
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-
-                {/* Right Column — Sticky */}
-                <div className="lg:col-span-1">
-                  <div className="sticky top-8 space-y-4">
-                  <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50 border-l-4 border-l-blue-400">
-                    <CardContent className="py-6 text-center">
-                      <div className="text-4xl mb-2 text-blue-400">
-                        <FiWind className="inline" />
-                      </div>
-                      <div className="font-bold text-lg" style={{ color: results.classColor }}>
-                        {results.classification}
-                      </div>
-                      <div className="text-gray-400 text-sm mt-1">
-                        Peak Pressure: {results.qp.toFixed(0)} Pa
-                      </div>
-                      <div className="text-gray-400 text-sm">
-                        ({(results.qp / 1000).toFixed(2)} kN/m²)
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {warnings.length > 0 && (
-                    <Card className="bg-amber-500/10 border-amber-500/30">
-                      <CardContent className="py-4">
-                        <div className="flex items-center gap-2 text-amber-400 mb-2">
-                          <FiAlertTriangle />
-                          <span className="font-medium">Design Notes</span>
-                        </div>
-                        <ul className="text-sm text-white space-y-1">
-                          {warnings.map((w, i) => (
-                            <li key={i}>• {w}</li>
-                          ))}
-                        </ul>
                       </CardContent>
                     </Card>
-                  )}
 
-                  {/* Recommendations */}
-                  <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
-                    <CardContent className="p-6">
-                      <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                          <FiCheckCircle className="w-6 h-6 text-blue-400" />
-                        </div>
-                        Design Recommendations
-                      </h3>
-                      <div className="space-y-3">
-                        {[
-                          'Verify orography factor for sites near hills, cliffs or escarpments per NA.2.4',
-                          'Consider directional factor c_dir if dominant wind direction is known from met data',
-                          'Check for vortex shedding and aeroelastic effects on slender structures (h/b > 4)',
-                          'Apply appropriate internal pressure coefficients for enclosed vs dominant opening cases',
-                        ].map((rec, i) => (
-                          <div key={i} className="flex items-start gap-3">
-                            <FiCheck className="text-blue-400 mt-0.5 flex-shrink-0" />
-                            <span className="text-gray-300 text-sm">{rec}</span>
+                    {/* Peak Velocity Pressure */}
+                    <Card
+                      variant="glass"
+                      className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                    >
+                      <CardHeader>
+                        <CardTitle className="text-2xl text-white font-semibold flex items-center space-x-3">
+                          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                            <FiActivity className="w-6 h-6 text-blue-400" />
                           </div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
+                          <span>Peak Velocity Pressure</span>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                          <div className="p-3 bg-gray-950/50 rounded-lg text-center">
+                            <div className="text-gray-400 text-xs">
+                              q<sub>b</sub> (basic)
+                            </div>
+                            <div className="text-lg font-bold text-white">
+                              {results.qb.toFixed(0)} Pa
+                            </div>
+                          </div>
+                          <div className="p-3 bg-gray-950/50 rounded-lg text-center">
+                            <div className="text-gray-400 text-xs">
+                              c<sub>e</sub> (exposure)
+                            </div>
+                            <div className="text-lg font-bold text-white">
+                              {results.ce.toFixed(2)}
+                            </div>
+                          </div>
+                          <div className="p-3 bg-gray-950/50 rounded-lg text-center">
+                            <div className="text-gray-400 text-xs">
+                              I<sub>v</sub> (turbulence)
+                            </div>
+                            <div className="text-lg font-bold text-white">
+                              {results.Iv.toFixed(3)}
+                            </div>
+                          </div>
+                          <div
+                            className="p-3 bg-gray-950/50 rounded-lg text-center border-2"
+                            style={{ borderColor: results.classColor }}
+                          >
+                            <div className="text-gray-400 text-xs">
+                              q<sub>p</sub> (peak)
+                            </div>
+                            <div
+                              className="text-xl font-bold"
+                              style={{ color: results.classColor }}
+                            >
+                              {results.qp.toFixed(0)} Pa
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
 
-                  <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-lg text-white font-semibold">Design Summary</CardTitle>
-                    </CardHeader>
-                    <CardContent className="text-sm space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Wind Zone</span>
-                        <span className="text-white">
-                          {UK_WIND_ZONES[formData.wind_zone]?.name}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Terrain</span>
-                        <span className="text-white">{formData.terrain_category}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">Structure</span>
-                        <span className="text-white">
-                          {STRUCTURE_TYPES[formData.structure_type]?.name}
-                        </span>
-                      </div>
-                      <div className="flex justify-between pt-2 border-t border-gray-700">
-                        <span className="text-gray-400">
-                          v<sub>b</sub>
-                        </span>
-                        <span className="text-white">{results.vb.toFixed(1)} m/s</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">
-                          q<sub>p</sub>
-                        </span>
-                        <span className="text-white">{results.qp.toFixed(0)} Pa</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400">
-                          F<sub>w</sub>
-                        </span>
-                        <span className="text-white">{results.wind_force.toFixed(1)} kN</span>
-                      </div>
-                    </CardContent>
-                  </Card>
-                  </div>{/* end sticky */}
+                    {/* Wind Pressure */}
+                    <Card
+                      variant="glass"
+                      className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                    >
+                      <CardHeader>
+                        <CardTitle className="text-2xl text-white font-semibold flex items-center space-x-3">
+                          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                            <FiLayers className="w-6 h-6 text-blue-400" />
+                          </div>
+                          <span>Wind Pressure</span>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                          <div className="p-3 bg-gray-950/50 rounded-lg text-center">
+                            <div className="text-gray-400 text-xs">
+                              w<sub>e</sub> (windward)
+                            </div>
+                            <div className="text-lg font-bold text-blue-400">
+                              +{results.we_windward.toFixed(0)} Pa
+                            </div>
+                          </div>
+                          <div className="p-3 bg-gray-950/50 rounded-lg text-center">
+                            <div className="text-gray-400 text-xs">
+                              w<sub>e</sub> (leeward)
+                            </div>
+                            <div className="text-lg font-bold text-cyan-400">
+                              {results.we_leeward.toFixed(0)} Pa
+                            </div>
+                          </div>
+                          <div className="p-3 bg-gray-950/50 rounded-lg text-center">
+                            <div className="text-gray-400 text-xs">Net Pressure</div>
+                            <div className="text-xl font-bold text-amber-400">
+                              {results.net_pressure.toFixed(0)} Pa
+                            </div>
+                            <div className="text-xs text-gray-500">
+                              {(results.net_pressure / 1000).toFixed(2)} kN/m²
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Wind Force */}
+                    <Card
+                      variant="glass"
+                      className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                    >
+                      <CardHeader>
+                        <CardTitle className="text-2xl text-white font-semibold flex items-center space-x-3">
+                          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                            <FiZap className="w-6 h-6 text-blue-400" />
+                          </div>
+                          <span>Total Wind Force</span>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="grid grid-cols-3 gap-4">
+                          <div className="p-3 bg-gray-950/50 rounded-lg text-center">
+                            <div className="text-gray-400 text-xs">Reference Area</div>
+                            <div className="text-lg font-bold text-white">
+                              {results.area.toFixed(0)} m²
+                            </div>
+                          </div>
+                          <div className="p-3 bg-gray-950/50 rounded-lg text-center">
+                            <div className="text-gray-400 text-xs">
+                              c<sub>s</sub>c<sub>d</sub> (structural)
+                            </div>
+                            <div className="text-lg font-bold text-white">
+                              {results.cscd.toFixed(2)}
+                            </div>
+                          </div>
+                          <div className="p-3 bg-gray-950/50 rounded-lg text-center border-2 border-blue-500">
+                            <div className="text-gray-400 text-xs">
+                              Wind Force F<sub>w</sub>
+                            </div>
+                            <div className="text-2xl font-bold text-blue-400">
+                              {results.wind_force.toFixed(1)} kN
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  {/* Right Column — Sticky */}
+                  <div className="lg:col-span-1">
+                    <div className="sticky top-8 space-y-4">
+                      <Card
+                        variant="glass"
+                        className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50 border-l-4 border-l-blue-400"
+                      >
+                        <CardContent className="py-6 text-center">
+                          <div className="text-4xl mb-2 text-blue-400">
+                            <FiWind className="inline" />
+                          </div>
+                          <div className="font-bold text-lg" style={{ color: results.classColor }}>
+                            {results.classification}
+                          </div>
+                          <div className="text-gray-400 text-sm mt-1">
+                            Peak Pressure: {results.qp.toFixed(0)} Pa
+                          </div>
+                          <div className="text-gray-400 text-sm">
+                            ({(results.qp / 1000).toFixed(2)} kN/m²)
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      {warnings.length > 0 && (
+                        <Card className="bg-amber-500/10 border-amber-500/30">
+                          <CardContent className="py-4">
+                            <div className="flex items-center gap-2 text-amber-400 mb-2">
+                              <FiAlertTriangle />
+                              <span className="font-medium">Design Notes</span>
+                            </div>
+                            <ul className="text-sm text-white space-y-1">
+                              {warnings.map((w, i) => (
+                                <li key={i}>• {w}</li>
+                              ))}
+                            </ul>
+                          </CardContent>
+                        </Card>
+                      )}
+
+                      {/* Recommendations */}
+                      <Card
+                        variant="glass"
+                        className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                      >
+                        <CardContent className="p-6">
+                          <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                              <FiCheckCircle className="w-6 h-6 text-blue-400" />
+                            </div>
+                            Design Recommendations
+                          </h3>
+                          <div className="space-y-3">
+                            {[
+                              'Verify orography factor for sites near hills, cliffs or escarpments per NA.2.4',
+                              'Consider directional factor c_dir if dominant wind direction is known from met data',
+                              'Check for vortex shedding and aeroelastic effects on slender structures (h/b > 4)',
+                              'Apply appropriate internal pressure coefficients for enclosed vs dominant opening cases',
+                            ].map((rec, i) => (
+                              <div key={i} className="flex items-start gap-3">
+                                <FiCheck className="text-blue-400 mt-0.5 flex-shrink-0" />
+                                <span className="text-gray-300 text-sm">{rec}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      <Card
+                        variant="glass"
+                        className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                      >
+                        <CardHeader className="pb-2">
+                          <CardTitle className="text-lg text-white font-semibold">
+                            Design Summary
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent className="text-sm space-y-2">
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Wind Zone</span>
+                            <span className="text-white">
+                              {UK_WIND_ZONES[formData.wind_zone]?.name}
+                            </span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Terrain</span>
+                            <span className="text-white">{formData.terrain_category}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Structure</span>
+                            <span className="text-white">
+                              {STRUCTURE_TYPES[formData.structure_type]?.name}
+                            </span>
+                          </div>
+                          <div className="flex justify-between pt-2 border-t border-gray-700">
+                            <span className="text-gray-400">
+                              v<sub>b</sub>
+                            </span>
+                            <span className="text-white">{results.vb.toFixed(1)} m/s</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">
+                              q<sub>p</sub>
+                            </span>
+                            <span className="text-white">{results.qp.toFixed(0)} Pa</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">
+                              F<sub>w</sub>
+                            </span>
+                            <span className="text-white">{results.wind_force.toFixed(1)} kN</span>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                    {/* end sticky */}
+                  </div>
                 </div>
-              </div>
               </div>
             )}
           </motion.div>
@@ -1480,7 +1651,10 @@ const WindActions = () => {
             transition={{ duration: 0.2 }}
             className="space-y-4"
           >
-            <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
+            <Card
+              variant="glass"
+              className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+            >
               <CardHeader className="pb-2">
                 <CardTitle className="text-2xl text-white font-semibold flex items-center space-x-3">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
@@ -1498,7 +1672,7 @@ const WindActions = () => {
           </motion.div>
         )}
       </div>
-      </div>
+    </div>
   );
 };
 

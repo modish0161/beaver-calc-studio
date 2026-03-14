@@ -152,6 +152,7 @@ function App() {
 
                 {/* Bridges */}
                 <Route path="/calculator/abutments" element={<Abutments />} />
+                <Route path="/calculator/abutments_v1" element={<Abutments />} />
                 <Route path="/calculator/bearing_reactions" element={<BearingReactions />} />
                 <Route path="/calculator/composite_beam" element={<CompositeBeam />} />
                 <Route path="/calculator/deck_slab" element={<DeckSlab />} />
@@ -194,6 +195,7 @@ function App() {
                 <Route path="/calculator/heras_fence" element={<HerasFence />} />
                 <Route path="/calculator/hoarding" element={<Hoarding />} />
                 <Route path="/calculator/needling" element={<NeedleBeam />} />
+                <Route path="/calculator/needle_beam" element={<NeedleBeam />} />
                 <Route path="/calculator/raking_props" element={<RakingProps />} />
                 <Route path="/calculator/sling_checks" element={<SlingChecks />} />
                 <Route path="/calculator/soffit_shores" element={<SoffitShores />} />
@@ -205,6 +207,7 @@ function App() {
                 <Route path="/calculator/temporary_parapet" element={<TemporaryParapet />} />
                 <Route path="/calculator/temp_parapet" element={<TemporaryParapet />} />
                 <Route path="/calculator/guardrail" element={<GuardrailChecks />} />
+                <Route path="/calculator/guardrail_checks" element={<GuardrailChecks />} />
                 <Route path="/calculator/working_platform" element={<WorkingPlatform />} />
 
                 {/* Earthworks */}

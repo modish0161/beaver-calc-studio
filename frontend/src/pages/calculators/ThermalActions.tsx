@@ -4,7 +4,7 @@
 // =============================================================================
 
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   FiActivity,
   FiAlertTriangle,
@@ -21,7 +21,7 @@ import {
   FiSun,
   FiTarget,
   FiThermometer,
-  FiZap
+  FiZap,
 } from 'react-icons/fi';
 import { Button } from '../../components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
@@ -35,8 +35,8 @@ import { generatePremiumPDF } from '../../lib/pdfGenerator';
 import Interactive3DDiagram from '../../components/3d/Interactive3DDiagram';
 import ThermalActions3D from '../../components/3d/scenes/ThermalActions3D';
 import ExplainableLabel from '../../components/ExplainableLabel';
-import WhatIfPreview from '../../components/WhatIfPreview';
 import MouseSpotlight from '../../components/MouseSpotlight';
+import WhatIfPreview from '../../components/WhatIfPreview';
 // TYPE DEFINITIONS
 // =============================================================================
 
@@ -302,8 +302,15 @@ const ThermalActions = () => {
   const whatIfSliders = [
     { key: 'structure_type', label: 'Structure_type', min: 0, max: 100, step: 1, unit: '' },
     { key: 'deck_type', label: 'Deck_type', min: 0, max: 100, step: 1, unit: '' },
-    { key: 'surfacing_thickness', label: 'Surfacing_thickness', min: 0, max: 100, step: 1, unit: '' },
-    { key: 'member_length', label: 'Member_length', min: 0, max: 100, step: 1, unit: '' }
+    {
+      key: 'surfacing_thickness',
+      label: 'Surfacing_thickness',
+      min: 0,
+      max: 100,
+      step: 1,
+      unit: '',
+    },
+    { key: 'member_length', label: 'Member_length', min: 0, max: 100, step: 1, unit: '' },
   ];
 
   const [results, setResults] = useState<Results | null>(null);
@@ -535,7 +542,6 @@ const ThermalActions = () => {
     });
   }, [formData, results]);
 
-
   const InputField = ({
     label,
     field,
@@ -549,7 +555,11 @@ const ThermalActions = () => {
   }) => (
     <div>
       <div className="flex items-center justify-between mb-2">
-        <ExplainableLabel label={label} field={field} className="block text-sm font-semibold text-gray-300" />
+        <ExplainableLabel
+          label={label}
+          field={field}
+          className="block text-sm font-semibold text-gray-300"
+        />
         {unit && <span className="text-blue-400 text-xs">{unit}</span>}
       </div>
       <input
@@ -650,7 +660,8 @@ const ThermalActions = () => {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
         }}
       />
 
@@ -661,6 +672,13 @@ const ThermalActions = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent mb-4">
+            Thermal Actions
+          </h2>
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-6">
+            EN 1991-1-5 thermal loading analysis
+          </p>
+
           <div className="flex items-center gap-3 bg-gray-900/40 backdrop-blur-md border border-gray-700/50 rounded-xl p-3 mb-6">
             <div className="flex items-center gap-2">
               {results && (
@@ -695,7 +713,12 @@ const ThermalActions = () => {
               {[
                 { id: 'input', label: 'Inputs', icon: <FiGrid /> },
                 { id: 'results', label: 'Analysis', icon: <FiActivity />, disabled: !results },
-                { id: 'visualization', label: 'Visualization', icon: <FiTarget />, disabled: !results },
+                {
+                  id: 'visualization',
+                  label: 'Visualization',
+                  icon: <FiTarget />,
+                  disabled: !results,
+                },
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -713,384 +736,458 @@ const ThermalActions = () => {
               ))}
             </div>
           </div>
-
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-white via-blue-100 to-blue-200 bg-clip-text text-transparent mb-4">
-              Thermal Actions
-          </h2>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            EN 1991-1-5 thermal loading analysis
-          </p>
         </motion.div>
 
         {activeTab === 'input' && (
-        <div className="grid lg:grid-cols-3 gap-8">
-
-          {/* Input Content */}
-          <div className="lg:col-span-2 space-y-6">
-                {/* Presets */}
-                <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-2xl text-white font-semibold flex items-center space-x-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                        <FiZap className="w-6 h-6 text-blue-400" />
-                      </div>
-                      <span>Quick Presets</span>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-2">
-                      {Object.entries(PRESETS).map(([key, preset]) => (
-                        <Button
-                          key={key}
-                          variant="glass"
-                          size="sm"
-                          onClick={() => applyPreset(key)}
-                          className="border-blue-500/30 text-blue-400 hover:bg-blue-500/10"
-                        >
-                          {preset.name}
-                        </Button>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Structure Type */}
-                <CollapsibleSection
-                  title="Structure Type"
-                  icon={
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Input Content */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Presets */}
+              <Card
+                variant="glass"
+                className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+              >
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-2xl text-white font-semibold flex items-center space-x-3">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                      <FiGrid className="w-6 h-6 text-blue-400" />
+                      <FiZap className="w-6 h-6 text-blue-400" />
                     </div>
-                  }
-                  variant="amber"
-                >
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-300 mb-2">Structure Type</label>
-                      <select
-                        title="Structure Type"
-                        value={formData.structure_type}
-                        onChange={(e) => updateForm('structure_type', e.target.value)}
-                        className="w-full bg-gray-800/50 border border-gray-600/50 rounded-lg px-4 py-2.5 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
+                    <span>Quick Presets</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-wrap gap-2">
+                    {Object.entries(PRESETS).map(([key, preset]) => (
+                      <Button
+                        key={key}
+                        variant="glass"
+                        size="sm"
+                        onClick={() => applyPreset(key)}
+                        className="border-blue-500/30 text-blue-400 hover:bg-blue-500/10"
                       >
-                        {Object.entries(STRUCTURE_TYPES).map(([key, st]) => (
-                          <option key={key} value={key}>
-                            {st.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    {formData.structure_type === 'bridge' && (
-                      <>
-                        <div>
-                          <label className="block text-sm font-semibold text-gray-300 mb-2">
-                            Deck Type (EN 1991-1-5)
-                          </label>
-                          <select
-                            title="Deck type"
-                            value={formData.deck_type}
-                            onChange={(e) => updateForm('deck_type', e.target.value)}
-                            className="w-full bg-gray-800/50 border border-gray-600/50 rounded-lg px-4 py-2.5 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
-                          >
-                            {Object.entries(DECK_TYPES).map(([key, dt]) => (
-                              <option key={key} value={key}>
-                                {dt.name}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                        <div>
-                          <label className="block text-sm font-semibold text-gray-300 mb-2">Surfacing</label>
-                          <select
-                            title="Surfacing"
-                            value={formData.surfacing_thickness}
-                            onChange={(e) => updateForm('surfacing_thickness', e.target.value)}
-                            className="w-full bg-gray-800/50 border border-gray-600/50 rounded-lg px-4 py-2.5 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
-                          >
-                            {Object.entries(SURFACING_ADJUSTMENTS).map(([key, sa]) => (
-                              <option key={key} value={key}>
-                                {sa.name}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      </>
-                    )}
+                        {preset.name}
+                      </Button>
+                    ))}
                   </div>
-                </CollapsibleSection>
+                </CardContent>
+              </Card>
 
-                {/* Geometry */}
-                <CollapsibleSection
-                  title="Member Geometry"
-                  icon={
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                      <FiLayers className="w-6 h-6 text-blue-400" />
-                    </div>
-                  }
-                  variant="blue"
-                >
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <InputField label="Member Length" field="member_length" unit="m" />
-                    <InputField label="Section Depth" field="depth" unit="mm" />
-                    <InputField label="Section Area" field="section_area" unit="mm²" />
-                    <InputField
-                      label="Moment of Inertia"
-                      field="moment_of_inertia"
-                      unit="mm⁴"
-                      tooltip="e.g. 5.0e9"
-                    />
+              {/* Structure Type */}
+              <CollapsibleSection
+                title="Structure Type"
+                icon={
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                    <FiGrid className="w-6 h-6 text-blue-400" />
                   </div>
-                </CollapsibleSection>
-
-                {/* Material */}
-                <CollapsibleSection
-                  title="Material Properties"
-                  icon={
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                      <FiTarget className="w-6 h-6 text-blue-400" />
-                    </div>
-                  }
-                  variant="emerald"
-                >
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-300 mb-2">Material</label>
-                      <select
-                        title="Material"
-                        value={formData.material}
-                        onChange={(e) => updateForm('material', e.target.value)}
-                        className="w-full bg-gray-800/50 border border-gray-600/50 rounded-lg px-4 py-2.5 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
-                      >
-                        {Object.entries(MATERIALS).map(([key, m]) => (
-                          <option key={key} value={key}>
-                            {m.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    {formData.material === 'custom' && (
-                      <>
-                        <InputField label="α (×10⁻⁶)" field="custom_alpha" unit="/°C" />
-                        <InputField label="E" field="custom_E" unit="MPa" />
-                      </>
-                    )}
-                  </div>
-                  <div className="mt-3 p-3 bg-gray-900/50 rounded text-sm text-gray-400">
-                    <strong>Material:</strong> {MATERIALS[formData.material]?.name || 'Custom'} — α
-                    ={' '}
-                    {(formData.material === 'custom'
-                      ? parseFloat(formData.custom_alpha)
-                      : MATERIALS[formData.material].alpha * 1e6
-                    ).toFixed(0)}
-                    ×10⁻⁶/°C, E ={' '}
-                    {formData.material === 'custom'
-                      ? formData.custom_E
-                      : MATERIALS[formData.material].E}{' '}
-                    MPa
-                  </div>
-                </CollapsibleSection>
-
-                {/* Temperature */}
-                <CollapsibleSection
-                  title="Temperature Data"
-                  icon={
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                      <FiThermometer className="w-6 h-6 text-blue-400" />
-                    </div>
-                  }
-                  variant="purple"
-                >
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-300 mb-2">UK Location</label>
-                      <select
-                        title="UK Location"
-                        value={formData.location}
-                        onChange={(e) => updateForm('location', e.target.value)}
-                        className="w-full bg-gray-800/50 border border-gray-600/50 rounded-lg px-4 py-2.5 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
-                      >
-                        <option value="default">UK General</option>
-                        <option value="london">London</option>
-                        <option value="birmingham">Birmingham</option>
-                        <option value="manchester">Manchester</option>
-                        <option value="edinburgh">Edinburgh</option>
-                        <option value="cardiff">Cardiff</option>
-                        <option value="belfast">Belfast</option>
-                      </select>
-                    </div>
-                    <InputField label="Initial Temp T₀" field="initial_temp" unit="°C" />
-                    <InputField label="Max Shade Temp" field="T_max_shade" unit="°C" />
-                    <InputField label="Min Shade Temp" field="T_min_shade" unit="°C" />
-                  </div>
-                </CollapsibleSection>
-
-                {/* Restraint */}
-                <CollapsibleSection
-                  title="Restraint Conditions"
-                  icon={
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                      <FiSun className="w-6 h-6 text-blue-400" />
-                    </div>
-                  }
-                  variant="amber"
-                  defaultOpen={false}
-                >
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-300 mb-2">Restraint Type</label>
-                      <select
-                        title="Restraint Type"
-                        value={formData.restraint_type}
-                        onChange={(e) => updateForm('restraint_type', e.target.value)}
-                        className="w-full bg-gray-800/50 border border-gray-600/50 rounded-lg px-4 py-2.5 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
-                      >
-                        {Object.entries(RESTRAINT_TYPES).map(([key, rt]) => (
-                          <option key={key} value={key}>
-                            {rt.name}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="flex items-end text-sm text-gray-400 pb-2">
-                      Restraint Factor: {RESTRAINT_TYPES[formData.restraint_type]?.factor || 0}
-                    </div>
-                  </div>
-                </CollapsibleSection>
-
-                {/* Calculate Button */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="flex justify-center pt-4"
-                >
-                  <Button
-                    onClick={() => {
-                      runCalculation();
-                      setActiveTab('results');
-                    }}
-                    disabled={isCalculating}
-                    className="w-full py-4 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:via-blue-400 hover:to-cyan-400 text-white font-bold text-lg rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
-                  >
-                    {isCalculating ? (
-                      <div className="flex items-center gap-3">
-                        <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
-                        ANALYSING...
-                      </div>
-                    ) : (
-                      '▶ RUN FULL ANALYSIS'
-                    )}
-                  </Button>
-                </motion.div>
-              </div>
-
-              {/* Right Column — Sticky Sidebar */}
-              <div className="lg:col-span-1">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.4 }}
-                  className="sticky top-8 space-y-4"
-                >
-                  {/* Fullscreen Preview Overlay */}
-                  {previewMaximized && (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="fixed inset-0 z-50 bg-gray-950/95 backdrop-blur-sm flex"
+                }
+                variant="amber"
+              >
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">
+                      Structure Type
+                    </label>
+                    <select
+                      title="Structure Type"
+                      value={formData.structure_type}
+                      onChange={(e) => updateForm('structure_type', e.target.value)}
+                      className="w-full bg-gray-800/50 border border-gray-600/50 rounded-lg px-4 py-2.5 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
                     >
-                      <div className="flex-1 relative">
-                        <Interactive3DDiagram height="h-full" cameraPosition={[8, 6, 8]}>
-                          <ThermalActions3D />
-                        </Interactive3DDiagram>
-                        <button
-                          onClick={() => setPreviewMaximized(false)}
-                          className="absolute top-4 right-4 p-2 bg-gray-900/80 border border-neon-cyan/30 rounded-lg text-neon-cyan hover:bg-gray-800 transition-colors z-10"
-                          aria-label="Minimize preview"
+                      {Object.entries(STRUCTURE_TYPES).map(([key, st]) => (
+                        <option key={key} value={key}>
+                          {st.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  {formData.structure_type === 'bridge' && (
+                    <>
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-300 mb-2">
+                          Deck Type (EN 1991-1-5)
+                        </label>
+                        <select
+                          title="Deck type"
+                          value={formData.deck_type}
+                          onChange={(e) => updateForm('deck_type', e.target.value)}
+                          className="w-full bg-gray-800/50 border border-gray-600/50 rounded-lg px-4 py-2.5 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
                         >
-                          <FiMinimize2 size={20} />
-                        </button>
-                        <div className="absolute top-4 left-4 text-neon-cyan/60 text-xs font-mono z-10">
-                          THERMAL ACTIONS — REAL-TIME PREVIEW
-                        </div>
+                          {Object.entries(DECK_TYPES).map(([key, dt]) => (
+                            <option key={key} value={key}>
+                              {dt.name}
+                            </option>
+                          ))}
+                        </select>
                       </div>
-                      <div className="w-80 bg-gray-900/90 border-l border-neon-cyan/20 overflow-y-auto p-5 space-y-4">
-                        <h3 className="text-sm font-bold text-neon-cyan uppercase tracking-wider flex items-center gap-2">
-                          <FiSliders size={14} /> Live Parameters
+                      <div>
+                        <label className="block text-sm font-semibold text-gray-300 mb-2">
+                          Surfacing
+                        </label>
+                        <select
+                          title="Surfacing"
+                          value={formData.surfacing_thickness}
+                          onChange={(e) => updateForm('surfacing_thickness', e.target.value)}
+                          className="w-full bg-gray-800/50 border border-gray-600/50 rounded-lg px-4 py-2.5 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
+                        >
+                          {Object.entries(SURFACING_ADJUSTMENTS).map(([key, sa]) => (
+                            <option key={key} value={key}>
+                              {sa.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </CollapsibleSection>
+
+              {/* Geometry */}
+              <CollapsibleSection
+                title="Member Geometry"
+                icon={
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                    <FiLayers className="w-6 h-6 text-blue-400" />
+                  </div>
+                }
+                variant="blue"
+              >
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <InputField label="Member Length" field="member_length" unit="m" />
+                  <InputField label="Section Depth" field="depth" unit="mm" />
+                  <InputField label="Section Area" field="section_area" unit="mm²" />
+                  <InputField
+                    label="Moment of Inertia"
+                    field="moment_of_inertia"
+                    unit="mm⁴"
+                    tooltip="e.g. 5.0e9"
+                  />
+                </div>
+              </CollapsibleSection>
+
+              {/* Material */}
+              <CollapsibleSection
+                title="Material Properties"
+                icon={
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                    <FiTarget className="w-6 h-6 text-blue-400" />
+                  </div>
+                }
+                variant="emerald"
+              >
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">
+                      Material
+                    </label>
+                    <select
+                      title="Material"
+                      value={formData.material}
+                      onChange={(e) => updateForm('material', e.target.value)}
+                      className="w-full bg-gray-800/50 border border-gray-600/50 rounded-lg px-4 py-2.5 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
+                    >
+                      {Object.entries(MATERIALS).map(([key, m]) => (
+                        <option key={key} value={key}>
+                          {m.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  {formData.material === 'custom' && (
+                    <>
+                      <InputField label="α (×10⁻⁶)" field="custom_alpha" unit="/°C" />
+                      <InputField label="E" field="custom_E" unit="MPa" />
+                    </>
+                  )}
+                </div>
+                <div className="mt-3 p-3 bg-gray-900/50 rounded text-sm text-gray-400">
+                  <strong>Material:</strong> {MATERIALS[formData.material]?.name || 'Custom'} — α ={' '}
+                  {(formData.material === 'custom'
+                    ? parseFloat(formData.custom_alpha)
+                    : MATERIALS[formData.material].alpha * 1e6
+                  ).toFixed(0)}
+                  ×10⁻⁶/°C, E ={' '}
+                  {formData.material === 'custom'
+                    ? formData.custom_E
+                    : MATERIALS[formData.material].E}{' '}
+                  MPa
+                </div>
+              </CollapsibleSection>
+
+              {/* Temperature */}
+              <CollapsibleSection
+                title="Temperature Data"
+                icon={
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                    <FiThermometer className="w-6 h-6 text-blue-400" />
+                  </div>
+                }
+                variant="purple"
+              >
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">
+                      UK Location
+                    </label>
+                    <select
+                      title="UK Location"
+                      value={formData.location}
+                      onChange={(e) => updateForm('location', e.target.value)}
+                      className="w-full bg-gray-800/50 border border-gray-600/50 rounded-lg px-4 py-2.5 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
+                    >
+                      <option value="default">UK General</option>
+                      <option value="london">London</option>
+                      <option value="birmingham">Birmingham</option>
+                      <option value="manchester">Manchester</option>
+                      <option value="edinburgh">Edinburgh</option>
+                      <option value="cardiff">Cardiff</option>
+                      <option value="belfast">Belfast</option>
+                    </select>
+                  </div>
+                  <InputField label="Initial Temp T₀" field="initial_temp" unit="°C" />
+                  <InputField label="Max Shade Temp" field="T_max_shade" unit="°C" />
+                  <InputField label="Min Shade Temp" field="T_min_shade" unit="°C" />
+                </div>
+              </CollapsibleSection>
+
+              {/* Restraint */}
+              <CollapsibleSection
+                title="Restraint Conditions"
+                icon={
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                    <FiSun className="w-6 h-6 text-blue-400" />
+                  </div>
+                }
+                variant="amber"
+                defaultOpen={false}
+              >
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">
+                      Restraint Type
+                    </label>
+                    <select
+                      title="Restraint Type"
+                      value={formData.restraint_type}
+                      onChange={(e) => updateForm('restraint_type', e.target.value)}
+                      className="w-full bg-gray-800/50 border border-gray-600/50 rounded-lg px-4 py-2.5 text-white focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
+                    >
+                      {Object.entries(RESTRAINT_TYPES).map(([key, rt]) => (
+                        <option key={key} value={key}>
+                          {rt.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="flex items-end text-sm text-gray-400 pb-2">
+                    Restraint Factor: {RESTRAINT_TYPES[formData.restraint_type]?.factor || 0}
+                  </div>
+                </div>
+              </CollapsibleSection>
+
+              {/* Calculate Button */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="flex justify-center pt-4"
+              >
+                <Button
+                  onClick={() => {
+                    runCalculation();
+                    setActiveTab('results');
+                  }}
+                  disabled={isCalculating}
+                  className="w-full py-4 bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 hover:from-blue-500 hover:via-blue-400 hover:to-cyan-400 text-white font-bold text-lg rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  {isCalculating ? (
+                    <div className="flex items-center gap-3">
+                      <div className="w-6 h-6 border-4 border-white/30 border-t-white rounded-full animate-spin" />
+                      ANALYSING...
+                    </div>
+                  ) : (
+                    '▶ RUN FULL ANALYSIS'
+                  )}
+                </Button>
+              </motion.div>
+            </div>
+
+            {/* Right Column — Sticky Sidebar */}
+            <div className="lg:col-span-1">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.4 }}
+                className="sticky top-8 space-y-4"
+              >
+                {/* Fullscreen Preview Overlay */}
+                {previewMaximized && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-50 bg-gray-950/95 backdrop-blur-sm flex"
+                  >
+                    <div className="flex-1 relative">
+                      <Interactive3DDiagram height="h-full" cameraPosition={[8, 6, 8]}>
+                        <ThermalActions3D />
+                      </Interactive3DDiagram>
+                      <button
+                        onClick={() => setPreviewMaximized(false)}
+                        className="absolute top-4 right-4 p-2 bg-gray-900/80 border border-neon-cyan/30 rounded-lg text-neon-cyan hover:bg-gray-800 transition-colors z-10"
+                        aria-label="Minimize preview"
+                      >
+                        <FiMinimize2 size={20} />
+                      </button>
+                      <div className="absolute top-4 left-4 text-neon-cyan/60 text-xs font-mono z-10">
+                        THERMAL ACTIONS — REAL-TIME PREVIEW
+                      </div>
+                    </div>
+                    <div className="w-80 bg-gray-900/90 border-l border-neon-cyan/20 overflow-y-auto p-5 space-y-4">
+                      <h3 className="text-sm font-bold text-neon-cyan uppercase tracking-wider flex items-center gap-2">
+                        <FiSliders size={14} /> Live Parameters
+                      </h3>
+                      {[
+                        {
+                          label: 'Member Length',
+                          field: 'member_length' as keyof FormData,
+                          min: 1,
+                          max: 200,
+                          step: 1,
+                          unit: 'm',
+                        },
+                        {
+                          label: 'Surfacing',
+                          field: 'surfacing_thickness' as keyof FormData,
+                          min: 0,
+                          max: 200,
+                          step: 5,
+                          unit: 'mm',
+                        },
+                        {
+                          label: 'Initial Temp',
+                          field: 'initial_temp' as keyof FormData,
+                          min: -10,
+                          max: 40,
+                          step: 1,
+                          unit: '°C',
+                        },
+                        {
+                          label: 'Fixity Factor',
+                          field: 'fixity_factor' as keyof FormData,
+                          min: 0,
+                          max: 1,
+                          step: 0.05,
+                          unit: '',
+                        },
+                        {
+                          label: 'Section Area',
+                          field: 'section_area' as keyof FormData,
+                          min: 1000,
+                          max: 100000,
+                          step: 500,
+                          unit: 'mm²',
+                        },
+                        {
+                          label: 'Depth',
+                          field: 'depth' as keyof FormData,
+                          min: 100,
+                          max: 5000,
+                          step: 50,
+                          unit: 'mm',
+                        },
+                      ].map((s) => (
+                        <div key={s.field} className="space-y-1">
+                          <div className="flex justify-between text-xs font-mono">
+                            <span className="text-gray-400">{s.label}</span>
+                            <span className="text-white">
+                              {formData[s.field] as string} {s.unit}
+                            </span>
+                          </div>
+                          <input
+                            title={s.label}
+                            type="range"
+                            min={s.min}
+                            max={s.max}
+                            step={s.step}
+                            value={formData[s.field] as string}
+                            onChange={(e) => updateForm(s.field, e.target.value)}
+                            className="w-full h-1 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-neon-cyan"
+                            aria-label={s.label}
+                          />
+                        </div>
+                      ))}
+                      <div className="border-t border-gray-700 pt-4">
+                        <h3 className="text-sm font-bold text-neon-cyan uppercase tracking-wider flex items-center gap-2 mb-3">
+                          <FiActivity size={14} /> Live Readout
                         </h3>
                         {[
-                          { label: 'Member Length', field: 'member_length' as keyof FormData, min: 1, max: 200, step: 1, unit: 'm' },
-                          { label: 'Surfacing', field: 'surfacing_thickness' as keyof FormData, min: 0, max: 200, step: 5, unit: 'mm' },
-                          { label: 'Initial Temp', field: 'initial_temp' as keyof FormData, min: -10, max: 40, step: 1, unit: '°C' },
-                          { label: 'Fixity Factor', field: 'fixity_factor' as keyof FormData, min: 0, max: 1, step: 0.05, unit: '' },
-                          { label: 'Section Area', field: 'section_area' as keyof FormData, min: 1000, max: 100000, step: 500, unit: 'mm²' },
-                          { label: 'Depth', field: 'depth' as keyof FormData, min: 100, max: 5000, step: 50, unit: 'mm' },
-                        ].map((s) => (
-                          <div key={s.field} className="space-y-1">
-                            <div className="flex justify-between text-xs font-mono">
-                              <span className="text-gray-400">{s.label}</span>
-                              <span className="text-white">{formData[s.field] as string} {s.unit}</span>
-                            </div>
-                            <input
-                              title={s.label}
-                              type="range"
-                              min={s.min}
-                              max={s.max}
-                              step={s.step}
-                              value={formData[s.field] as string}
-                              onChange={(e) => updateForm(s.field, e.target.value)}
-                              className="w-full h-1 bg-gray-800 rounded-lg appearance-none cursor-pointer accent-neon-cyan"
-                              aria-label={s.label}
-                            />
+                          { label: 'Structure Type', value: formData.structure_type || '—' },
+                          { label: 'Deck Type', value: formData.deck_type || '—' },
+                          { label: 'Material', value: formData.material || '—' },
+                          { label: 'Location', value: formData.location || '—' },
+                        ].map((stat) => (
+                          <div
+                            key={stat.label}
+                            className="flex justify-between text-xs py-1 border-b border-gray-800/50"
+                          >
+                            <span className="text-gray-500">{stat.label}</span>
+                            <span className="text-white font-medium">{stat.value}</span>
                           </div>
                         ))}
-                        <div className="border-t border-gray-700 pt-4">
-                          <h3 className="text-sm font-bold text-neon-cyan uppercase tracking-wider flex items-center gap-2 mb-3">
-                            <FiActivity size={14} /> Live Readout
-                          </h3>
-                          {[
-                            { label: 'Structure Type', value: formData.structure_type || '—' },
-                            { label: 'Deck Type', value: formData.deck_type || '—' },
-                            { label: 'Material', value: formData.material || '—' },
-                            { label: 'Location', value: formData.location || '—' },
-                          ].map((stat) => (
-                            <div key={stat.label} className="flex justify-between text-xs py-1 border-b border-gray-800/50">
-                              <span className="text-gray-500">{stat.label}</span>
-                              <span className="text-white font-medium">{stat.value}</span>
+                        {results && (
+                          <div className="mt-3 space-y-1">
+                            <div className="text-xs font-bold text-gray-400 uppercase mb-1">
+                              Last Analysis
                             </div>
-                          ))}
-                          {results && (
-                            <div className="mt-3 space-y-1">
-                              <div className="text-xs font-bold text-gray-400 uppercase mb-1">Last Analysis</div>
-                              {[
-                                { label: 'Te,max', value: `${results.Te_max.toFixed(1)} °C` },
-                                { label: 'Te,min', value: `${results.Te_min.toFixed(1)} °C` },
-                                { label: 'Expansion', value: `${results.max_expansion.toFixed(1)} mm` },
-                                { label: 'Contraction', value: `${results.max_contraction.toFixed(1)} mm` },
-                                { label: 'Total Range', value: `${results.total_range.toFixed(1)} mm` },
-                                { label: 'Rating', value: results.rating },
-                              ].map((check) => (
-                                <div key={check.label} className="flex justify-between text-xs py-0.5">
-                                  <span className="text-gray-500">{check.label}</span>
-                                  <span className={cn('font-bold', results.ratingColor === 'red' ? 'text-red-500' : results.ratingColor === 'orange' ? 'text-orange-400' : 'text-emerald-400')}>
-                                    {check.value}
-                                  </span>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                        <button
-                          onClick={() => setPreviewMaximized(false)}
-                          className="w-full py-2 mt-4 text-sm font-bold text-gray-400 hover:text-white border border-gray-700 hover:border-neon-cyan/40 rounded-lg transition-colors"
-                        >
-                          Close Fullscreen
-                        </button>
+                            {[
+                              { label: 'Te,max', value: `${results.Te_max.toFixed(1)} °C` },
+                              { label: 'Te,min', value: `${results.Te_min.toFixed(1)} °C` },
+                              {
+                                label: 'Expansion',
+                                value: `${results.max_expansion.toFixed(1)} mm`,
+                              },
+                              {
+                                label: 'Contraction',
+                                value: `${results.max_contraction.toFixed(1)} mm`,
+                              },
+                              {
+                                label: 'Total Range',
+                                value: `${results.total_range.toFixed(1)} mm`,
+                              },
+                              { label: 'Rating', value: results.rating },
+                            ].map((check) => (
+                              <div
+                                key={check.label}
+                                className="flex justify-between text-xs py-0.5"
+                              >
+                                <span className="text-gray-500">{check.label}</span>
+                                <span
+                                  className={cn(
+                                    'font-bold',
+                                    results.ratingColor === 'red'
+                                      ? 'text-red-500'
+                                      : results.ratingColor === 'orange'
+                                        ? 'text-orange-400'
+                                        : 'text-emerald-400',
+                                  )}
+                                >
+                                  {check.value}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
-                    </motion.div>
-                  )}
+                      <button
+                        onClick={() => setPreviewMaximized(false)}
+                        className="w-full py-2 mt-4 text-sm font-bold text-gray-400 hover:text-white border border-gray-700 hover:border-neon-cyan/40 rounded-lg transition-colors"
+                      >
+                        Close Fullscreen
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
 
-                  <WhatIfPreview
+                <WhatIfPreview
                   title="Thermal Actions — 3D Preview"
                   sliders={whatIfSliders}
                   form={formData}
@@ -1104,7 +1201,10 @@ const ThermalActions = () => {
                   )}
                 />
 
-                <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
+                <Card
+                  variant="glass"
+                  className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                >
                   <CardHeader className="pb-2">
                     <CardTitle className="text-lg text-white font-semibold flex items-center gap-2">
                       <FiInfo className="text-blue-400" />
@@ -1126,8 +1226,8 @@ const ThermalActions = () => {
                     </p>
                   </CardContent>
                 </Card>
-                </motion.div>
-              </div>
+              </motion.div>
+            </div>
           </div>
         )}
 
@@ -1143,12 +1243,42 @@ const ThermalActions = () => {
             {/* Top Summary Check Cards — border-l-4 */}
             <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-4">
               {[
-                { label: 'Temp Range', value: `${(results.Te_max - results.Te_min).toFixed(0)}°C`, icon: <FiThermometer />, pass: true },
-                { label: 'Expansion', value: `+${results.max_expansion.toFixed(1)} mm`, icon: <FiSun />, pass: results.max_expansion < 80 },
-                { label: 'Contraction', value: `-${results.max_contraction.toFixed(1)} mm`, icon: <FiTarget />, pass: results.max_contraction < 80 },
-                { label: 'Total Range', value: `${results.total_range.toFixed(1)} mm`, icon: <FiLayers />, pass: results.total_range < 100 },
-                { label: 'ΔTU Exp', value: `+${results.delta_TU_exp.toFixed(0)}°C`, icon: <FiZap />, pass: results.delta_TU_exp < 40 },
-                { label: 'Rating', value: results.rating, icon: <FiActivity />, pass: results.total_range < 100 },
+                {
+                  label: 'Temp Range',
+                  value: `${(results.Te_max - results.Te_min).toFixed(0)}°C`,
+                  icon: <FiThermometer />,
+                  pass: true,
+                },
+                {
+                  label: 'Expansion',
+                  value: `+${results.max_expansion.toFixed(1)} mm`,
+                  icon: <FiSun />,
+                  pass: results.max_expansion < 80,
+                },
+                {
+                  label: 'Contraction',
+                  value: `-${results.max_contraction.toFixed(1)} mm`,
+                  icon: <FiTarget />,
+                  pass: results.max_contraction < 80,
+                },
+                {
+                  label: 'Total Range',
+                  value: `${results.total_range.toFixed(1)} mm`,
+                  icon: <FiLayers />,
+                  pass: results.total_range < 100,
+                },
+                {
+                  label: 'ΔTU Exp',
+                  value: `+${results.delta_TU_exp.toFixed(0)}°C`,
+                  icon: <FiZap />,
+                  pass: results.delta_TU_exp < 40,
+                },
+                {
+                  label: 'Rating',
+                  value: results.rating,
+                  icon: <FiActivity />,
+                  pass: results.total_range < 100,
+                },
               ].map((item, i) => (
                 <Card
                   key={i}
@@ -1183,32 +1313,53 @@ const ThermalActions = () => {
             <div className="grid lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 space-y-6">
                 {/* Uniform Temperature */}
-                <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
+                <Card
+                  variant="glass"
+                  className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                >
                   <CardHeader>
                     <CardTitle className="text-2xl text-white font-semibold flex items-center space-x-3">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
                         <FiThermometer className="w-6 h-6 text-blue-400" />
                       </div>
-                      <span>Uniform Temperature Component (ΔT<sub>U</sub>)</span>
+                      <span>
+                        Uniform Temperature Component (ΔT<sub>U</sub>)
+                      </span>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       <div className="p-3 bg-gray-950/50 rounded-xl text-center">
-                        <div className="text-gray-400 text-xs">T<sub>e,max</sub></div>
-                        <div className="text-xl font-bold text-red-400">+{results.Te_max.toFixed(0)}°C</div>
+                        <div className="text-gray-400 text-xs">
+                          T<sub>e,max</sub>
+                        </div>
+                        <div className="text-xl font-bold text-red-400">
+                          +{results.Te_max.toFixed(0)}°C
+                        </div>
                       </div>
                       <div className="p-3 bg-gray-950/50 rounded-xl text-center">
-                        <div className="text-gray-400 text-xs">T<sub>e,min</sub></div>
-                        <div className="text-xl font-bold text-blue-400">{results.Te_min.toFixed(0)}°C</div>
+                        <div className="text-gray-400 text-xs">
+                          T<sub>e,min</sub>
+                        </div>
+                        <div className="text-xl font-bold text-blue-400">
+                          {results.Te_min.toFixed(0)}°C
+                        </div>
                       </div>
                       <div className="p-3 bg-gray-950/50 rounded-xl text-center">
-                        <div className="text-gray-400 text-xs">ΔT<sub>U,exp</sub></div>
-                        <div className="text-xl font-bold text-red-400">+{results.delta_TU_exp.toFixed(0)}°C</div>
+                        <div className="text-gray-400 text-xs">
+                          ΔT<sub>U,exp</sub>
+                        </div>
+                        <div className="text-xl font-bold text-red-400">
+                          +{results.delta_TU_exp.toFixed(0)}°C
+                        </div>
                       </div>
                       <div className="p-3 bg-gray-950/50 rounded-xl text-center">
-                        <div className="text-gray-400 text-xs">ΔT<sub>U,con</sub></div>
-                        <div className="text-xl font-bold text-blue-400">-{results.delta_TU_con.toFixed(0)}°C</div>
+                        <div className="text-gray-400 text-xs">
+                          ΔT<sub>U,con</sub>
+                        </div>
+                        <div className="text-xl font-bold text-blue-400">
+                          -{results.delta_TU_con.toFixed(0)}°C
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -1216,32 +1367,45 @@ const ThermalActions = () => {
 
                 {/* Differential Temperature */}
                 {formData.structure_type === 'bridge' && (
-                  <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
+                  <Card
+                    variant="glass"
+                    className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                  >
                     <CardHeader>
                       <CardTitle className="text-2xl text-white font-semibold flex items-center space-x-3">
                         <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
                           <FiActivity className="w-6 h-6 text-blue-400" />
                         </div>
-                        <span>Differential Temperature (ΔT<sub>M</sub>)</span>
+                        <span>
+                          Differential Temperature (ΔT<sub>M</sub>)
+                        </span>
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div className="p-3 bg-gray-950/50 rounded-xl text-center">
                           <div className="text-gray-400 text-xs">Heating (top warmer)</div>
-                          <div className="text-xl font-bold text-red-400">+{results.delta_TM_heat.toFixed(0)}°C</div>
+                          <div className="text-xl font-bold text-red-400">
+                            +{results.delta_TM_heat.toFixed(0)}°C
+                          </div>
                         </div>
                         <div className="p-3 bg-gray-950/50 rounded-xl text-center">
                           <div className="text-gray-400 text-xs">Cooling (top cooler)</div>
-                          <div className="text-xl font-bold text-blue-400">+{results.delta_TM_cool.toFixed(0)}°C</div>
+                          <div className="text-xl font-bold text-blue-400">
+                            +{results.delta_TM_cool.toFixed(0)}°C
+                          </div>
                         </div>
                         <div className="p-3 bg-gray-950/50 rounded-xl text-center">
                           <div className="text-gray-400 text-xs">Curvature (heat)</div>
-                          <div className="text-lg font-bold text-white">{(results.curvature_heat * 1000).toFixed(3)}/km</div>
+                          <div className="text-lg font-bold text-white">
+                            {(results.curvature_heat * 1000).toFixed(3)}/km
+                          </div>
                         </div>
                         <div className="p-3 bg-gray-950/50 rounded-xl text-center">
                           <div className="text-gray-400 text-xs">Curvature (cool)</div>
-                          <div className="text-lg font-bold text-white">{(results.curvature_cool * 1000).toFixed(3)}/km</div>
+                          <div className="text-lg font-bold text-white">
+                            {(results.curvature_cool * 1000).toFixed(3)}/km
+                          </div>
                         </div>
                       </div>
                     </CardContent>
@@ -1249,7 +1413,10 @@ const ThermalActions = () => {
                 )}
 
                 {/* Movement */}
-                <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
+                <Card
+                  variant="glass"
+                  className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                >
                   <CardHeader>
                     <CardTitle className="text-2xl text-white font-semibold flex items-center space-x-3">
                       <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
@@ -1262,11 +1429,15 @@ const ThermalActions = () => {
                     <div className="grid grid-cols-3 gap-4 mb-4">
                       <div className="p-3 bg-gray-950/50 rounded-xl text-center">
                         <div className="text-gray-400 text-xs">Max Expansion</div>
-                        <div className="text-xl font-bold text-red-400">+{results.max_expansion.toFixed(1)} mm</div>
+                        <div className="text-xl font-bold text-red-400">
+                          +{results.max_expansion.toFixed(1)} mm
+                        </div>
                       </div>
                       <div className="p-3 bg-gray-950/50 rounded-xl text-center">
                         <div className="text-gray-400 text-xs">Max Contraction</div>
-                        <div className="text-xl font-bold text-blue-400">-{results.max_contraction.toFixed(1)} mm</div>
+                        <div className="text-xl font-bold text-blue-400">
+                          -{results.max_contraction.toFixed(1)} mm
+                        </div>
                       </div>
                       <div
                         className="p-3 bg-gray-950/50 rounded-xl text-center border-2"
@@ -1283,7 +1454,10 @@ const ThermalActions = () => {
 
                 {/* Restrained Forces */}
                 {formData.restraint_type !== 'free' && (
-                  <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
+                  <Card
+                    variant="glass"
+                    className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                  >
                     <CardHeader>
                       <CardTitle className="text-2xl text-white font-semibold flex items-center space-x-3">
                         <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
@@ -1296,19 +1470,27 @@ const ThermalActions = () => {
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div className="p-3 bg-gray-950/50 rounded-xl text-center">
                           <div className="text-gray-400 text-xs">Axial (Expansion)</div>
-                          <div className="text-lg font-bold text-red-400">{results.axial_force_exp.toFixed(0)} kN</div>
+                          <div className="text-lg font-bold text-red-400">
+                            {results.axial_force_exp.toFixed(0)} kN
+                          </div>
                         </div>
                         <div className="p-3 bg-gray-950/50 rounded-xl text-center">
                           <div className="text-gray-400 text-xs">Axial (Contraction)</div>
-                          <div className="text-lg font-bold text-blue-400">{results.axial_force_con.toFixed(0)} kN</div>
+                          <div className="text-lg font-bold text-blue-400">
+                            {results.axial_force_con.toFixed(0)} kN
+                          </div>
                         </div>
                         <div className="p-3 bg-gray-950/50 rounded-xl text-center">
                           <div className="text-gray-400 text-xs">Stress (Exp)</div>
-                          <div className="text-lg font-bold text-white">{results.thermal_stress_exp.toFixed(1)} MPa</div>
+                          <div className="text-lg font-bold text-white">
+                            {results.thermal_stress_exp.toFixed(1)} MPa
+                          </div>
                         </div>
                         <div className="p-3 bg-gray-950/50 rounded-xl text-center">
                           <div className="text-gray-400 text-xs">Stress (Con)</div>
-                          <div className="text-lg font-bold text-white">{results.thermal_stress_con.toFixed(1)} MPa</div>
+                          <div className="text-lg font-bold text-white">
+                            {results.thermal_stress_con.toFixed(1)} MPa
+                          </div>
                         </div>
                       </div>
                     </CardContent>
@@ -1319,7 +1501,10 @@ const ThermalActions = () => {
               {/* Right Column — Sticky */}
               <div className="lg:col-span-1">
                 <div className="sticky top-8 space-y-4">
-                  <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50 border-l-4 border-l-blue-400">
+                  <Card
+                    variant="glass"
+                    className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50 border-l-4 border-l-blue-400"
+                  >
                     <CardContent className="py-6 text-center">
                       <div className="text-4xl mb-2 text-blue-400">
                         <FiThermometer className="inline" />
@@ -1350,7 +1535,10 @@ const ThermalActions = () => {
                   )}
 
                   {/* Recommendations */}
-                  <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
+                  <Card
+                    variant="glass"
+                    className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                  >
                     <CardContent className="p-6">
                       <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                         <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
@@ -1374,9 +1562,14 @@ const ThermalActions = () => {
                     </CardContent>
                   </Card>
 
-                  <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
+                  <Card
+                    variant="glass"
+                    className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+                  >
                     <CardHeader className="pb-2">
-                      <CardTitle className="text-lg text-white font-semibold">Design Summary</CardTitle>
+                      <CardTitle className="text-lg text-white font-semibold">
+                        Design Summary
+                      </CardTitle>
                     </CardHeader>
                     <CardContent className="text-sm space-y-2">
                       <div className="flex justify-between">
@@ -1417,7 +1610,10 @@ const ThermalActions = () => {
             transition={{ duration: 0.2 }}
             className="mt-8 space-y-4"
           >
-            <Card variant="glass" className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50">
+            <Card
+              variant="glass"
+              className="bg-gray-900/40 backdrop-blur-md border border-gray-700/50"
+            >
               <CardHeader className="pb-2">
                 <CardTitle className="text-2xl text-white font-semibold flex items-center space-x-3">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
@@ -1435,7 +1631,7 @@ const ThermalActions = () => {
           </motion.div>
         )}
       </div>
-      </div>
+    </div>
   );
 };
 
