@@ -1,0 +1,207 @@
+/* BeaverCalc Studio - Professional Structural Engineering Application */
+
+.beaver-calc-root {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Beaver Bridges Logo Styles */
+.beaver-logo {
+  height: 48px;
+  width: auto;
+  will-change: filter;
+  transition: all 300ms ease-in-out;
+}
+
+.beaver-logo:hover {
+  filter: drop-shadow(0 0 1.5em rgba(0, 212, 255, 0.5));
+  transform: scale(1.05);
+}
+
+/* Professional Calculator Cards */
+.calculator-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.calculator-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.calculator-card:hover::before {
+  left: 100%;
+}
+
+.calculator-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Engineering Form Styles */
+.engineering-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.engineering-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.engineering-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  font-size: 1rem;
+  transition: all 0.2s;
+  backdrop-filter: blur(10px);
+}
+
+.engineering-input:focus {
+  outline: none;
+  border-color: rgba(0, 212, 255, 0.6);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+}
+
+/* Results Display */
+.results-container {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  backdrop-filter: blur(20px);
+  border-radius: 1rem;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.result-metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+  border-left: 3px solid rgba(0, 212, 255, 0.6);
+}
+
+.result-label {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+}
+
+.result-value {
+  font-weight: 700;
+  color: rgba(0, 212, 255, 1);
+  font-size: 1.125rem;
+  font-family: 'Courier New', monospace;
+}
+
+/* Professional Status Indicators */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.status-pass {
+  background: rgba(0, 255, 136, 0.2);
+  color: rgba(0, 255, 136, 1);
+  border: 1px solid rgba(0, 255, 136, 0.4);
+}
+
+.status-fail {
+  background: rgba(255, 0, 110, 0.2);
+  color: rgba(255, 0, 110, 1);
+  border: 1px solid rgba(255, 0, 110, 0.4);
+}
+
+.status-warning {
+  background: rgba(255, 193, 7, 0.2);
+  color: rgba(255, 193, 7, 1);
+  border: 1px solid rgba(255, 193, 7, 0.4);
+}
+
+.status-processing {
+  background: rgba(0, 212, 255, 0.2);
+  color: rgba(0, 212, 255, 1);
+  border: 1px solid rgba(0, 212, 255, 0.4);
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Beaver Bridges Brand Footer */
+.beaver-footer {
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.5) 100%);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 4rem;
+}
+
+.certification-badge {
+  width: 80px;
+  height: auto;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.certification-badge:hover {
+  opacity: 1;
+}
+
+/* Loading States */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.skeleton {
+  animation: shimmer 2s infinite;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  background-size: 1000px 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .beaver-logo {
+    height: 36px;
+  }
+  
+  .engineering-input {
+    font-size: 0.875rem;
+  }
+  
+  .result-value {
+    font-size: 1rem;
+  }
+}

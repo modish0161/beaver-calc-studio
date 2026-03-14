@@ -1,0 +1,604 @@
+import React, { useState } from 'react'
+import {
+  FiActivity,
+  FiBookmark,
+  FiCheckCircle,
+  FiClock,
+  FiDownload,
+  FiEdit3,
+  FiFileText,
+  FiFolder,
+  FiTrash2,
+  FiTrendingUp,
+  FiUpload,
+  FiZap
+} from 'react-icons/fi'
+import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { Button } from '../components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
+import LoadingSpinner from '../components/LoadingSpinner'
+import { toast, projectToasts, calculatorToasts } from '../lib/toast'
+import { cn } from '../lib/utils'
+
+interface Project {
+  id: string
+  name: string
+  client: string
+  status: 'active' | 'archived' | 'draft'
+  createdAt: string
+  lastModified: string
+  runCount: number
+  fileCount: number
+}
+
+interface RecentRun {
+  id: string
+  projectId: string
+  projectName: string
+  calculator: string
+  status: 'completed' | 'running' | 'failed' | 'draft'
+  createdAt: string
+  createdBy: string
+}
+
+const Projects: React.FC = () => {
+  const [view, setView] = useState<'dashboard' | 'projects' | 'runs'>('dashboard')
+  
+  // Mock data - will be replaced with API calls
+  const projects: Project[] = [
+    {
+      id: 'BB1733',
+      name: 'M25 Bridge Widening',
+      client: 'Highways England',
+      status: 'active',
+      createdAt: '2025-10-15',
+      lastModified: '2025-11-11',
+      runCount: 47,
+      fileCount: 23
+    },
+    {
+      id: 'BB1801',
+      name: 'A3 Footbridge',
+      client: 'Surrey County Council',
+      status: 'active',
+      createdAt: '2025-11-01',
+      lastModified: '2025-11-10',
+      runCount: 12,
+      fileCount: 8
+    },
+    {
+      id: 'BB1695',
+      name: 'Railway Underbridge Assessment',
+      client: 'Network Rail',
+      status: 'archived',
+      createdAt: '2025-08-20',
+      lastModified: '2025-09-30',
+      runCount: 89,
+      fileCount: 45
+    }
+  ]
+
+  const recentRuns: RecentRun[] = [
+    {
+      id: 'run_a1b2c3',
+      projectId: 'BB1733',
+      projectName: 'M25 Bridge Widening',
+      calculator: 'Steel Plate Girder',
+      status: 'completed',
+      createdAt: '2025-11-11 14:23',
+      createdBy: 'M. Collins'
+    },
+    {
+      id: 'run_d4e5f6',
+      projectId: 'BB1801',
+      projectName: 'A3 Footbridge',
+      calculator: 'Crane Pad Design',
+      status: 'completed',
+      createdAt: '2025-11-11 11:45',
+      createdBy: 'J. Smith'
+    },
+    {
+      id: 'run_g7h8i9',
+      projectId: 'BB1733',
+      projectName: 'M25 Bridge Widening',
+      calculator: 'RC Slab Bending',
+      status: 'draft',
+      createdAt: '2025-11-10 16:30',
+      createdBy: 'M. Collins'
+    }
+  ]
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'completed':
+      case 'active':
+        return 'text-green-400 bg-green-500/20 border-green-500/40'
+      case 'running':
+        return 'text-blue-400 bg-blue-500/20 border-blue-500/40'
+      case 'failed':
+        return 'text-red-400 bg-red-500/20 border-red-500/40'
+      case 'draft':
+      case 'archived':
+        return 'text-gray-400 bg-gray-500/20 border-gray-500/40'
+      default:
+        return 'text-gray-400 bg-gray-500/20 border-gray-500/40'
+    }
+  }
+
+  return (
+    <div className="min-h-screen pt-32 pb-20 px-4 relative">
+      {/* Floating background elements */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-20 left-1/4 w-32 h-32 bg-neon-blue/5 rounded-full blur-3xl animate-float-complex"></div>
+        <div className="absolute top-40 right-1/3 w-24 h-24 bg-neon-purple/8 rounded-full blur-2xl animate-float-complex" style={{animationDelay: '2s'}}></div>
+        <div className="absolute bottom-20 left-1/2 w-40 h-40 bg-neon-pink/5 rounded-full blur-3xl animate-float-complex" style={{animationDelay: '4s'}}></div>
+      </div>
+
+      <div className="max-w-8xl mx-auto relative z-10">
+        {/* Page Header with Spotlight Effect */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-12"
+        >
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h1 className="text-6xl md:text-7xl font-black text-white mb-3 tracking-tight">
+                <span className="text-gradient-rainbow">Projects</span>
+              </h1>
+              <p className="text-gray-400 text-xl">
+                Manage projects, track calculations, and generate reports
+              </p>
+            </div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button
+                variant="neon"
+                size="lg"
+                className="cyber-glow-blue shadow-2xl"
+              >
+                <FiFolder className="mr-2" size={20} />
+                New Project
+              </Button>
+            </motion.div>
+          </div>
+
+          {/* View Tabs with Glass Effect */}
+          <div className="glass-advanced rounded-2xl p-2 inline-flex space-x-2 border border-white/10">
+            {(['dashboard', 'projects', 'runs'] as const).map((tab) => (
+              <motion.button
+                key={tab}
+                onClick={() => setView(tab)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={cn(
+                  "px-6 py-3 rounded-xl font-bold transition-all duration-300 relative",
+                  view === tab
+                    ? 'bg-gradient-to-r from-neon-cyan to-neon-blue text-white shadow-lg shadow-neon-cyan/30'
+                    : 'text-gray-400 hover:text-white hover:bg-white/5'
+                )}
+              >
+                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                {view === tab && (
+                  <motion.div
+                    layoutId="activeTab"
+                    className="absolute inset-0 bg-gradient-to-r from-neon-cyan/20 to-neon-blue/20 rounded-xl -z-10 blur-xl"
+                  />
+                )}
+              </motion.button>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Dashboard View with Bento Grid */}
+        {view === 'dashboard' && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="space-y-8"
+          >
+            {/* Bento Grid Stats - Enhanced Layout */}
+            <div className="grid grid-cols-12 gap-6">
+              {/* Large Featured Card - Active Projects */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="col-span-12 md:col-span-6 lg:col-span-4 group"
+              >
+                <Card 
+                  variant="glass" 
+                  className="h-full border-2 border-neon-blue/30 hover:border-neon-blue/60 transition-all duration-500 hover:scale-[1.02] overflow-hidden relative bento-tilt_1 hover-lift"
+                >
+                  {/* Animated background */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-neon-blue/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                  
+                  {/* Floating particles */}
+                  <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                    <div className="absolute top-4 right-4 w-2 h-2 bg-neon-blue rounded-full animate-float-complex"></div>
+                    <div className="absolute bottom-6 left-6 w-1.5 h-1.5 bg-neon-cyan rounded-full animate-float-complex" style={{animationDelay: '1s'}}></div>
+                  </div>
+
+                  <CardContent className="p-8 relative z-10">
+                    <div className="flex items-start justify-between mb-6">
+                      <div className="relative">
+                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-neon-blue to-neon-cyan flex items-center justify-center cyber-glow-blue shadow-2xl group-hover:scale-110 transition-transform duration-500">
+                          <FiFolder className="text-white text-3xl" />
+                        </div>
+                        <div className="absolute inset-0 rounded-2xl border-2 border-neon-blue/30 animate-pulse"></div>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-5xl font-black text-white group-hover:text-neon-cyan transition-colors duration-500">
+                          {projects.filter(p => p.status === 'active').length}
+                        </span>
+                        <div className="flex items-center justify-end mt-2 text-green-400 text-sm">
+                          <FiTrendingUp className="mr-1" />
+                          <span className="font-bold">+12%</span>
+                        </div>
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-300 group-hover:text-white transition-colors duration-300">Active Projects</h3>
+                    <p className="text-sm text-gray-500 mt-2">Currently in progress</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              {/* Total Runs Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="col-span-12 md:col-span-6 lg:col-span-4 group"
+              >
+                <Card 
+                  variant="glass" 
+                  className="h-full border-2 border-neon-purple/30 hover:border-neon-purple/60 transition-all duration-500 hover:scale-[1.02] overflow-hidden relative bento-tilt_2 hover-lift"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-neon-purple/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                  
+                  <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                    <div className="absolute top-4 right-4 w-2 h-2 bg-neon-purple rounded-full animate-float-complex"></div>
+                    <div className="absolute bottom-6 left-6 w-1.5 h-1.5 bg-neon-pink rounded-full animate-float-complex" style={{animationDelay: '1s'}}></div>
+                  </div>
+
+                  <CardContent className="p-8 relative z-10">
+                    <div className="flex items-start justify-between mb-6">
+                      <div className="relative">
+                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center cyber-glow-purple shadow-2xl group-hover:scale-110 transition-transform duration-500">
+                          <FiCheckCircle className="text-white text-3xl" />
+                        </div>
+                        <div className="absolute inset-0 rounded-2xl border-2 border-neon-purple/30 animate-pulse" style={{animationDelay: '0.5s'}}></div>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-5xl font-black text-white group-hover:text-neon-purple transition-colors duration-500">
+                          {projects.reduce((sum, p) => sum + p.runCount, 0)}
+                        </span>
+                        <div className="flex items-center justify-end mt-2 text-purple-400 text-sm">
+                          <FiActivity className="mr-1" />
+                          <span className="font-bold">148 this week</span>
+                        </div>
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-300 group-hover:text-white transition-colors duration-300">Total Calculations</h3>
+                    <p className="text-sm text-gray-500 mt-2">All-time completed runs</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              {/* Total Files Card */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="col-span-12 md:col-span-6 lg:col-span-4 group"
+              >
+                <Card 
+                  variant="glass" 
+                  className="h-full border-2 border-neon-green/30 hover:border-neon-green/60 transition-all duration-500 hover:scale-[1.02] overflow-hidden relative bento-tilt_1 hover-lift"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-neon-green/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                  
+                  <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                    <div className="absolute top-4 right-4 w-2 h-2 bg-neon-green rounded-full animate-float-complex"></div>
+                    <div className="absolute bottom-6 left-6 w-1.5 h-1.5 bg-green-400 rounded-full animate-float-complex" style={{animationDelay: '1s'}}></div>
+                  </div>
+
+                  <CardContent className="p-8 relative z-10">
+                    <div className="flex items-start justify-between mb-6">
+                      <div className="relative">
+                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-neon-green to-green-400 flex items-center justify-center cyber-glow-green shadow-2xl group-hover:scale-110 transition-transform duration-500">
+                          <FiFileText className="text-white text-3xl" />
+                        </div>
+                        <div className="absolute inset-0 rounded-2xl border-2 border-neon-green/30 animate-pulse"></div>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-5xl font-black text-white group-hover:text-neon-green transition-colors duration-500">
+                          {projects.reduce((sum, p) => sum + p.fileCount, 0)}
+                        </span>
+                        <div className="flex items-center justify-end mt-2 text-green-400 text-sm">
+                          <FiDownload className="mr-1" />
+                          <span className="font-bold">12 downloads</span>
+                        </div>
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-300 group-hover:text-white transition-colors duration-300">Total Files</h3>
+                    <p className="text-sm text-gray-500 mt-2">Reports and documents</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            </div>
+
+            {/* Recent Runs - Enhanced Bento Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <Card variant="glass" className="border-2 border-white/10 hover:border-neon-cyan/30 transition-all duration-500 overflow-hidden relative group">
+                {/* Animated background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-neon-cyan/5 via-transparent to-neon-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                
+                <CardHeader className="relative z-10">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-cyan to-neon-blue flex items-center justify-center shadow-lg shadow-neon-cyan/30">
+                        <FiZap className="text-white text-2xl" />
+                      </div>
+                      <CardTitle className="text-3xl font-black text-white">Recent Calculations</CardTitle>
+                    </div>
+                    <Link to="/runs">
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <Button variant="ghost" size="sm" className="text-neon-cyan hover:text-neon-cyan/80 font-bold">
+                          View All →
+                        </Button>
+                      </motion.div>
+                    </Link>
+                  </div>
+                </CardHeader>
+                <CardContent className="relative z-10">
+                  <div className="space-y-3">
+                    {recentRuns.map((run, index) => (
+                      <motion.div
+                        key={run.id}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.5 + index * 0.1 }}
+                        className="p-5 rounded-xl bg-white/5 border border-white/10 hover:border-neon-cyan/40 hover:bg-white/10 transition-all duration-300 cursor-pointer group/run relative overflow-hidden"
+                      >
+                        {/* Hover gradient */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-neon-cyan/10 to-transparent opacity-0 group-hover/run:opacity-100 transition-opacity duration-500"></div>
+                        
+                        <div className="flex items-center justify-between relative z-10">
+                          <div className="flex-1">
+                            <div className="flex items-center space-x-3 mb-2">
+                              <h3 className="text-white font-bold text-lg group-hover/run:text-neon-cyan transition-colors">
+                                {run.calculator}
+                              </h3>
+                              <span className={`text-xs px-3 py-1 rounded-full border font-bold ${getStatusColor(run.status)}`}>
+                                {run.status.toUpperCase()}
+                              </span>
+                            </div>
+                            <div className="flex items-center space-x-6 text-sm text-gray-400">
+                              <span className="flex items-center space-x-2">
+                                <FiFolder size={14} />
+                                <span className="font-medium">{run.projectName}</span>
+                              </span>
+                              <span className="flex items-center space-x-2">
+                                <FiClock size={14} />
+                                <span>{run.createdAt}</span>
+                              </span>
+                              <span className="font-medium">{run.createdBy}</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                              <Button variant="ghost" size="sm" className="opacity-0 group-hover/run:opacity-100 transition-opacity hover:bg-white/10">
+                                <FiEdit3 size={16} />
+                              </Button>
+                            </motion.div>
+                            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                              <Button variant="ghost" size="sm" className="opacity-0 group-hover/run:opacity-100 transition-opacity hover:bg-white/10">
+                                <FiDownload size={16} />
+                              </Button>
+                            </motion.div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Active Projects Quick Access - Enhanced Bento Grid */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+            >
+              <Card variant="glass" className="border-2 border-white/10 hover:border-neon-purple/30 transition-all duration-500 overflow-hidden relative group">
+                {/* Animated background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-neon-purple/5 via-transparent to-neon-pink/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                
+                <CardHeader className="relative z-10">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-neon-purple to-neon-pink flex items-center justify-center shadow-lg shadow-neon-purple/30">
+                      <FiFolder className="text-white text-2xl" />
+                    </div>
+                    <CardTitle className="text-3xl font-black text-white">Active Projects</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent className="relative z-10">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {projects.filter(p => p.status === 'active').map((project, index) => (
+                      <motion.div
+                        key={project.id}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.7 + index * 0.1 }}
+                        whileHover={{ scale: 1.05, rotateY: 5 }}
+                        className="p-6 rounded-xl bg-gradient-to-br from-neon-blue/10 to-neon-purple/10 border-2 border-white/10 hover:border-neon-cyan/40 transition-all duration-500 cursor-pointer group/project relative overflow-hidden bento-tilt_1"
+                      >
+                        {/* Shine effect */}
+                        <div className="card-shine"></div>
+                        
+                        {/* Hover gradient */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-neon-cyan/10 to-transparent opacity-0 group-hover/project:opacity-100 transition-opacity duration-700"></div>
+                        
+                        <div className="relative z-10">
+                          <div className="flex items-start justify-between mb-4">
+                            <div className="relative">
+                              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-neon-blue to-neon-cyan flex items-center justify-center shadow-lg group-hover/project:scale-110 transition-transform duration-500">
+                                <FiFolder className="text-white text-2xl" />
+                              </div>
+                              <div className="absolute inset-0 rounded-xl border-2 border-neon-blue/30 animate-pulse"></div>
+                            </div>
+                            <span className="text-xs text-gray-400 bg-white/10 px-3 py-1 rounded-full border border-white/20 font-bold">
+                              {project.id}
+                            </span>
+                          </div>
+                          <h3 className="text-white font-black text-xl mb-2 group-hover/project:text-neon-cyan transition-colors">
+                            {project.name}
+                          </h3>
+                          <p className="text-gray-400 text-sm mb-4 font-medium">{project.client}</p>
+                          <div className="flex items-center justify-between text-xs text-gray-400 font-medium">
+                            <span className="flex items-center space-x-1">
+                              <FiZap size={12} className="text-neon-cyan" />
+                              <span>{project.runCount} runs</span>
+                            </span>
+                            <span className="flex items-center space-x-1">
+                              <FiFileText size={12} className="text-neon-purple" />
+                              <span>{project.fileCount} files</span>
+                            </span>
+                            <span className="flex items-center space-x-1">
+                              <FiClock size={12} className="text-neon-pink" />
+                              <span>{new Date(project.lastModified).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</span>
+                            </span>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </motion.div>
+        )}
+
+      {/* All Projects View */}
+      {view === 'projects' && (
+        <div className="space-y-4">
+          {projects.map((project) => (
+            <Card key={project.id} variant="glass" className="border border-white/10 hover:border-neon-cyan/40 transition-all duration-300 group cursor-pointer">
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-6">
+                    <div className="w-16 h-16 rounded-lg bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center">
+                      <FiFolder className="text-white text-2xl" />
+                    </div>
+                    <div>
+                      <div className="flex items-center space-x-3 mb-2">
+                        <h3 className="text-2xl font-bold text-white group-hover:text-neon-cyan transition-colors">
+                          {project.name}
+                        </h3>
+                        <span className={`text-xs px-3 py-1 rounded-full border ${getStatusColor(project.status)}`}>
+                          {project.status.toUpperCase()}
+                        </span>
+                      </div>
+                      <p className="text-gray-400 mb-2">{project.client}</p>
+                      <div className="flex items-center space-x-6 text-sm text-gray-400">
+                        <span>Project ID: {project.id}</span>
+                        <span>{project.runCount} calculations</span>
+                        <span>{project.fileCount} files</span>
+                        <span>Last modified: {new Date(project.lastModified).toLocaleDateString('en-GB')}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Button variant="ghost" size="sm">
+                      <FiEdit3 size={18} />
+                    </Button>
+                    <Button variant="ghost" size="sm">
+                      <FiUpload size={18} />
+                    </Button>
+                    <Button variant="ghost" size="sm" className="text-red-400 hover:text-red-300">
+                      <FiTrash2 size={18} />
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
+
+      {/* Recent Runs View */}
+      {view === 'runs' && (
+        <div className="space-y-4">
+          <Card variant="glass" className="border border-white/10">
+            <CardHeader>
+              <CardTitle className="text-2xl font-bold text-white">All Recent Runs</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {recentRuns.map((run) => (
+                  <div
+                    key={run.id}
+                    className="p-6 rounded-lg bg-white/5 border border-white/10 hover:border-neon-cyan/40 hover:bg-white/10 transition-all duration-300 cursor-pointer group"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center space-x-4">
+                        <h3 className="text-xl font-bold text-white group-hover:text-neon-cyan transition-colors">
+                          {run.calculator}
+                        </h3>
+                        <span className={`text-xs px-3 py-1 rounded-full border ${getStatusColor(run.status)}`}>
+                          {run.status.toUpperCase()}
+                        </span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Button variant="ghost" size="sm">
+                          <FiEdit3 size={16} />
+                        </Button>
+                        <Button variant="ghost" size="sm">
+                          <FiDownload size={16} />
+                        </Button>
+                        <Button variant="ghost" size="sm" className="text-red-400 hover:text-red-300">
+                          <FiTrash2 size={16} />
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-4 gap-6 text-sm">
+                      <div>
+                        <span className="text-gray-400 block mb-1">Project</span>
+                        <span className="text-white font-medium">{run.projectName}</span>
+                      </div>
+                      <div>
+                        <span className="text-gray-400 block mb-1">Run ID</span>
+                        <span className="text-white font-mono text-xs">{run.id}</span>
+                      </div>
+                      <div>
+                        <span className="text-gray-400 block mb-1">Created</span>
+                        <span className="text-white">{run.createdAt}</span>
+                      </div>
+                      <div>
+                        <span className="text-gray-400 block mb-1">Designer</span>
+                        <span className="text-white">{run.createdBy}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default Projects

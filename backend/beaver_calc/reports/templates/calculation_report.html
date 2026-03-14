@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ calculator_name }} - Calculation Report</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm 1.5cm;
+            @top-center {
+                content: "{{ project_name }}";
+                font-family: 'Arial', sans-serif;
+                font-size: 10pt;
+                color: #262C53;
+            }
+            @bottom-center {
+                content: "Page " counter(page) " of " counter(pages);
+                font-family: 'Arial', sans-serif;
+                font-size: 9pt;
+                color: #666;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            font-size: 10pt;
+            line-height: 1.6;
+            color: #333;
+            background: white;
+        }
+
+        /* Beaver Bridges Brand Colors */
+        .brand-primary { color: #262C53; }
+        .brand-turquoise { color: #00D9FF; }
+        .brand-bg { background-color: #262C53; }
+        .brand-turquoise-bg { background-color: #00D9FF; }
+
+        /* Header */
+        .header {
+            border-bottom: 4px solid #262C53;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            flex: 1;
+        }
+
+        .logo-text {
+            font-size: 28pt;
+            font-weight: bold;
+            color: #262C53;
+            letter-spacing: -1px;
+        }
+
+        .tagline {
+            font-size: 9pt;
+            color: #00D9FF;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .header-info {
+            text-align: right;
+            font-size: 9pt;
+            color: #666;
+        }
+
+        /* Title Section */
+        .title-section {
+            background: linear-gradient(135deg, #262C53 0%, #1a1f3a 100%);
+            color: white;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+        }
+
+        .calc-title {
+            font-size: 20pt;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calc-subtitle {
+            font-size: 11pt;
+            color: #00D9FF;
+            font-weight: normal;
+        }
+
+        /* Project Info Grid */
+        .project-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #00D9FF;
+        }
+
+        .info-item {
+            margin-bottom: 8px;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #262C53;
+            font-size: 9pt;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            color: #333;
+            font-size: 10pt;
+            margin-top: 2px;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 8pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-verified {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        /* Section Headers */
+        .section {
+            margin-bottom: 25px;
+            page-break-inside: avoid;
+        }
+
+        .section-header {
+            background: #262C53;
+            color: white;
+            padding: 12px 20px;
+            font-size: 13pt;
+            font-weight: bold;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-icon {
+            margin-right: 10px;
+            font-size: 16pt;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            font-size: 9pt;
+        }
+
+        th, td {
+            padding: 10px 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background: #262C53;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 8pt;
+            letter-spacing: 0.5px;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        tr:hover {
+            background: #e9ecef;
+        }
+
+        .table-value {
+            font-weight: bold;
+            color: #262C53;
+        }
+
+        /* Results Highlight */
+        .results-highlight {
+            background: linear-gradient(135deg, #00D9FF15 0%, #262C5315 100%);
+            border-left: 5px solid #00D9FF;
+            padding: 20px 25px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: bold;
+            color: #262C53;
+            font-size: 11pt;
+        }
+
+        .result-value {
+            font-size: 14pt;
+            font-weight: bold;
+            color: #00D9FF;
+        }
+
+        .result-unit {
+            font-size: 9pt;
+            color: #666;
+            margin-left: 5px;
+        }
+
+        /* Status Indicators */
+        .status-pass {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .status-fail {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .status-warning {
+            color: #ffc107;
+            font-weight: bold;
+        }
+
+        /* Code References */
+        .code-reference {
+            background: #f8f9fa;
+            border-left: 3px solid #00D9FF;
+            padding: 12px 15px;
+            margin: 15px 0;
+            font-size: 9pt;
+            border-radius: 4px;
+        }
+
+        .code-clause {
+            font-weight: bold;
+            color: #262C53;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #262C53;
+            font-size: 8pt;
+            color: #666;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .footer-section h4 {
+            color: #262C53;
+            font-size: 9pt;
+            margin-bottom: 8px;
+        }
+
+        /* Certifications */
+        .certifications {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .cert-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 5px;
+            background: #e9ecef;
+            border-radius: 4px;
+            font-size: 7pt;
+            font-weight: bold;
+            color: #262C53;
+        }
+
+        /* Watermark */
+        .watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 72pt;
+            color: rgba(38, 44, 83, 0.03);
+            font-weight: bold;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Calculation Steps */
+        .calc-step {
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+        }
+
+        .calc-step-title {
+            font-weight: bold;
+            color: #262C53;
+            margin-bottom: 8px;
+        }
+
+        .calc-equation {
+            font-family: 'Courier New', monospace;
+            background: #f8f9fa;
+            padding: 8px 12px;
+            margin: 8px 0;
+            border-radius: 4px;
+            font-size: 9pt;
+        }
+
+        /* Page Break Control */
+        .page-break {
+            page-break-after: always;
+        }
+
+        .avoid-break {
+            page-break-inside: avoid;
+        }
+    </style>
+</head>
+<body>
+    <!-- Watermark -->
+    <div class="watermark">BEAVER BRIDGES</div>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="logo-section">
+            <div class="logo-text">BEAVER BRIDGES</div>
+            <div class="tagline">Structural Engineering Excellence</div>
+        </div>
+        <div class="header-info">
+            <div><strong>Report Generated:</strong> {{ current_date }}</div>
+            <div><strong>Report ID:</strong> {{ run_id }}</div>
+            <div><strong>Version:</strong> {{ version }}</div>
+        </div>
+    </div>
+
+    <!-- Title Section -->
+    <div class="title-section">
+        <div class="calc-title">{{ calculator_name }}</div>
+        <div class="calc-subtitle">{{ calculator_description }}</div>
+    </div>
+
+    <!-- Project Information -->
+    <div class="project-info">
+        <div>
+            <div class="info-item">
+                <div class="info-label">Project Name</div>
+                <div class="info-value">{{ project_name }}</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Project ID</div>
+                <div class="info-value">{{ project_id }}</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Client</div>
+                <div class="info-value">{{ client_name }}</div>
+            </div>
+        </div>
+        <div>
+            <div class="info-item">
+                <div class="info-label">Engineer</div>
+                <div class="info-value">{{ engineer_name }}</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Design Code</div>
+                <div class="info-value">{{ design_code }} <span class="status-badge status-verified">✓ VERIFIED</span></div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Calculation Date</div>
+                <div class="info-value">{{ calc_date }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Input Parameters -->
+    <div class="section avoid-break">
+        <div class="section-header">
+            <span class="section-icon">📋</span>
+            INPUT PARAMETERS
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Symbol</th>
+                    <th>Value</th>
+                    <th>Unit</th>
+                    <th>Reference</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for param in input_parameters %}
+                <tr>
+                    <td>{{ param.name }}</td>
+                    <td><em>{{ param.symbol }}</em></td>
+                    <td class="table-value">{{ param.value }}</td>
+                    <td>{{ param.unit }}</td>
+                    <td>{{ param.reference }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Calculation Steps -->
+    <div class="section">
+        <div class="section-header">
+            <span class="section-icon">🔬</span>
+            CALCULATION METHODOLOGY
+        </div>
+        
+        {% for step in calculation_steps %}
+        <div class="calc-step avoid-break">
+            <div class="calc-step-title">Step {{ loop.index }}: {{ step.title }}</div>
+            <div>{{ step.description }}</div>
+            {% if step.equation %}
+            <div class="calc-equation">{{ step.equation }}</div>
+            {% endif %}
+            {% if step.code_reference %}
+            <div class="code-reference">
+                <span class="code-clause">{{ step.code_reference.clause }}</span>: {{ step.code_reference.description }}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Results -->
+    <div class="section avoid-break">
+        <div class="section-header">
+            <span class="section-icon">✅</span>
+            CALCULATION RESULTS
+        </div>
+        
+        <div class="results-highlight">
+            {% for result in results %}
+            <div class="result-row">
+                <span class="result-label">{{ result.name }}</span>
+                <span>
+                    <span class="result-value">{{ result.value }}</span>
+                    <span class="result-unit">{{ result.unit }}</span>
+                </span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Check</th>
+                    <th>Capacity</th>
+                    <th>Demand</th>
+                    <th>Utilization</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for check in design_checks %}
+                <tr>
+                    <td>{{ check.name }}</td>
+                    <td class="table-value">{{ check.capacity }} {{ check.unit }}</td>
+                    <td class="table-value">{{ check.demand }} {{ check.unit }}</td>
+                    <td class="table-value">{{ check.utilization }}%</td>
+                    <td class="{% if check.status == 'PASS' %}status-pass{% elif check.status == 'FAIL' %}status-fail{% else %}status-warning{% endif %}">
+                        {{ check.status }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Design Summary -->
+    <div class="section avoid-break">
+        <div class="section-header">
+            <span class="section-icon">📊</span>
+            DESIGN SUMMARY
+        </div>
+        <div style="padding: 15px; background: #f8f9fa; border-radius: 4px;">
+            {{ design_summary }}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4>BEAVER BRIDGES LTD</h4>
+                <p>Structural Engineering Excellence</p>
+                <p>Company Registration: 09733378</p>
+                <p>www.beaverbridges.co.uk</p>
+            </div>
+            <div class="footer-section">
+                <h4>DESIGN STANDARDS</h4>
+                <p>{{ design_code }}</p>
+                <p>British Standards Institution</p>
+                <p>Eurocodes Compliance</p>
+            </div>
+            <div class="footer-section">
+                <h4>CERTIFICATIONS</h4>
+                <div class="certifications">
+                    <span class="cert-badge">ISO 9001</span>
+                    <span class="cert-badge">ISO 14001</span>
+                    <span class="cert-badge">ISO 45001</span>
+                    <span class="cert-badge">CHAS</span>
+                    <span class="cert-badge">RISQS</span>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 20px; text-align: center; font-size: 7pt; color: #999;">
+            <p>This calculation has been prepared using BeaverCalc Studio v{{ version }}</p>
+            <p>© {{ current_year }} Beaver Bridges Ltd. All rights reserved.</p>
+            <p style="color: #dc3545; font-weight: bold; margin-top: 10px;">
+                IMPORTANT: This calculation is valid only when bearing the original signature and company stamp.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,304 @@
+BeaverCalc Studio — Comprehensive Product Brief
+(Structural Engineering Calculations Platform)
+Prepared for Beaver Bridges Ltd
+Date: 11 November 2025
+———————————————————————————————————
+1. Executive Summary
+BeaverCalc Studio is a modern, modular structural and temporary-works calculations platform designed for bridge projects and allied civil engineering tasks. It combines a Python calculations engine with a Flask API bridge and a React + TypeScript frontend. The system focuses on rigorous engineering methods (Eurocodes and UK practice), robust auditability, versioned calculations, and rapid, elegant reporting for design and site teams.
+2. Objectives & Non‑Objectives
+2.1 Objectives
+•	Provide a single hub for structural and temporary-works calculations used by Beaver Bridges engineers.
+•	Deliver repeatable, version‑controlled results with transparent inputs, assumptions, and code references.
+•	Enable fast report creation (PDF/DOCX) with project branding and drawing references.
+•	Offer a plugin architecture so new calculators can be added safely without impacting the core.
+•	Support UK practice (Eurocodes with UK NAs; BS 5975 for temporary works; common BRE/industry guidance).
+•	Integrate with existing tools and file formats (DWG/DXF exports, IFC where appropriate).
+2.2 Non‑Objectives (Initial Release)
+•	Full 3D FEA for arbitrary geometry (roadmap item; initial release covers beam/frame/grillage solvers).
+•	Automated BIM round‑tripping to Revit (initially export‑first via DXF/IFC).
+•	Site mobile app (mobile‑web responsive UI is in scope; native apps are a later phase).
+3. Users & Personas
+•	Structural Engineer (bridges): designs decks, beams, bearings, connections, and checks load effects.
+•	Temporary Works Coordinator (TWC/TWS): designs crane pads, working platforms, falsework, and access.
+•	Site Engineer / Supervisor: needs quick checks, reports, and method‑statement extracts.
+•	Senior Project Manager: reviews outputs, signs off assumptions, tracks versions and approvals.
+4. Scope & Module Catalogue
+The platform ships with a curated library of calculators. Priority tags: P0 (launch), P1 (next), P2 (later).
+Structural Analysis (Core)
+Priority	Calculator / Tool
+P0	Beam / grillage solver (1D beam, continuous spans, moving loads)
+P0	2D frame/truss analysis for simple bridge frames and falsework
+P1	Influence lines for deck/grillage elements
+
+Loads & Combinations
+Priority	Calculator / Tool
+P0	Self‑weight, imposed loads, construction loads
+P0	Traffic actions for highway bridges (conceptual LM handling per Eurocode practice)
+P0	Wind actions on superstructure/temporary works (per Eurocode framework)
+P1	Thermal actions (uniform and gradient)
+P1	Accidental actions (impact, notional)
+
+Steel (EN 1993 context)
+Priority	Calculator / Tool
+P0	I/H‑section beam bending, shear, deflection checks
+P0	Plate girder checks (web slenderness, buckling)
+P0	Lateral torsional buckling (LTB) quick check
+P0	Bolted connections (shear/bearing, slip‑resistant at SLS/ULS)
+P0	Fillet and butt weld sizing
+P1	Stiffener and bearing stiffener checks
+P1	Composite action quick estimator (steel + concrete deck)
+
+Concrete (EN 1992 context)
+Priority	Calculator / Tool
+P0	RC slab one‑way/two‑way bending & shear
+P0	RC beam bending/shear; bar scheduling summary
+P1	Punching shear check
+P1	Crack width & deflection serviceability checks
+
+Timber (EN 1995 context)
+Priority	Calculator / Tool
+P1	C24/C16 member checks in bending, shear, combined loading
+P1	Bearing and connection checks (screws/bolts)
+
+Geotechnical (EN 1997 context)
+Priority	Calculator / Tool
+P0	Pad/strip footing bearing pressure & sliding checks (ULS/SLS)
+P1	Pile axial capacity (static methods)
+P1	Excavation/retained height simple checks (gravity/legato walls)
+
+Bridge‑Specific
+Priority	Calculator / Tool
+P0	Bearing reaction envelopes from load cases
+P1	Elastomeric bearing sizing (strain, shape factor)
+P1	Movement joint allowance calculator
+
+Temporary Works (BS 5975 practice)
+Priority	Calculator / Tool
+P0	Crane pad / working platform design (loads, punching, bearing, stability)
+P0	Falsework post/ledger load paths & utilisation check
+P0	Legato block/kentledge stack stability (overturning/sliding)
+P0	Heras fence + ballast stability in wind (indicative, with safety notes)
+P1	Access ramp grading & bearing checks (HGV)
+P1	Edge protection / parapet provisional checks
+
+Construction Aids
+Priority	Calculator / Tool
+P0	Load sheet generator (ULS/SLS envelopes)
+P0	Drawing note packs & method statements snippets
+P1	DXF export of influence/swept areas and pad layouts
+
+5. System Architecture
+Architecture motif: Python calculations engine ⟶ Flask API bridge ⟶ React + TypeScript frontend.
+•	Backend (Python): calculations engine (NumPy/SciPy), units via Pint, validation via Pydantic, persistence via SQLAlchemy + PostgreSQL, reporting via Jinja2→HTML→PDF/DOCX.
+•	API Layer (Flask): REST endpoints, OpenAPI generation, JWT-based auth, role‑based access control (RBAC), Flask‑SocketIO for live job progress and streaming logs.
+•	Frontend (React + TypeScript): Vite, shadcn/ui + Tailwind, TanStack Query for data, react‑hook‑form + Zod for schema‑driven forms, Recharts for plots.
+•	Task Execution: Redis + RQ (or Celery) for long‑running calculations with resumable jobs.
+•	Files/Exports: Local or S3‑compatible object storage for reports, spreadsheets, and DXFs.
+•	Observability: Structured logging, request IDs, Sentry (optional) for error tracking.
+6. Technology Stack
+Layer	Tech
+Language	Python 3.12+, TypeScript 5+
+Backend	Flask, SQLAlchemy, Pydantic, Pint, NumPy/SciPy, Redis, RQ/Celery
+Frontend	React 18, Vite, Tailwind, shadcn/ui, TanStack Query, react‑hook‑form, Zod
+DB	PostgreSQL 15 (with TimescaleDB optional for telemetry)
+Reporting	Jinja2 templates, WeasyPrint (PDF), python‑docx (DOCX), openpyxl (XLSX)
+CAD/BIM	ezdxf (DXF export), ifcopenshell (optional IFC export)
+Auth	JWT, optional SSO (Azure AD via OAuth2/OpenID Connect)
+Packaging	Poetry or Hatch; Docker; GitHub Actions CI/CD
+7. API Design (Flask)
+Selected endpoints (non‑exhaustive):
+•	POST /auth/login — obtain JWT
+•	GET /calculators — list calculators and schemas
+•	GET /calculators/{key} — get calculator metadata (inputs/outputs, units, references)
+•	POST /runs — start a calculation run with input payload; returns run_id
+•	GET /runs/{run_id} — fetch status/results
+•	WS /runs/{run_id}/stream — live progress/logs via WebSocket
+•	POST /reports — render DOCX/PDF for a completed run
+•	GET /materials/steel, /materials/concrete, /sections/ukb — libraries and catalogues
+•	GET /projects/{id}/files — retrieve artefacts; PUT for uploads (drawings, photos)
+Example input payload (Steel I‑beam bending):
+{
+  "calculator": "steel_beam_bending_v1",
+  "project_id": "BB1733",
+  "inputs": {
+    "section": "UKB 610x229x101",
+    "span_m": 18.0,
+    "uniform_load_kN_per_m": 45.0,
+    "lateral_restraint": "unrestrained",
+    "steel_grade": "S355"
+  },
+  "metadata": {
+    "designer": "M. Collins",
+    "assumptions": ["Composite action ignored", "Service temperature 0–45°C"],
+    "references": ["EN 1993‑1‑1 (UK NA)"]
+  }
+}
+Example result payload (truncated):
+{
+  "run_id": "a1b2c3",
+  "status": "completed",
+  "results": {
+    "M_Ed_kNm": 7200.0,
+    "V_Ed_kN": 320.0,
+    "utilisation_bending": 0.82,
+    "utilisation_shear": 0.41,
+    "deflection_mm": 38.2,
+    "checks": ["LTB OK at 0.92", "Shear buckling N/A"],
+    "warnings": ["Unrestrained length near limit — consider secondary restraint"]
+  },
+  "attachments": [
+    {"type": "pdf", "url": "/reports/a1b2c3.pdf"},
+    {"type": "docx", "url": "/reports/a1b2c3.docx"}
+  ]
+}
+8. Data Model & Persistence
+•	Projects(id, name, client, metadata)
+•	Calculators(key, version, schema_json, reference_text)
+•	Runs(id, project_id, calculator_key, inputs_json, results_json, status, created_at, created_by)
+•	Files(id, project_id, run_id, path, type, hash, created_at)
+•	Users(id, email, role, last_login, active)
+•	Audit(id, actor, action, target, diff_json, at)
+9. Calculator Framework (Plugin Model)
+•	Each calculator ships as a Python package module with:
+•	• Schema.py — Pydantic models for inputs/outputs with units
+•	• Engine.py — deterministic functions using NumPy/SciPy
+•	• Checks.py — limit‑state checks and utilisation aggregation
+•	• Report.md.j2 — Jinja template for human‑readable output
+•	• Tests/ — unit tests with golden files for verification
+Example: Steel Beam Bending Check — Skeleton
+class Inputs(BaseModel):
+    section: str
+    span_m: float
+    uniform_load_kN_per_m: float
+    lateral_restraint: str
+    steel_grade: str
+
+class Outputs(BaseModel):
+    M_Ed_kNm: float
+    V_Ed_kN: float
+    utilisation_bending: float
+    utilisation_shear: float
+    deflection_mm: float
+
+10. Reporting & Exports
+•	DOCX/PDF reports with Beaver Bridges branding and drawing references.
+•	Appendices with assumptions, formulae, code clauses, and intermediate steps (optional).
+•	DXF overlays for pad footprints, load patches, and influence areas (export).
+•	CSV/XLSX exports of load cases and envelopes for peer review.
+11. Security, Compliance & Audit
+•	Role‑based access: Admin, Designer, Checker, Viewer.
+•	Full audit trail for inputs, results, and report issuance.
+•	Immutable run hashes so any change invalidates signatures.
+•	GDPR‑aligned data handling; on‑prem or VPC deployment.
+•	Disclaimer blocks and sign‑off workflows for issued reports.
+12. UX Principles
+•	Clear, friendly forms with unit pickers and inline validation.
+•	‘Explain this’ toggles reveal methods, clauses, and equations.
+•	Save as template: reuse standard assumptions and materials.
+•	Dark/light themes; keyboard navigation; responsive layouts.
+13. Developer Experience & CI/CD
+•	Monorepo with /backend (Flask) and /frontend (React‑TS).
+•	Dev containers (VS Code) with pinned toolchains.
+•	GitHub Actions: lint, type‑check, tests, build images, publish artifacts.
+•	Smoke tests run against a docker‑compose environment.
+14. Deployment Options
+•	On‑prem Windows Server or Linux VM via Docker Compose.
+•	Azure (Web App + Postgres Flexible Server + Redis) with private networking.
+•	Backups and retention policies for DB and object storage.
+15. Delivery Plan (Phased)
+Phase	Scope (high level)	Deliverables
+P0 — Foundations (Weeks 1‑4)	Repo, auth, projects, runs, 4–6 core calculators, reporting, DXF export (basic)	Running env, OpenAPI, unit tests, sample reports
+P1 — Bridge Depth (Weeks 5‑10)	Grillage, bearings, composite estimators, crane pads v2, Heras in wind, RC slabs/beams	Validated calculators, library data, templates
+P2 — Extensions (Weeks 11‑16)	Pile capacity, punching shear, IFC export (pilot), influence lines, mobile UX polish	User docs, training deck, support SLAs
+16. Risks & Mitigations
+•	Scope creep → Strict P0/P1/P2 gating; fortnightly demos.
+•	Validation debt → Golden tests; dual‑calc spot checks against hand calcs and trusted spreadsheets.
+•	Performance on large load cases → Async jobs + caching; optimise hotspots in NumPy.
+•	Change management → Version pinning and migration scripts; clear release notes.
+Appendix A — Calculators Catalogue (Expanded)
+Steel — Members
+•	I/H‑beam bending & shear (SLS/ULS)
+•	Plate girder: web slenderness & buckling, stiffeners
+•	LTB checks with effective length options
+•	Combined bending + shear + torsion (quick)
+Steel — Connections
+•	Bolted end‑plate (moment, shear)
+•	Base plates (bearing, grout, anchors)
+•	Weld sizing (fillet/butt)
+Concrete
+•	RC slabs (1‑way/2‑way) with bar schedule summary
+•	RC beams (bending/shear)
+•	Punching shear (flat slabs)
+•	Serviceability crack width & deflection
+Timber
+•	C24 member checks (bending, shear, compression)
+•	Timber connections (bolts/screws)
+Geotechnics
+•	Pad/strip bearing pressures & sliding
+•	Pile axial capacity (static methods)
+•	Legato retaining check (gravity)
+Bridge‑Specific
+•	Bearing reactions & envelopes
+•	Elastomeric bearing sizing
+•	Movement joint allowances
+Loads
+•	Traffic actions (Eurocode concepts for highway bridges)
+•	Wind actions (superstructure/temporary works)
+•	Thermal actions (uniform/gradient)
+•	Accidental/notional loads
+Temporary Works
+•	Crane pad / working platform
+•	Falsework posts/ledgers
+•	Heras fence + ballast in wind
+•	Access ramp grading and bearing
+Construction Aids
+•	Load sheet generator (ULS/SLS)
+•	DXF pad footprints
+•	Note packs and method snippets
+Appendix B — Example Report Outline
+•	Title page (project, drawing refs, designer/checker, date, version)
+•	Scope & assumptions
+•	Inputs (tables with units)
+•	Method summary (clause references, equations)
+•	Results (utilisation, diagrams, reactions)
+•	Sensitivity/notes/warnings
+•	Conclusions & sign‑off
+•	Appendices (derivations, intermediate steps, logs)
+Appendix C — Cline: Plan Mode (Step‑by‑Step)
+1.	Create monorepo: /backend (Flask) and /frontend (React‑TS).
+2.	Backend scaffold: Poetry/Hatch, Flask app, auth (JWT), Projects/Runs models, OpenAPI.
+3.	Wire Redis + RQ; add /runs to dispatch async jobs.
+4.	Implement calculator plugin loader; register 4 core calculators.
+5.	Add reporting service (Jinja2→PDF/DOCX) and DXF export stubs.
+6.	Frontend scaffold: Vite + React‑TS + Tailwind + shadcn/ui; auth screens; Projects CRUD.
+7.	Build Calculator Runner UI: select calculator, input form (auto‑generated from schema), run, see status.
+8.	Results viewer with plots and utilisation bars; export buttons for PDF/DOCX/DXF.
+9.	CI: lint/type‑check/tests/build docker images; docker‑compose for local dev.
+10.	Docs: README + user guide; golden test comparisons against verified spreadsheets/hand calcs.
+Appendix D — Cline: Ask Mode Prompts
+•	“Generate a Flask blueprint for /runs with POST to dispatch a calculation, GET for status, and WebSocket streaming using Flask‑SocketIO.”
+•	“Implement a Pydantic schema for steel_beam_bending_v1 with unit annotations and validation ranges.”
+•	“Write the NumPy routine to compute M_Ed, V_Ed, and deflection for a simply supported beam under UDL and patch loads; include LTB quick check.”
+•	“Create a Jinja2 DOCX template and Python function to render a branded calculation report.”
+•	“Build a React form that auto‑renders from a JSON schema (Zod); integrate TanStack Query to call /runs and poll for status.”
+•	“Add DXF export for crane pad footprints using ezdxf; expose endpoint /runs/{id}/dxf.”
+•	“Set up GitHub Actions CI with Python and Node jobs, running unit tests and building Docker images.”
+•	“Integrate Azure AD SSO with JWT hand‑off and role mapping (Admin/Designer/Checker/Viewer).”
+Appendix E — Acceptance Criteria (P0)
+•	User can log in and create a project; roles enforced.
+•	User can run at least 4 core calculators and receive deterministic results with versioned runs.
+•	PDF and DOCX reports generate successfully with branding and audit footer.
+•	DXF export works for at least one calculator (pad footprint).
+•	OpenAPI spec available at /api/docs; all endpoints covered by tests.
+•	Golden tests: ≥ 10 verified cases across steel, concrete, temporary works.
+Appendix F — Standards & Guidance (Indicative, UK Practice)
+•	EN 1990 Basis of Structural Design (+ UK NA)
+•	EN 1991 Actions on Structures (incl. traffic; wind; thermal; + UK NA)
+•	EN 1992 Concrete Design (+ UK NA)
+•	EN 1993 Steel Design (+ UK NA)
+•	EN 1995 Timber Design (+ UK NA)
+•	EN 1997 Geotechnical Design (+ UK NA)
+•	BS 5975 Temporary Works Procedures and the permissible stress design of falsework
+•	BRE/industry guidance for working platforms and crane pads (as applicable)
+17. Final Notes
+This brief is designed to be immediately actionable by an AI coding agent and a small engineering team. Start with the P0 set, validate rigorously against trusted references, and iterate toward P1/P2 as the library matures. All outputs should include clear assumptions, unit consistency, and an audit trail.
